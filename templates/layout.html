@@ -1,0 +1,18 @@
+<html>
+<head>
+	<title>Udhaarify</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+	{% include 'includes/_navbar.html' %}
+	<div class = "container">
+		{% include 'includes/_messages.html' %}
+		{% block body %}
+
+		{% endblock %}
+	</div>
+
+	<!-- JS files -->
+	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+</body>
+</html>
