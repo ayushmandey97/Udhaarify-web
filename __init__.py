@@ -25,10 +25,12 @@ from sql_config import configure
 configure(app)
 mysql = MySQL(app)
 
+'''
 #configuring mail settings
 from mail_config import mail_configure
 mail_configure(app)
 mail = Mail(app)
+'''
 
 #To avoid manual url changes to view unauthorized dashboard
 def is_logged_in(f):
@@ -41,11 +43,13 @@ def is_logged_in(f):
 			return redirect(url_for('login'))
 	return wrap
 
+
+
+
 #Homepage
 @app.route('/')
 def homepage():
 	return render_template('home.html')
-
 
 
 #Dashboard
@@ -54,6 +58,10 @@ def homepage():
 def dashboard():
 	return render_template('dashboard.html')
 
+
+
+
+'''
 #Add friends through mail invite
 @app.route('/dashboard/sendinvite', methods = ['POST'])
 @is_logged_in
@@ -64,6 +72,40 @@ def invite():
 	mail.send(msg)
 	flash("Invite successfully sent!", 'success')
 	return redirect(url_for('dashboard'))
+'''
+
+
+
+
+
+@app.route('/dashboard/add-friend', methods = ['POST'])
+@is_logged_in
+def add_friend():
+	username = request.form['username']
+	cur = mysql.connection.cursor()
+	result = cur.execute("select * from users where username = '%s'", [username])
+	if result > 0:
+		result = cur.execute("select * from friends where username = '%s' and friend_username = '%s'",(session['username'],username))
+		
+		if result == 0:
+			#Now add the user to the database
+			cur.execute("insert into friends (username, friend_username) values(%s, %s)", (session['username'], username))
+			mysql.connection.commit()
+			flash('Friend added successfully!')
+
+		else:
+			flash('Friend already added cannot be added again!','error')
+	else:
+		flash('Requested username does not exist!')
+
+	cur.close()
+	return redirect(url_for('dashboard'))
+
+
+
+
+
+
 
 
 #LOGIN
@@ -109,6 +151,24 @@ def login():
 
 
 
+@app.route('/dashboard/settleup', methods = ['GET','POST'])
+def settleup():
+	if request.method == 'POST':
+		print("hello")
+
+		flash('Transaction noted!')
+		return redirect(url_for('dashboard'))
+
+	return render_template('settle_up.html')
+
+
+
+
+
+
+
+
+
 
 #REGISTRATION
 class RegisterForm(Form):
@@ -140,6 +200,13 @@ def register():
 
 
 	return render_template('register.html', form = form)
+
+
+
+
+
+
+
 
 @app.route('/logout')
 @is_logged_in
