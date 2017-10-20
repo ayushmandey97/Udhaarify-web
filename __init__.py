@@ -83,20 +83,20 @@ def invite():
 def add_friend():
 	username = request.form['username']
 	cur = mysql.connection.cursor()
-	result = cur.execute("select * from users where username = '%s'", [username])
+	result = cur.execute("select * from users where username = %s", [username])
 	if result > 0:
-		result = cur.execute("select * from friends where username = '%s' and friend_username = '%s'",(session['username'],username))
+		result = cur.execute("select * from friends where username = %s and friend_username = %s",(session['username'],username))
 		
 		if result == 0:
 			#Now add the user to the database
 			cur.execute("insert into friends (username, friend_username) values(%s, %s)", (session['username'], username))
 			mysql.connection.commit()
-			flash('Friend added successfully!')
+			flash('Friend added successfully!','success')
 
 		else:
-			flash('Friend already added cannot be added again!','error')
+			flash('Friend already added cannot be added again!','danger')
 	else:
-		flash('Requested username does not exist!')
+		flash('Requested username does not exist!','danger')
 
 	cur.close()
 	return redirect(url_for('dashboard'))
