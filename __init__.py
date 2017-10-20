@@ -60,7 +60,7 @@ def dashboard():
 
 
 
-
+#To send mail invites
 '''
 #Add friends through mail invite
 @app.route('/dashboard/sendinvite', methods = ['POST'])
@@ -77,7 +77,7 @@ def invite():
 
 
 
-
+#Adding friends
 @app.route('/dashboard/add-friend', methods = ['POST'])
 @is_logged_in
 def add_friend():
@@ -85,11 +85,13 @@ def add_friend():
 	cur = mysql.connection.cursor()
 	result = cur.execute("select * from users where username = %s", [username])
 	if result > 0:
-		result = cur.execute("select * from friends where username = %s and friend_username = %s",(session['username'],username))
+		result = cur.execute("select * from friends where friend1 = %s and friend2 = %s",(session['username'],username))
 		
 		if result == 0:
-			#Now add the user to the database
-			cur.execute("insert into friends (username, friend_username) values(%s, %s)", (session['username'], username))
+			#Now add the user to the database, handling two way friendships
+			cur.execute("insert into friends (friend1, friend2) values(%s, %s)", (session['username'], username))
+			cur.execute("insert into friends (friend2, friend1) values(%s, %s)", (session['username'], username))
+			
 			mysql.connection.commit()
 			flash('Friend added successfully!','success')
 
@@ -148,23 +150,121 @@ def login():
 
 
 
-
-
-
+#Settle up
+import settle_up
 @app.route('/dashboard/settleup', methods = ['GET','POST'])
+@is_logged_in
 def settleup():
 	if request.method == 'POST':
-		print("hello")
+		friend = request.form['username']
+		amount = int(request.form['amount'])
+		person_paying = request.form['radio']
+		
+		#Dont allow settling up if user not a friend
+		cur = mysql.connection.cursor()
+		result = cur.execute('select * from friends where friend1 = %s and friend2 = %s', (session['username'], friend))
+		if result == 0:
+			flash('Cannot settle up with person not added as friend!','danger')
+			return redirect(url_for('dashboard'))
 
-		flash('Transaction noted!')
-		return redirect(url_for('dashboard'))
+
+		#getting the sender and receiver
+		if person_paying == session['username']:
+			receiver = friend
+			sender = session['username']
+		
+		elif person_paying == friend:
+			receiver = session['username']
+			sender = friend
+
+
+
+
+		#handling cases for different payment methods
+		if request.form['payment_method'] == 'online':
+			print("Implement Stripe payment method.")
+			#TO BE COMPLETED
+
+		elif request.form['payment_method'] == 'cash':
+			result = cur.execute('select amount from debt where sender = %s and receiver = %s',(session['username'], friend))
+			if result > 0:
+				#user owes this cur_amt to the friend already
+				
+				data = cur.fetchone()
+				cur_amt = data['amount']
+				
+				
+				if person_paying == 'user':
+					cur_amt = cur_amt + amount
+				elif person_paying == 'friend':
+					cur_amt = cur_amt - amount
+					
+					if cur_amt < 0:
+						#Now friend owes the user
+						cur_amt = cur_amt*-1;
+						cur.execute('update debt set sender = %s, receiver = %s, amount = %s where sender = %s and receiver = %s', (friend,session['username'], cur_amt, session['username'], friend))
+					
+					elif cur_amt > 0:
+						#User still owes friend
+						cur.execute('update debt set amount = %s where sender = %s and receiver = %s', (cur_amt, session['username'], friend))
+					
+					else:
+						#case where remaining amount is zero
+						cur.execute('delete from debt where sender = %s and receiver = %s', (session['username'], friend))
+
+				mysql.connection.commit()
+				cur.close()
+
+				flash('Transaction noted successfully!', 'success')
+				return redirect(url_for('dashboard'))
+
+
+			result = cur.execute('select amount from debt where sender = %s and receiver = %s',(friend, session['username']))
+			if result > 0:
+				#The friend owes this cur_amt to the user already
+				data = cur.fetchone()
+				cur_amt = data['amount']
+
+				
+				if person_paying == 'user':
+					cur_amt -= amount
+				elif person_paying == 'friend':
+					cur_amt += amount
+				
+
+				if cur_amt < 0:
+					#Now User owes the Friend
+					cur_amt = cur_amt*-1;
+					cur.execute('update debt set sender = %s, receiver = %s, amount = %s where sender = %s and receiver = %s', (session['username'],friend, cur_amt, friend, session['username']))
+				
+				elif cur_amt > 0:
+					#Friend still owes User
+					cur.execute('update debt set amount = %s where sender = %s and receiver = %s', (cur_amt, friend, session['username']))
+				
+				else:
+					#case where remaining amount is zero
+					cur.execute('delete from debt where sender = %s and receiver = %s', (friend, session['username']))
+
+				mysql.connection.commit()
+				cur.close()
+
+				flash('Transaction noted succesfully', 'success')
+				return redirect(url_for('dashboard'))
+
+			#No old debt exists between user and the friend at this point
+			if person_paying == 'friend':
+				cur.execute('insert into debt (sender, receiver, amount) values (%s, %s)', (friend,session['username'],amount))
+			else:
+				cur.execute('insert into debt (sender, receiver, amount) values (%s, %s)', (session['username'],friend,amount))
+
+			mysql.connection.commit()
+			cur.close()
+
+			flash('Transaction noted!','success')
+			return redirect(url_for('dashboard'))
+
 
 	return render_template('settle_up.html')
-
-
-
-
-
 
 
 
