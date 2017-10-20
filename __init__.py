@@ -13,6 +13,9 @@ from passlib.hash import sha256_crypt
 #for unauthorised url accesses
 from functools import wraps 
 
+#for sending emails
+from flask_mail import Mail, Message
+
 #creating the app engine
 app = Flask(__name__)
 
@@ -22,10 +25,10 @@ from sql_config import configure
 configure(app)
 mysql = MySQL(app)
 
-#Homepage
-@app.route('/')
-def homepage():
-	return render_template('home.html')
+#configuring mail settings
+from mail_config import mail_configure
+mail_configure(app)
+mail = Mail(app)
 
 #To avoid manual url changes to view unauthorized dashboard
 def is_logged_in(f):
@@ -38,6 +41,29 @@ def is_logged_in(f):
 			return redirect(url_for('login'))
 	return wrap
 
+#Homepage
+@app.route('/')
+def homepage():
+	return render_template('home.html')
+
+
+
+#Dashboard
+@app.route('/dashboard')
+@is_logged_in
+def dashboard():
+	return render_template('dashboard.html')
+
+#Add friends through mail invite
+@app.route('/dashboard/sendinvite', methods = ['POST'])
+@is_logged_in
+def invite():
+	email = request.form['email']
+	msg = Message('Hey, come join me at Udhaarify', sender = 'noreply.udhaarify@gmail.com', recipients = ['%s'%email])
+	msg.body = "Hey, so there's this great bill splitting and expense tracking app what you should totally try out, just try it out, it will help us avoid a lot of hassles \n Here's the link: http/localhost:5000/register"
+	mail.send(msg)
+	flash("Invite successfully sent!", 'success')
+	return redirect(url_for('dashboard'))
 
 
 #LOGIN
@@ -62,7 +88,7 @@ def login():
 				session['username'] = username
 
 				flash('Successfully logged in!', 'success')
-				return render_template('home.html')
+				return redirect(url_for('dashboard'))
 
 
 			else:
@@ -114,7 +140,6 @@ def register():
 
 
 	return render_template('register.html', form = form)
-
 
 @app.route('/logout')
 @is_logged_in
