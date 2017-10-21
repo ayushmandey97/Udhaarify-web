@@ -1,5 +1,5 @@
 .upper{
-	background-image: url("assets/bkf.png");
+	background-color: url('assets/bkf.png');
 	background-size: cover;
 	background-position: center;
 	width: 100%;
@@ -36,7 +36,7 @@ html{
 }
 @font-face {
 	font-family: 'run';
-	src: url(assets/fonts/run.ttf);
+	src: url('assets/fonts/run.ttf');
 	font-family: 'NexaLight';
 	src: url("assets/fonts/Nexa Light.otf");
 }

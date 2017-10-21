@@ -3,8 +3,8 @@
 <head>
 	<title>Udhaarify</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="main.css">
-	<link rel="stylesheet" href="footer.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/main.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/footer.css') }}">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
@@ -75,15 +75,15 @@
 					<div class="col-lg-6">
 						<div class="row" id="icons">
 							<div class="col-lg-4 igroup">
-								<img src="assets/fast.png">
+								<img src="{{ url_for('static', filename='assets/fast.png') }}">
 								<p class="icontext">Fast and reliable</p>
 							</div>
 							<div class="col-lg-4 igroup">
-								<img src="assets/easy.png">
+								<img src="{{ url_for('static', filename='assets/easy.png') }}">
 								<p class="icontext">Easy <br> to use</p>
 							</div>
 							<div class="col-lg-4 igroup">
-								<img src="assets/secure.png">
+								<img src="{{ url_for('static', filename='assets/secure.png') }}">
 								<p class="icontext">Safe and Secure</p>
 							</div>
 						</div>
@@ -110,13 +110,13 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-6"">
+						<div class="col-lg-6">
 							<div class="row">
 								<div class="col-lg-3">
-									<img src="assets/iphone.png" id="iphone">
+									<img src="{{ url_for('static', filename='assets/iphone.png') }}" id="iphone">
 								</div>	
 								<div class="col-lg-3">
-									<img src="assets/mac.png">
+									<img src="{{ url_for('static', filename='assets/mac.png') }}">
 								</div>
 							</div>
 						</div>
@@ -130,15 +130,15 @@
 				<p class="teamhead"> Our Team</p>
 				<div class="row">
 					<div class="col-lg-4">
-						<img src="assets/ayushman.jpg" class="tphoto">
+						<img src="{{ url_for('static', filename='assets/ayushman.jpg') }}" class="tphoto">
 						<p class="ttext"> Ayushman Dey </p>
 					</div>
 					<div class="col-lg-4">
-						<img src="assets/dheeraj.jpg" class="tphoto">
+						<img src="{{ url_for('static', filename='assets/dheeraj.jpg') }}" class="tphoto">
 						<p class="ttext"> Dheeraj Lalwani </p>
 					</div>
 					<div class="col-lg-4">
-						<img src="assets/raghu.jpg" class="tphoto">
+						<img src="{{ url_for('static', filename='assets/raghu.jpg') }}" class="tphoto">
 							<p class="ttext"> Raghu Tiwari </p>
 				</div>
 			</div>

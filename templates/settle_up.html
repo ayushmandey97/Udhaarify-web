@@ -1,0 +1,148 @@
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>
+			SETTLE UP
+		</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!--Beginning of STYLE-->
+
+	<style>
+		.funkyradio{
+		margin-top: 40px;
+		margin-left: 20px;
+	}
+	.amt{
+		margin-top: 20px;
+	}
+	@import url(http://fonts.googleapis.com/css?family=Oswald);
+
+
+
+
+	.btn{
+		margin: 4px;
+		box-shadow: 1px 1px 5px #888888;
+	}
+
+
+	   
+	.btn-hot {
+	color: #fff;
+	background-color: #db5566;
+	border-bottom:2px solid #af4451;
+	}
+
+	.btn-hot:hover, .btn-sky.active:focus, .btn-hot:focus, .open>.dropdown-toggle.btn-hot {
+	color: #fff;
+	background-color: #df6a78;
+	border-bottom:2px solid #b25560;
+	outline: none;}
+
+
+	.btn-hot:active, .btn-hot.active {
+	color: #fff;
+	background-color: #c04b59;
+	border-top:2px solid #9a3c47;
+	margin-top: 2px;
+	}
+
+	.btn-sunny {
+	color: #fff;
+	background-color: #f4ad49;
+	border-bottom:2px solid #c38a3a;
+	}
+
+	.btn-sunny:hover, .btn-sky.active:focus, .btn-sunny:focus, .open>.dropdown-toggle.btn-sunny {
+	color: #fff;
+	background-color: #f5b75f;
+	border-bottom:2px solid #c4924c;
+	outline: none;
+	}
+
+
+	.btn-sunny:active, .btn-sunny.active {
+	color: #fff;
+	background-color: #d69840;
+	border-top:2px solid #ab7a33;
+	margin-top: 2px;
+	}
+
+	.btn:focus,
+	.btn:active:focus,
+	.btn.active:focus {
+		outline: none;
+		outline-offset: 0px;
+	}
+	.well{
+		margin-top: 20px;
+	}
+
+	a {color:#fff;}
+	a:hover {text-decoration:none; color:#fff;}
+	</style>
+
+
+
+
+
+	<!--End of Style-->
+	</head>
+
+	<body>
+		<form action = "/dashboard/settleup" method = "POST">
+			<div class="container">
+			<div class="row align-itmes-start">
+				<div class="col-sm-6">
+					<h2>Add a Friend</h2>
+					<div id="custom-search-input">
+						<div class="input-group col-md-12">
+							<input type="text" class="form-control input-lg" placeholder="Type here" name = "username" />
+							<span class="input-group-btn">
+								<button class="btn btn-info btn-lg" type="button">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row align-items-center">
+			<div class="col-sm-6">
+		
+			<div class="funkyradio">
+			<div class="funkyradio-default">
+				<input type="radio" name="radio" id="radio1" value = "friend"/>
+				<label for="radio1">I am getting Paid</label>
+			</div>
+			<div class="funkyradio-primary">
+				<input type="radio" name="radio" id="radio2" value = "user" checked/>
+				<label for="radio2">I am Paying</label>
+			</div>
+		    </div>
+			</div>
+			</div>
+			<div class="row align-items-end amt">
+					<div class="col-sm-6 amt">
+						<label class="control-label col-sm-2" for="amt-paid">Amount:</label>
+				  <div class="col-sm-6">          
+					<input type="text" id="amt-paid" placeholder="Enter Amount" name="amount">
+				  </div>
+				
+			</div>
+			</div>
+			<div class="row align-items-center">
+			<div class="col-sm-6 btn-pay">
+			<div class="well text-center">
+				<button type="submit" class="btn btn-hot text-uppercase" name = "payment_method" value = "cash">Record Transaction</button>
+				<button type="submit" class="btn btn-sunny text-uppercase" name = "payment_method" value = "online">Pay Now</button>
+			</div>
+	</div>
+	</form>
+	</body>
+	</html>
+
+
