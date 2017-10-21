@@ -1,17 +1,201 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Udhaarify</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link rel="stylesheet" href="footer.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
+</head>
+<body>
+	<div class="upper">
+		<!-- Header -->
+		<div class="header">
+			<nav class="navbar navbar-default">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
 
-{% block body %}
-	
-	<div class = "jumbotron text-center">
-		<h1>Welcome to Udhaarify</h1>
-		<p class = "lead"> Dheeraj is going to go jobless for this project most probably.</p>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="#">Home<span class="sr-only">(current)</span></a></li>
+						<li><a href="#">About</a></li>
+					</ul>
+					<a class="navbar-brand" href="#" id="logo">Udhaarify</a>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/login"><i class="fa fa-user" aria-hidden="true"></i>
+							Login</a></li>
+							<li id="signup"><a href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Signup</a></li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</nav>
+			</div>
 
-			<a href="/register" class = "btn btn-primary btn-lg">Register</a>
-			<a href="/login" class = "btn btn-success btn-lg">Login</a>
-
-
-	</div>
-
-
-
-{% endblock %}
+			<div class="container">
+				<div class="desc">
+					<div class="row">
+						<div class="col-lg-12">
+							<div id="content">
+								<h1 id="introtext">No need to do the math all the time</h1>
+								<h4 id="introtext2">No more money splitting hassles. Keep a track of how much money your friends owe you and split bills easily with them. Just enter in the your names and amounts and you are all set. Sign up now and remove another hassle from your life.
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Payment Box -->
+			<div class="payment">
+				<p class="introtext2 boxtext">who are you sending money to?</p>
+				<div class="pbox1">
+					<p>Dheeraj</p>
+				</div>
+				<p class="introtext2 boxtext" id="boxtext2">how much money?</p>
+				<div class="pbox1" id="box2">
+					<p>₹ 410</p>
+				</div>
+				<div class="settleup">
+					<button type="button" class="btn btn-default" id="sbutton">Settle Up</button>
+				</div>
+			</div>
+		</div>
+		<div class="mid">
+			<div class="container-fluid umid">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="row" id="icons">
+							<div class="col-lg-4 igroup">
+								<img src="assets/fast.png">
+								<p class="icontext">Fast and reliable</p>
+							</div>
+							<div class="col-lg-4 igroup">
+								<img src="assets/easy.png">
+								<p class="icontext">Easy <br> to use</p>
+							</div>
+							<div class="col-lg-4 igroup">
+								<img src="assets/secure.png">
+								<p class="icontext">Safe and Secure</p>
+							</div>
+						</div>
+						<hr id="rule">
+					</div>
+					<div class="col-lg-4" id="charge">
+						<p class="chargehead"> We don't charge anything.</p>
+						<p class="chargetext">Divide expenses with your friends like a pro. You can settle up your transaction at cost of nothing. Just start using the easy system given on the right and get started in no time. And the best part? It's free to use.</p>
+					</div>
+				</div>
+			</div>
+			<div class="lmid">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-6">
+							<p class="chargehead lmidtext">Use it on our mobile website or on the desktop</p>
+							<p class="chargetext lmidtext">Haven't got a desktop around you? You don't need one to use our application! Responsive and compaitable on all major smartphone browsers.</p>
+							<div class="row btns">
+								<div class="col-lg-4">
+									<a href="/login"><button type="button" href="/login" class="btn btn-default login">sign in</button></a>
+								</div>
+								<div class="col-lg-4">
+									<a href="/register"><button type="button" class="btn btn-default sup">create an account</button></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6"">
+							<div class="row">
+								<div class="col-lg-3">
+									<img src="assets/iphone.png" id="iphone">
+								</div>	
+								<div class="col-lg-3">
+									<img src="assets/mac.png">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Team -->
+		<div class="team">
+			<div class="container-fluid">
+				<p class="teamhead"> Our Team</p>
+				<div class="row">
+					<div class="col-lg-4">
+						<img src="assets/ayushman.jpg" class="tphoto">
+						<p class="ttext"> Ayushman Dey </p>
+					</div>
+					<div class="col-lg-4">
+						<img src="assets/dheeraj.jpg" class="tphoto">
+						<p class="ttext"> Dheeraj Lalwani </p>
+					</div>
+					<div class="col-lg-4">
+						<img src="assets/raghu.jpg" class="tphoto">
+							<p class="ttext"> Raghu Tiwari </p>
+				</div>
+			</div>
+			<p class="teamhead">About us</p>
+			<p class="tdesc">Did you ever plan on having a fun night out only to be disappointed at the end of it, just because of cash hassles? Endless debate on how much to pay each other, everyone whipping out their phones and calculating, trying to convince that their math is correct. Is that something that you and your friends can relate to? If yes, then we have a solution. Udhaarify is an open source software which uses an algorithm to settle those pesky bills for you, making group outings way more awesome. You can customize the bill the way you want, and thus can add bills of varying complexity, we'll solve it all for you.So go ahead and register, why wait?</p>
+			</div>
+			</div>
+			<!-- Footer -->
+			<div class="footer">
+				<footer id="myFooter">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-sm-3">
+								<h2 class="logo"><a href="#"> <span class="foot_U">U</span><span class="foot_U">d</span><span class="foot_U">h</span><span class="foot_U">a</span><span class="foot_U">a</span><span class="foot_U">r</span><span class="foot_U">i</span><span class="foot_U">f</span><span class="foot_U">y</span></a></h2>
+							</div>
+							<div class="col-sm-2">
+								<h5 class="subhead">Get started</h5>
+								<ul>
+									<li><a href="#">Home</a></li>
+									<li><a href="/register">Sign up</a></li>
+									<!-- <li><a href="#">Downloads</a></li>-->
+								</ul>
+							</div>
+							<div class="col-sm-2">
+								<h5 class="subhead">About us</h5>
+								<ul>
+									<li><a href="#">Company Information</a></li>
+									<li><a href="#">Developers</a></li>
+									<!--<li><a href="#">Reviews</a></li>-->
+								</ul>
+							</div>
+							<div class="col-sm-2">
+								<h5 class="subhead">Need Help?</h5>
+								<ul>
+									<li><a href="#">FAQ</a></li>
+									<li><a href="#">Help desk</a></li>
+									<!-- <li><a href="#">Forums</a></li>-->
+								</ul>
+							</div>
+							<div class="col-sm-3">
+								<div class="social-networks">
+									<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+									<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+									<a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+								</div>
+								<button type="button" class="btn btn-default">Contact us</button>
+							</div>
+						</div>
+					</div>
+					<div class="footer-copyright">
+						<p>©BETA</p>
+					</div>
+				</footer>
+			</div>
+			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+			<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+			<script type="text/javascript" src="index.js"></script>
+		</body>
+		</html>
