@@ -150,6 +150,52 @@ def login():
 
 
 
+
+
+#REGISTRATION
+class RegisterForm(Form):
+	name = StringField('Name', [validators.Length(min=1, max=50)])
+	username = StringField('Username', [validators.Length(min=4, max=25)])
+	email = StringField('Email', [validators.Length(min=6, max=50)])
+	password = PasswordField('Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords do not match')
+    ])
+	confirm = PasswordField('Confirm Password')
+
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+	form = RegisterForm(request.form)
+	if request.method == 'POST' and form.validate():
+		name = form.name.data
+		email = form.email.data
+		username = form.username.data
+		password = sha256_crypt.encrypt(str(form.password.data)) #creating password hash
+
+		cur = mysql.connection.cursor()
+		cur.execute('insert into users(name, email, username, password) values(%s, %s, %s, %s)', (name, email, username, password))
+		mysql.connection.commit()
+		cur.close()
+
+		flash('Successfully registered! Log in to continue.', 'success')
+		return redirect(url_for('login'))
+
+
+	return render_template('register.html', form = form)
+
+
+
+@app.route('/logout')
+@is_logged_in
+def logout():
+	session.clear()
+	flash('Successfully logged out.','success')
+	return redirect(url_for('login'))
+
+
+
+
+
 #Settle up
 @app.route('/dashboard/settleup', methods = ['GET','POST'])
 @is_logged_in
@@ -259,50 +305,150 @@ def settleup():
 
 
 
-#REGISTRATION
-class RegisterForm(Form):
-	name = StringField('Name', [validators.Length(min=1, max=50)])
-	username = StringField('Username', [validators.Length(min=4, max=25)])
-	email = StringField('Email', [validators.Length(min=6, max=50)])
-	password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords do not match')
-    ])
-	confirm = PasswordField('Confirm Password')
-
-@app.route('/register', methods = ['GET', 'POST'])
-def register():
-	form = RegisterForm(request.form)
-	if request.method == 'POST' and form.validate():
-		name = form.name.data
-		email = form.email.data
-		username = form.username.data
-		password = sha256_crypt.encrypt(str(form.password.data)) #creating password hash
-
-		cur = mysql.connection.cursor()
-		cur.execute('insert into users(name, email, username, password) values(%s, %s, %s, %s)', (name, email, username, password))
-		mysql.connection.commit()
-		cur.close()
-
-		flash('Successfully registered! Log in to continue.', 'success')
-		return redirect(url_for('login'))
 
 
-	return render_template('register.html', form = form)
+#ADD A BILL
+
+class AddBillForm(form):
+	#Date - calculate the date in which the bill is added
+	#Description
+	desc = StringField("Enter bill description", validators = [Required()])
+	#Amount
+	amt = IntegerField("Enter the total bill amount", validators = [Required])
+	#Notes
+	notes = TextAreaField("Enter extra bill notes (Optonal) ")
+
+	#People in the bill
+	people_in_bill = FieldList(StringField("Enter the people involed in the bill"))
+
+	#PAID BY
+
+	#Paid by[]
+	paid_by = FieldList(StringField("Enter the people paying for the bill"))
+	#Paid by amount[]
+	paid_by_amounts = FieldList(StringField("Enter the amounts for the people paying in the bill"))
+	#paidEqually?
+	paid_equally = BooleanField("Paid equally?", default= False)
+
+
+	#SPLIT BY
+
+	#Split by[]
+	split_by = FieldList(StringField("Enter the people splitting for the bill"))
+	#Split by amount[]
+	split_by_amounts = FieldList(StringField("Enter the amounts for the people who are splitting in the bill"))
+	#Split Equally?
+	split_equally = BooleanField("Split equally?", default= False)
 
 
 
 
-
-
-
-
-@app.route('/logout')
+@app.route('/add-a-bill', methods = ['POST'])
 @is_logged_in
-def logout():
-	session.clear()
-	flash('Successfully logged out.','success')
-	return redirect(url_for('login'))
+def add_bill():
+	form = AddBillForm(request.form)
+
+	if request.method == 'POST':
+
+		#Basic bill datails
+		#date =    Get date using library 
+		total_amount = form.amt.data
+		description = form.desc.data
+		notes = form.notes.data
+		
+		people_in_bill = form.people_in_bill.data
+		size = len(people_in_bill)
+		
+		#Paying details
+		paid_by = form.paid_by.data
+		paid_by_amounts = form.paid_by_amounts.data
+		paid_equally = form.paid_equally.data
+
+		#Spliting details
+		split_by = form.paid_by.data
+		split_by_amounts = form.paid_by_amounts.data
+		split_equally = form.paid_equally.data
+
+		#if equally paid or split
+		eql_paid_amt = total_amount/len(paid_by)
+		eql_split_amt = total_amount/len(split_by)
+
+		#Array storing net worth
+		amount = []
+
+		#Adding the amounts to net worth for people who have paid
+		for index, i in enumerate(people_in_bill):
+			if i in paid_by:
+				if paid_equally != 'True':
+					amount[index] += paid_by_amounts[paid_by.index(i)]
+				else:
+					amount[index] += eql_paid_amt
+
+		#Subtracting the amounts to networth for people who have spent in the bill
+		for index, i in enumerate(people_in_bill):
+			if i in split_by:
+				if split_equally != 'True':
+					amount[index] -= split_by_amounts[split_by.index(i)]
+				else:
+					amount[index] -= eql_split_amt
+		
+
+
+		#using minimum cashflow algorithm to calculate the the minimum number of transactions required 
+		final_string = []
+		counter = 0
+		mincashflow(amount)
+
+		def mincashflow(amount):
+			
+			'''
+			
+			Finding the indexes of minimum and maximum values in amount[] amount[mxCredit] indicates the maximum amount to be given
+            (or credited) to any person . And amount[mxDebit] indicates the maximum amount to be taken (or debited) from any person.
+            So if there is a positive value in amount[], then there must be a negative value
+             
+            '''
+            
+            mxCredit = max(amount)
+            mxDebit = min(amount)
+            
+
+            # If both amounts are 0, then all amounts are settled
+            if (amount[mxCredit] == 0 and amount[mxDebit] == 0) or (amount[mxDebit]>-1 and amount[mxDebit]<0) or (amount[mxCredit]>0 and amount[mxCredit]<1)):
+				return
+
+            
+
+            #Find the minimum of two amounts
+            minimum = minOf2(-amount[mxDebit], amount[mxCredit])
+            
+            amount[mxCredit] -= minimum;
+            amount[mxDebit] += minimum;
+
+            # If minimum is the maximum amount to be
+            final_string[counter] = peopleInBill[mxDebit]+ " has to pay " + (int)minimum + " to " + peopleInBill[mxCredit];
+            counter += 1
+
+
+            #Add
+            #add_into_debt(peopleInBill[mxDebit],peopleInBill[mxCredit],(int)min);
+            
+            '''
+            
+            Recur for the amount array.  Note that it is guaranteed that
+            the recursion would terminate as either amount[mxCredit] 
+            or  amount[mxDebit] becomes 0
+            
+            '''
+            minCashflowRec(amount);
+
+
+        def minOf2(a,b):
+        	return a if a <= b else b 
+
+
+	return render_template('add_a_bill.html')
+
 
 
 
