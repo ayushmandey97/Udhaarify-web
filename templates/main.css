@@ -1,0 +1,318 @@
+.upper{
+	background-image: url("assets/bkf.png");
+	background-size: cover;
+	background-position: center;
+	width: 100%;
+	height: 820px;
+}
+.container{
+	float: left;
+	padding: 0;
+	margin-top: 8%;
+	margin-left: 0;
+	width: 732px;
+	height: 427px;
+}
+.desc{
+	float: left;
+	border-radius: 0px 200px 200px 0px;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-bottom: 5%;
+	padding-top: 2%;    
+	border-width: 2px;
+	border-color: #ffffff;
+	border-style: solid;
+	width: 732px;
+	height: 427px;
+	border-left: 0px;
+}
+body{
+	font-family: run;
+	font-weight: 400;
+}
+html{
+	height: 100%;
+}
+@font-face {
+	font-family: 'run';
+	src: url(assets/fonts/run.ttf);
+	font-family: 'NexaLight';
+	src: url("assets/fonts/Nexa Light.otf");
+}
+.navbar {
+	background-color: transparent;
+	background: transparent;
+	border-color: transparent;
+	padding-top: 1%;
+}
+
+.navbar-default .navbar-nav>li>a {
+	font-family: Run;
+	color: #262626;
+	font-size: 20px; /* Approximation due to font substitution */
+	font-weight: 500;
+	text-align: center;
+} 
+.header{
+	font-family: Run;
+	color: #262626;
+	font-size: 20px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 75px; /* Approximation due to font substitution */
+	text-align: center;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+#introtext{
+	font-family: Run;
+	color: #262626;
+	font-size: 70px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 75px; /* Approximation due to font substitution */
+	text-align: left;
+}
+#introtext2{
+	font-family: Run;
+	color: #262626;
+	font-size: 20px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 45px; /* Approximation due to font substitution */
+	text-align: left;
+	font-family: Run;
+	color: #262626;
+	font-size: 20px; /* Approximation due to font substitution */
+	font-weight: 500;
+	text-align: left;
+}
+.navbar-brand{
+	text-align: center;
+}
+#signup{
+	border-width: 2px;
+	border-color: #000000;
+	border-style: solid;
+	border-radius: 30px;
+}
+.payment{
+	background-color: #ffffff;
+	box-shadow: 2px 4px 26.97px 2.03px rgba(189, 189, 189, 0.75);
+	width: 515px;
+	height: 462px;
+	float: right;
+	margin-top: 8%;
+	margin-right: 7%;
+	border-radius: 70px;
+}
+.boxtext{
+	font-family: Run;
+	color: #262626;
+	font-size: 30px; /* Approximation due to font substitution */
+	font-weight: 500; /* Approximation due to font substitution */
+	text-align: left;
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-top: 10%;
+	padding-bottom: 1.5%;
+}
+.pbox1{
+	background-color: #f0f0f0;
+	width: 412px;
+	height: 61px;
+	margin-left: 10%;
+	margin-right: 10%;
+	font-family: NexaLight;
+	color: #262626;
+	font-size: 35px; /* Approximation due to font substitution */
+	font-weight: 400;
+	line-height: 65px; /* Approximation due to font substitution */
+	text-align: center;
+	border-radius: 100px;
+}
+#boxtext2{
+	padding-left: 25%;
+}
+#box2{
+	background-color: #9effb5;
+}
+#sbutton{
+	background-color: #121212;
+	width: 133px;
+	height: 56px;
+	border-radius: 50px;
+	font-family: Run;
+	color: #ffffff;
+	font-size: 25px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 25px; /* Approximation due to font substitution */
+	text-align: center;
+}
+.settleup{
+	float: right;
+	margin-right: 10%;
+	padding-top: 5%;
+}
+.navbar-brand
+{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	text-align: center;
+	margin:0 auto;
+}
+#logo{
+	font-family: Run;
+	color: #262626;
+	font-size: 40px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 20px; /* Approximation due to font substitution */
+	text-align: center;
+	transform: scaleX(1.0027); /* width and height properties ommitted due to transform */
+	padding-top: 1%;
+}
+.mid{
+	background-image: url("assets/wb.png");
+	background-size: cover;
+	background-position: center;
+	width: 100%;
+	height: 1400px;
+	
+	padding-top: 100px;
+}
+.lmid{
+	background-image: url("assets/vector.png");
+	background-size: cover;
+	background-position: center;
+	width: 100%;
+	height: 1275px;
+	
+	margin-top: 200px;
+	margin-bottom: 300px;
+	padding-right: 3%;
+	padding-left: 3%;
+}
+.container-fluid{
+	margin-top: 100px;
+}
+#charge{
+	float: right;	
+}
+.chargehead{
+	font-family: Run;
+	color: #262626;
+	font-size: 70px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 75px; /* Approximation due to font substitution */
+	text-align: left;
+}
+.chargetext{
+	font-family: Run;
+	color: #aeaeae;
+	font-size: 20px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 30px; /* Approximation due to font substitution */
+	text-align: left;
+}
+
+.icontext{
+	font-family: Run;
+	color: #262626;
+	font-size: 50px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 50px; /* Approximation due to font substitution */
+	text-align: center;
+	padding-top: 20px;
+}
+.igroup{
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#rule{
+	background-color: #e9e9e9;
+	width: 100%;
+	height: 4px;
+	margin-top: 8%;
+}
+.umid{
+	padding-left: 3%;
+	padding-right: 3%;
+}
+.sup{
+	background: -webkit-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+	background: -moz-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+	background: -o-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+	background: -ms-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+	background: linear-gradient(0deg, #4cf8d5 0%, #abffb0 100%);
+	box-shadow: 2px 4px 5px 0px rgba(174, 174, 174, 0.75);
+	width: 290px;
+	height: 56px;
+	border-radius: 50px;
+	font-family: Run;
+	color: #121212;
+	font-size: 25px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 25px; /* Approximation due to font substitution */
+	text-align: center;
+}
+.login{
+	background-color: #121212;
+	width: 133px;
+	height: 56px;
+	border-radius: 50px;
+	font-family: Run;
+	color: #ffffff;
+	font-size: 25px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 25px; /* Approximation due to font substitution */
+	text-align: center;
+}
+.btns{
+	padding-top: 5%;
+}
+.lmidtext{
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+#mac{
+	width: 581px;
+height: 565px;
+}
+#iphone{
+	padding-top: 100%;
+	float: right;
+	margin-top: 20%;
+}
+.team{
+	width: 100%;
+	height: 800px;
+	background-color: #121212;
+}
+.teamhead{
+	color: white;
+	font-size: 70px;
+	text-align: center;
+	padding-top: 3%;
+
+}
+.tphoto{
+	width: 45%;
+	/*float: left;*/
+	margin: 1.66%;
+	border-radius: 50%;
+	height: 45%;
+	margin-left: 20%;
+}
+.ttext{
+	padding-top: 4%;	
+	color: white;
+	margin:  0% 28%;
+	font-size: 30px;
+}
+.tdesc{
+	padding-bottom: 3%;
+	font-size: 22px;
+	color: white;
+	text-align: center;
+	margin: 0px 10%;
+}
