@@ -5,7 +5,7 @@ from flask import Flask, render_template, flash, redirect, url_for, session, log
 from flask_mysqldb import MySQL
 
 #For form validation etc
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators, IntegerField, FieldList, BooleanField
 
 #For password encryption
 from passlib.hash import sha256_crypt
@@ -15,6 +15,9 @@ from functools import wraps
 
 #for sending emails
 from flask_mail import Mail, Message
+
+#for getting the current date
+import datetime
 
 #creating the app engine
 app = Flask(__name__)
@@ -158,9 +161,9 @@ class RegisterForm(Form):
 	username = StringField('Username', [validators.Length(min=4, max=25)])
 	email = StringField('Email', [validators.Length(min=6, max=50)])
 	password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords do not match')
-    ])
+		validators.DataRequired(),
+		validators.EqualTo('confirm', message='Passwords do not match')
+	])
 	confirm = PasswordField('Confirm Password')
 
 @app.route('/register', methods = ['GET', 'POST'])
@@ -309,12 +312,11 @@ def settleup():
 
 #ADD A BILL
 
-class AddBillForm(form):
-	#Date - calculate the date in which the bill is added
+class AddBillForm(Form):
 	#Description
-	desc = StringField("Enter bill description", validators = [Required()])
+	desc = StringField("Enter bill description", validators = [validators.DataRequired()])
 	#Amount
-	amt = IntegerField("Enter the total bill amount", validators = [Required])
+	amt = IntegerField("Enter the total bill amount", validators = [validators.DataRequired()])
 	#Notes
 	notes = TextAreaField("Enter extra bill notes (Optonal) ")
 
@@ -343,19 +345,28 @@ class AddBillForm(form):
 
 
 
-@app.route('/add-a-bill', methods = ['POST'])
+@app.route('/add-a-bill', methods = ['GET', 'POST'])
 @is_logged_in
 def add_bill():
 	form = AddBillForm(request.form)
 
-	if request.method == 'POST':
+	if request.method == 'POST' and form.validate():
 
 		#Basic bill datails
-		#date =    Get date using library 
 		total_amount = form.amt.data
 		description = form.desc.data
 		notes = form.notes.data
-		
+
+		#getting the current date
+		now = datetime.datetime.now()
+		current_date = now.day + "/" + now.month + "/" + now.year
+
+		#Putting bill details into the database
+		cur = mysql.connection.cursor()
+		execute('insert into bill_details (bill_amount, description, notes, date) values (%s, %s, %s, %s)', (total_amount, description, notes, current_date))
+		mysql.connection.commit()
+		cur.close()
+
 		people_in_bill = form.people_in_bill.data
 		size = len(people_in_bill)
 		
@@ -398,56 +409,70 @@ def add_bill():
 		final_string = []
 		counter = 0
 		mincashflow(amount)
+		
+		cur = mysql.connection.cursor()
+		cur.execute("select max(bill_id) from bill_details")
+		data = cur.fetchone()
+		bill_id = data['bill_id']
+
+		return render_template('bill_transactions.html', transactions = final_string, bill_id = bill_id)
 
 		def mincashflow(amount):
 			
 			'''
 			
 			Finding the indexes of minimum and maximum values in amount[] amount[mxCredit] indicates the maximum amount to be given
-            (or credited) to any person . And amount[mxDebit] indicates the maximum amount to be taken (or debited) from any person.
-            So if there is a positive value in amount[], then there must be a negative value
-             
-            '''
-            
-            mxCredit = max(amount)
-            mxDebit = min(amount)
-            
+			(or credited) to any person . And amount[mxDebit] indicates the maximum amount to be taken (or debited) from any person.
+			So if there is a positive value in amount[], then there must be a negative value
+			
+			'''
+			mxCredit = max(amount)
+			mxDebit = max(amount)
 
-            # If both amounts are 0, then all amounts are settled
-            if (amount[mxCredit] == 0 and amount[mxDebit] == 0) or (amount[mxDebit]>-1 and amount[mxDebit]<0) or (amount[mxCredit]>0 and amount[mxCredit]<1)):
+			# If both amounts are 0, then all amounts are settled
+			if (amount[mxCredit] == 0 and amount[mxDebit] == 0) or (amount[mxDebit] > -1 and amount[mxDebit] < 0) or (amount[mxCredit] > 0 and amount[mxCredit] < 1):
 				return
 
-            
+			#Find the minimum of two amounts
+			minimum = minOf2(-amount[mxDebit], amount[mxCredit])
+			
+			amount[mxCredit] -= minimum;
+			amount[mxDebit] += minimum;
 
-            #Find the minimum of two amounts
-            minimum = minOf2(-amount[mxDebit], amount[mxCredit])
-            
-            amount[mxCredit] -= minimum;
-            amount[mxDebit] += minimum;
-
-            # If minimum is the maximum amount to be
-            final_string[counter] = peopleInBill[mxDebit]+ " has to pay " + (int)minimum + " to " + peopleInBill[mxCredit];
-            counter += 1
+			# If minimum is the maximum amount to be
+			final_string[counter] = peopleInBill[mxDebit]+ " has to pay " + minimum + " to " + peopleInBill[mxCredit];
+			counter += 1
 
 
-            #Add
-            #add_into_debt(peopleInBill[mxDebit],peopleInBill[mxCredit],(int)min);
-            
-            '''
-            
-            Recur for the amount array.  Note that it is guaranteed that
-            the recursion would terminate as either amount[mxCredit] 
-            or  amount[mxDebit] becomes 0
-            
-            '''
-            minCashflowRec(amount);
+			#Add
+			add_debt(payer = peopleInBill[mxDebit],spender = peopleInBill[mxCredit],amt = minimum);
+			
+			'''
+			
+			Recur for the amount array.  Note that it is guaranteed that
+			the recursion would terminate as either amount[mxCredit] 
+			or  amount[mxDebit] becomes 0
+			
+			'''
+			minCashflowRec(amount);
 
 
-        def minOf2(a,b):
-        	return a if a <= b else b 
+		def minOf2(a,b):
+			return a if a <= b else b 
+
+		def add_debt(payer, spender, amt):
+			cur = mysql.connection.cursor()
+			result = cur.execute("select max(bill_id) from bill_details")
+			if result > 0:
+				data = cur.fetchone()
+				bill_id = data['bill_id']
+				cur.execute('insert into bill_payers (bill_id, bill_payer, amount) values (%s, %s, %s)', (bill_id, payer, amount))
+				cur.execute('insert into bill_spenders (bill_id, bill_spender, amount) values (%s, %s, %s)', (bill_id, spender, amount))
+				mysql.connection.commit()
+				cur.close()
 
 
-	return render_template('add_a_bill.html')
+	return render_template('add_bill.html', form = form)
 
 
 

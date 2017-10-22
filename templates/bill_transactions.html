@@ -1,0 +1,17 @@
+{% include 'layout.html' %}
+
+{% block body %}
+	<h2 align = "right">Bill id: {{bill_id}}</h2>
+	<table>
+		<caption>These are the following transations which are to be made to settle the bill</caption>
+		<tr>
+			{% for transaction in transactions %}
+			<td> {{transaction}} </td>
+			{% endfor %}
+		</tr>
+	</table>
+
+	<a href = "/dashboard" ><button class = "btn btn-primary"> Go to dashbaord </button> </a>
+
+
+{% endblock %}
