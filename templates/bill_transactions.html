@@ -3,10 +3,11 @@
 {% block body %}
 	<div class = "jumbotron" align = "center">
 		<h2 align = "center">These are the following transations which are to be made to settle the bill with bill id: {{bill_id}}</h2>
+		<hr>
 		<table>
 			<tr>
 				{% for transaction in transactions %}
-				<td> {{transaction}} </td>
+				<td> <h3> {{transaction}} <h3> </td>
 				{% endfor %}
 			</tr>
 		</table>

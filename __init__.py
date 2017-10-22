@@ -344,7 +344,7 @@ class AddBillForm(Form):
 	split_by_list = FieldList(FormField(SplitByForm), min_entries = 3)
 	split_equally = BooleanField("Split Equally?")
 	
-def mincashflow(amount, people_in_bill, counter = 0):
+def mincashflow(amount, people_in_bill, final_string, counter = 0):
 	
 	'''
 	
@@ -366,7 +366,9 @@ def mincashflow(amount, people_in_bill, counter = 0):
 	amount[mxDebit] += minimum;
 
 	# If minimum is the maximum amount to be
-	logger(str(people_in_bill[mxDebit])+ " has to pay " + str(minimum) + " to " + str(people_in_bill[mxCredit]))
+	s = str(people_in_bill[mxDebit])+ " has to pay " + str(minimum) + " to " + str(people_in_bill[mxCredit])
+	logger(s)
+	final_string.append(s)
 
 
 	#Add
@@ -379,7 +381,7 @@ def mincashflow(amount, people_in_bill, counter = 0):
 	or  amount[mxDebit] becomes 0
 	
 	'''
-	mincashflow(amount, people_in_bill)
+	mincashflow(amount, people_in_bill, final_string)
 
 def get_index(l):
 	min_index = 0
@@ -471,6 +473,19 @@ def add_bill():
 
 		#Array storing net worth
 		amount = [0]*size
+		
+
+		'''
+
+		msg = ""
+		for index, i in enumerate(split_by):
+			msg += str(i)
+
+		logger(msg)
+		#logger("EXTRA PAY: " + str(paid_by_amounts[paid_by.index("ayushman")]))
+		#logger("EXTRA SPLIT: " + str(split_by_amounts[split_by.index("dheeraj")]))
+		'''
+		
 
 
 		#Adding the amounts to net worth for people who have paid
@@ -481,6 +496,7 @@ def add_bill():
 				else:
 					amount[index] += eql_paid_amt
 
+
 		#Subtracting the amounts to networth for people who have spent in the bill
 		for index, i in enumerate(people_in_bill):
 			if i in split_by:
@@ -488,19 +504,12 @@ def add_bill():
 					amount[index] -= split_by_amounts[split_by.index(i)]
 				else:
 					amount[index] -= eql_split_amt
-		
-
-		msg = ""
-		for index, i in enumerate(amount):
-			msg += str(people_in_bill[index]) + ":" + str(i)
-
-		logger(msg)
-
-
+	
 		#using minimum cashflow algorithm to calculate the the minimum number of transactions required 
 		final_string = []
 		counter = 0
-		#mincashflow(amount = amount, people_in_bill = people_in_bill)
+		
+		mincashflow(amount = amount, people_in_bill = people_in_bill, final_string = final_string)
 		
 		cur = mysql.connection.cursor()
 		cur.execute("select max(bill_id) from bill_details")
