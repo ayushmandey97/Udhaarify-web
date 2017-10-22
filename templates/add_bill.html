@@ -7,6 +7,9 @@
 		<form method = "POST" action = "">
 			
 			<div class="form-group">
+				{{render_field(form.date, class_= "form-control")}}
+			</div>
+			<div class="form-group">
 				{{render_field(form.desc, class_= "form-control")}}
 			</div>
 			<div class="form-group">
@@ -15,44 +18,99 @@
 			<div class="form-group">
 				{{render_field(form.notes, class_= "form-control")}}
 			</div>
+
+
+			<!--
+			<div data-toggle="fieldset" id="people_in_bill-fieldset">
+            <button type="button" data-toggle="fieldset-add-row" data-target="#people_in_bill-fieldset">Add</button>
+            <table>
+                <tr>
+                    <th>Name</th>
+                </tr>
+                {% for name in form.people_in_bill %}
+                <tr data-toggle="fieldset-entry">
+                    <td>{{render_field(name.person_in_bill, class_ = "form-control")}}</td>
+                    <td><button type="button" data-toggle="fieldset-remove-row" id="people_in_bill-{{loop.index0}}-remove">Remove</button></td>
+                </tr>
+                {% endfor %}
+            </table>
+        	</div> -->
+
+
 			
-
-
+			
 			<div class="form-group">
-				{% for person in form.people_in_bill %}
-					{{person.form.person_in_bill}}
+
+				{% for i in form.people_in_bill %}
+					{{render_field(i.person_in_bill, class_ = "form-control")}}
 				{% endfor %}
+
 			</div>
 
-			
 
+
+
+			<!--
+			<div data-toggle="fieldset" id="paid-by-fieldset">
+            <button type="button" data-toggle="fieldset-add-row" data-target="#paid-by-fieldset">Add</button>
+            <table>
+                <tr>
+                    <th>Paid By</th>
+                </tr>
+                {% for name in form.paid_by_list %}
+                <tr data-toggle="fieldset-entry">
+                    <td>{{ name.paid_by }}</td>
+                    <td>{{ name.paid_by_amount }}</td>
+                    <td><button type="button" data-toggle="fieldset-remove-row" id="paid-by-{{loop.index0}}-remove">Remove</button></td>
+                </tr>
+                {% endfor %}
+            </table>
+        	</div> -->
+			
 			<div class="form-group">
 				{{render_field(form.paid_equally, class_= "form-control")}}
 			</div>
-
 			<div class="form-group">
-				{{render_field(form.paid_by_list, class_= "form-control")}}
-				{% for payers in form.paid_by_list %}
-					{% for i in payers %}
-						{{i.form.paid_by}}
-						{{i.form.paid_by_amount}}
-					{% endfor %}
+				
+				{% for i in form.paid_by_list %}
+					{{render_field(i.paid_by, class_ = "form-control")}}
+					{{render_field(i.paid_by_amount, class_ = "form-control")}}
 				{% endfor %}
-			</div>
+
+			</div> 
 
 
 
+
+			<!--
+
+			<div data-toggle="fieldset" id="split-by-fieldset">
+            <button type="button" data-toggle="fieldset-add-row" data-target="#split-by-fieldset">Add</button>
+            <table>
+                <tr>
+                    <th>Split By</th>
+                </tr>
+                {% for name in form.split_by_list %}
+                <tr data-toggle="fieldset-entry">
+                    <td>{{ name.split_by }}</td>
+                    <td>{{ name.split_by_amount }}</td>
+                    <td><button type="button" data-toggle="fieldset-remove-row" id="split-by-{{loop.index0}}-remove">Remove</button></td>
+                </tr>
+                {% endfor %}
+            </table>
+        	</div> -->
+			
 			<div class="form-group">
 				{{render_field(form.split_equally, class_= "form-control")}}
 			</div>
 			<div class="form-group">
-				{% for spenders in form.split_by_list %}
-					{% for i in spenders %}
-						{{i.form.split_by}}
-						{{i.form.split_by_amount}}
-					{% endfor %}
+				
+				{% for i in form.split_by_list %}
+					{{render_field(i.split_by, class_ = "form-control")}}
+					{{render_field(i.split_by_amount, class_ = "form-control")}}
 				{% endfor %}
-			</div>
+
+			</div> 
 			
 
 			<p><input type = "submit" class = "btn btn-primary" value = "Submit"></p>

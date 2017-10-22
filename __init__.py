@@ -5,7 +5,7 @@ from flask import Flask, render_template, flash, redirect, url_for, session, log
 from flask_mysqldb import MySQL
 
 #For form validation etc
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators, IntegerField, FieldList, BooleanField, FormField
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators, IntegerField, FieldList, BooleanField, FormField, DateField
 
 #For password encryption
 from passlib.hash import sha256_crypt
@@ -330,20 +330,90 @@ class AddBillForm(Form):
 	amt = IntegerField("Enter the total bill amount", validators = [validators.DataRequired()])
 	#Notes
 	notes = TextAreaField("Enter extra bill notes (Optonal) ")
+	#Date
+	date = DateField("Enter the date for the bill (Optional)")
 
 	#People in the bill
-	people_in_bill = FieldList(FormField(PeopleInBill))
+	people_in_bill = FieldList(FormField(PeopleInBill), min_entries = 3)
 
 	#PAID BY
-	paid_by_list = FieldList(FormField(PaidByForm))
+	paid_by_list = FieldList(FormField(PaidByForm), min_entries = 3)
 	paid_equally = BooleanField("Paid Equally?")
 
 	#SPLIT BY
-	split_by_list = FieldList(FormField(SplitByForm))
+	split_by_list = FieldList(FormField(SplitByForm), min_entries = 3)
 	split_equally = BooleanField("Split Equally?")
 	
+def mincashflow(amount, people_in_bill, counter = 0):
+	
+	'''
+	
+	Finding the indexes of minimum and maximum values in amount[] amount[mxCredit] indicates the maximum amount to be given
+	(or credited) to any person . And amount[mxDebit] indicates the maximum amount to be taken (or debited) from any person.
+	So if there is a positive value in amount[], then there must be a negative value
+	
+	'''
+	mxDebit, mxCredit = get_index(amount)
+
+	# If both amounts are 0, then all amounts are settled
+	if (amount[mxCredit] == 0 and amount[mxDebit] == 0) or (amount[mxDebit] > -1 and amount[mxDebit] < 0) or (amount[mxCredit] > 0 and amount[mxCredit] < 1):
+		return
+
+	#Find the minimum of two amounts
+	minimum = minOf2(-amount[mxDebit], amount[mxCredit])
+	
+	amount[mxCredit] -= minimum;
+	amount[mxDebit] += minimum;
+
+	# If minimum is the maximum amount to be
+	logger(str(people_in_bill[mxDebit])+ " has to pay " + str(minimum) + " to " + str(people_in_bill[mxCredit]))
 
 
+	#Add
+	add_debt(payer = people_in_bill[mxDebit],spender = people_in_bill[mxCredit],amt = minimum)
+	
+	'''
+	
+	Recur for the amount array.  Note that it is guaranteed that
+	the recursion would terminate as either amount[mxCredit] 
+	or  amount[mxDebit] becomes 0
+	
+	'''
+	mincashflow(amount, people_in_bill)
+
+def get_index(l):
+	min_index = 0
+	max_index = 0
+
+	minimum = l[0]
+	maximum = l[0]
+
+	for i in range(1,len(l)):
+		if l[i] >= maximum:
+			maximum = l[i]
+			max_index = i
+
+		if l[i] <= minimum:
+			minimum = l[i]
+			min_index = i
+	
+	return (min_index, max_index)
+
+
+
+def minOf2(a,b):
+	return a if a <= b else b 
+
+def add_debt(payer, spender, amt):
+	cur = mysql.connection.cursor()
+	result = cur.execute("select max(bill_id) from bill_details")
+	if result > 0:
+		data = cur.fetchone()
+		bill_id = data['max(bill_id)']
+		cur.execute('insert into bill_payers (bill_id, bill_payer, amount) values (%s, %s, %s)', (bill_id, payer, amt))
+		cur.execute('insert into bill_spenders (bill_id, bill_spender, amount) values (%s, %s, %s)', (bill_id, spender, amt))
+		mysql.connection.commit()
+		cur.close()
 
 
 @app.route('/add-a-bill', methods = ['GET', 'POST'])
@@ -357,14 +427,15 @@ def add_bill():
 		total_amount = form.amt.data
 		description = form.desc.data
 		notes = form.notes.data
+		current_date = form.date.data
 
-		#getting the current date
-		now = datetime.datetime.now()
-		current_date = now.day + "/" + now.month + "/" + now.year
+		#If date not provided by the user, the current date is set
+		if current_date == None:
+			current_date = datetime.date.today()
 
 		#Putting bill details into the database
 		cur = mysql.connection.cursor()
-		execute('insert into bill_details (bill_amount, description, notes, date) values (%s, %s, %s, %s)', (total_amount, description, notes, current_date))
+		cur.execute('insert into bill_details (bill_amount, description, notes, date) values (%s, %s, %s, %s)', (total_amount, description, notes, current_date))
 		mysql.connection.commit()
 		cur.close()
 
@@ -399,7 +470,8 @@ def add_bill():
 		eql_split_amt = total_amount/len(split_by)
 
 		#Array storing net worth
-		amount = []
+		amount = [0]*size
+
 
 		#Adding the amounts to net worth for people who have paid
 		for index, i in enumerate(people_in_bill):
@@ -418,78 +490,35 @@ def add_bill():
 					amount[index] -= eql_split_amt
 		
 
+		msg = ""
+		for index, i in enumerate(amount):
+			msg += str(people_in_bill[index]) + ":" + str(i)
+
+		logger(msg)
+
 
 		#using minimum cashflow algorithm to calculate the the minimum number of transactions required 
 		final_string = []
 		counter = 0
-		mincashflow(amount)
+		#mincashflow(amount = amount, people_in_bill = people_in_bill)
 		
 		cur = mysql.connection.cursor()
 		cur.execute("select max(bill_id) from bill_details")
 		data = cur.fetchone()
-		bill_id = data['bill_id']
+		bill_id = data['max(bill_id)']
 
+		
 		return render_template('bill_transactions.html', transactions = final_string, bill_id = bill_id)
-
-		def mincashflow(amount):
-			
-			'''
-			
-			Finding the indexes of minimum and maximum values in amount[] amount[mxCredit] indicates the maximum amount to be given
-			(or credited) to any person . And amount[mxDebit] indicates the maximum amount to be taken (or debited) from any person.
-			So if there is a positive value in amount[], then there must be a negative value
-			
-			'''
-			mxCredit = max(amount)
-			mxDebit = max(amount)
-
-			# If both amounts are 0, then all amounts are settled
-			if (amount[mxCredit] == 0 and amount[mxDebit] == 0) or (amount[mxDebit] > -1 and amount[mxDebit] < 0) or (amount[mxCredit] > 0 and amount[mxCredit] < 1):
-				return
-
-			#Find the minimum of two amounts
-			minimum = minOf2(-amount[mxDebit], amount[mxCredit])
-			
-			amount[mxCredit] -= minimum;
-			amount[mxDebit] += minimum;
-
-			# If minimum is the maximum amount to be
-			final_string[counter] = peopleInBill[mxDebit]+ " has to pay " + minimum + " to " + peopleInBill[mxCredit];
-			counter += 1
-
-
-			#Add
-			add_debt(payer = peopleInBill[mxDebit],spender = peopleInBill[mxCredit],amt = minimum);
-			
-			'''
-			
-			Recur for the amount array.  Note that it is guaranteed that
-			the recursion would terminate as either amount[mxCredit] 
-			or  amount[mxDebit] becomes 0
-			
-			'''
-			minCashflowRec(amount);
-
-
-		def minOf2(a,b):
-			return a if a <= b else b 
-
-		def add_debt(payer, spender, amt):
-			cur = mysql.connection.cursor()
-			result = cur.execute("select max(bill_id) from bill_details")
-			if result > 0:
-				data = cur.fetchone()
-				bill_id = data['bill_id']
-				cur.execute('insert into bill_payers (bill_id, bill_payer, amount) values (%s, %s, %s)', (bill_id, payer, amount))
-				cur.execute('insert into bill_spenders (bill_id, bill_spender, amount) values (%s, %s, %s)', (bill_id, spender, amount))
-				mysql.connection.commit()
-				cur.close()
-
 
 	return render_template('add_bill.html', form = form)
 
 
-
+def logger(msg):
+	print("************************************")
+	print("\n\n\n")
+	print(msg)
+	print("\n\n\n")
+	print("************************************")
 
 
 #Script only runs if explictly told, but not if imported
