@@ -5,7 +5,7 @@ from flask import Flask, render_template, flash, redirect, url_for, session, log
 from flask_mysqldb import MySQL
 
 #For form validation etc
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators, IntegerField, FieldList, BooleanField
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators, IntegerField, FieldList, BooleanField, FormField
 
 #For password encryption
 from passlib.hash import sha256_crypt
@@ -312,6 +312,17 @@ def settleup():
 
 #ADD A BILL
 
+class PaidByForm(Form):
+	paid_by = StringField("Enter person who paid")
+	paid_by_amount = IntegerField("Enter amount paid")	
+
+class SplitByForm(Form):
+	split_by = StringField("Enter person who spent")
+	split_by_amount = IntegerField("Enter amount spent")
+
+class PeopleInBill(Form):
+	person_in_bill = StringField("Enter person in the bill")
+
 class AddBillForm(Form):
 	#Description
 	desc = StringField("Enter bill description", validators = [validators.DataRequired()])
@@ -321,26 +332,16 @@ class AddBillForm(Form):
 	notes = TextAreaField("Enter extra bill notes (Optonal) ")
 
 	#People in the bill
-	people_in_bill = FieldList(StringField("Enter the people involed in the bill"))
+	people_in_bill = FieldList(FormField(PeopleInBill))
 
 	#PAID BY
-
-	#Paid by[]
-	paid_by = FieldList(StringField("Enter the people paying for the bill"))
-	#Paid by amount[]
-	paid_by_amounts = FieldList(StringField("Enter the amounts for the people paying in the bill"))
-	#paidEqually?
-	paid_equally = BooleanField("Paid equally?", default= False)
-
+	paid_by_list = FieldList(FormField(PaidByForm))
+	paid_equally = BooleanField("Paid Equally?")
 
 	#SPLIT BY
-
-	#Split by[]
-	split_by = FieldList(StringField("Enter the people splitting for the bill"))
-	#Split by amount[]
-	split_by_amounts = FieldList(StringField("Enter the amounts for the people who are splitting in the bill"))
-	#Split Equally?
-	split_equally = BooleanField("Split equally?", default= False)
+	split_by_list = FieldList(FormField(SplitByForm))
+	split_equally = BooleanField("Split Equally?")
+	
 
 
 
@@ -367,18 +368,31 @@ def add_bill():
 		mysql.connection.commit()
 		cur.close()
 
-		people_in_bill = form.people_in_bill.data
+		#Getting the people in the bill
+		people_in_bill = []
+		for entry in form.people_in_bill.entries:
+			people_in_bill.append(entry.data['person_in_bill'])
 		size = len(people_in_bill)
 		
 		#Paying details
-		paid_by = form.paid_by.data
-		paid_by_amounts = form.paid_by_amounts.data
+		paid_by = []
+		paid_by_amounts = []
+		paid_equally = False
+		for entry in form.paid_by_list.entries:
+			paid_by.append(entry.data['paid_by'])
+			paid_by_amounts.append(entry.data['paid_by_amount'])
+
 		paid_equally = form.paid_equally.data
 
 		#Spliting details
-		split_by = form.paid_by.data
-		split_by_amounts = form.paid_by_amounts.data
-		split_equally = form.paid_equally.data
+		split_by = []
+		split_by_amounts = []
+		split_equally = False
+		for entry in form.split_by_list.entries:
+			split_by.append(entry.data['split_by'])
+			split_by_amounts.append(entry.data['split_by_amount'])
+
+		split_equally = form.split_equally.data
 
 		#if equally paid or split
 		eql_paid_amt = total_amount/len(paid_by)
