@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<head>
+	<title>
+		SETTLE UP
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style__menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color__box.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.colorbox.js') }}"> </script>
+    
+    <script>
+    $(document).ready(function() {
+        $(".rsettle").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
+        $(".raddbill").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
+        
+    });
+    </script>
+
+<style>
+    .funkyradio{
+	margin-top: 40px;
+	margin-left: 20px;
+}
+.amt{
+	margin-top: 20px;
+}
+@import url(http://fonts.googleapis.com/css?family=Oswald);
+
+
+
+
+.btn{
+   /* margin: 4px; */
+    box-shadow: 1px 1px 5px #888888;
+}
+
+
+   
+.btn-hot {
+color: #fff;
+background-color: #db5566;
+border-bottom:2px solid #af4451;
+}
+
+.btn-hot:hover, .btn-sky.active:focus, .btn-hot:focus, .open>.dropdown-toggle.btn-hot {
+color: #fff;
+background-color: #df6a78;
+border-bottom:2px solid #b25560;
+outline: none;}
+
+
+.btn-hot:active, .btn-hot.active {
+color: #fff;
+background-color: #c04b59;
+border-top:2px solid #9a3c47;
+margin-top: 2px;
+}
+
+.btn-sunny {
+color: #fff;
+background-color: #f4ad49;
+border-bottom:2px solid #c38a3a;
+}
+
+.btn-sunny:hover, .btn-sky.active:focus, .btn-sunny:focus, .open>.dropdown-toggle.btn-sunny {
+color: #fff;
+background-color: #f5b75f;
+border-bottom:2px solid #c4924c;
+outline: none;
+}
+
+
+.btn-sunny:active, .btn-sunny.active {
+color: #fff;
+background-color: #d69840;
+border-top:2px solid #ab7a33;
+margin-top: 2px;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+    outline: none;
+    outline-offset: 0px;
+}
+.well{
+	margin-top: 20px;
+}
+
+a {color:#fff;}
+a:hover {text-decoration:none; color:#fff;}
+</style>
+
+
+
+
+
+<!--End of Style-->
+
+    <!--Beginning of STYLE-->
+</head>
+
+<body>
+	
+        <div class="rhead">
+            <span class="rdash"> DASHBOARD</span>
+                    <a class = "raddbill" href="/dashboard/add-a-bill"><button type="button" class="btn btn-hot btn-sm text-uppercase raddbtn">Add a Bill</button></a>
+                   <a class="rsettle" href="/dashboard/settleup"> <button type="button" class="btn btn-sunny btn-sm text-uppercase rsettlebtn">Settle Up</button></a>
+                </div>
+
+
+                <table style="width: 100%">
+                    <tr>
+                        <th>Total Balance
+                        </th>
+                        <th>
+                            You Owe
+                        </th>
+                        <th> 
+                            You are Owed
+                        </th>
+                    </tr>
+                     <tr>
+                        <td width="33%" id="rtotalbal">340
+                        </td>
+                        <td width="33%" id="rowe">
+                            140
+                        </td>
+                        <td width="33%" id="rowed"> 
+                            480
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="rowehead">
+                    <span id="rowehd">YOU OWE
+                    </span>
+                    <span id="rowedhd">YOU ARE OWED
+                    </span>
+                </div>
+                <table style="width: 100%" class="rlist side-borders">
+                     <tr>
+                        <td width="50%" class="rowename"><i class="fa fa-tripadvisor" style="font-size:20px"></i> Dheeraj Lalwani
+                        </td>
+                        <td width="50%" class="rowedname">
+                           <i class="fa fa-tripadvisor" style="font-size:20px"></i> Raghu Tiwari
+                        </td>
+                        
+                    </tr>
+                     <tr>
+                        <td width="50%" class="roweamt">340
+                        </td>
+                        <td width="50%" class="rowedamt">
+                            140
+                        </td>
+                        
+                    </tr>
+                     <tr>
+                        <td width="50%" class="rowename"><i class="fa fa-tripadvisor" style="font-size:20px"></i> Ayushman Dey 
+                        </td>
+                        <td width="50%" class="rowedname">
+                       <i class="fa fa-tripadvisor" style="font-size:20px"></i> Ayushman Dey                
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td width="50%" class="roweamt">340
+                        </td>
+                        <td width="50%" class="rowedamt">
+                            140
+                        </td>
+                        
+                    </tr>
+                </table>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='dash.js') }}"> </script>
+        </script>
+
+</body>
+</html>
+
+

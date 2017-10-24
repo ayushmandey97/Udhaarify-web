@@ -35,6 +35,7 @@ mail_configure(app)
 mail = Mail(app)
 '''
 
+
 #To avoid manual url changes to view unauthorized dashboard
 def is_logged_in(f):
 	@wraps(f)
@@ -45,6 +46,35 @@ def is_logged_in(f):
 			flash('Unauthorized, please log in first.', 'danger')
 			return redirect(url_for('login'))
 	return wrap
+
+
+
+@app.route('/dashboard_menu')
+@is_logged_in
+def dashboard_menu():
+	return render_template('dashboard_menu.html')
+
+@app.route('/all_transactions')
+@is_logged_in
+def all_transactions():
+	return render_template('all_transactions.html')
+
+@app.route('/first_button')
+@is_logged_in
+def first():
+	return render_template('firstbtn.html')
+
+@app.route('/second_button')
+@is_logged_in
+def second():
+	return render_template('secondbtn.html')
+
+@app.route('/add-friend-html')
+@is_logged_in
+def add_friend_html():
+	return render_template('add-friend.html')
+
+
 
 
 
@@ -77,9 +107,6 @@ def invite():
 	return redirect(url_for('dashboard'))
 '''
 
-
-
-
 #Adding friends
 @app.route('/dashboard/add-friend', methods = ['POST'])
 @is_logged_in
@@ -107,8 +134,8 @@ def add_friend():
 	else:
 		flash('Requested username does not exist!','danger')
 
-	cur.close()
-	return redirect(url_for('dashboard'))
+	return redirect(url_for('add_friend_html'))
+
 
 
 

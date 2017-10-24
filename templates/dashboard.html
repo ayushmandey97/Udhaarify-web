@@ -1,38 +1,184 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
 
-{% block body %}
-	<div>
-		<a href = "/dashboard/settleup">
-			<button type = "button" class = "btn btn-danger"> Settle Up </button>
- 		</a>
- 		<a href = "/dashboard/add-a-bill">
- 			<button type = "button" class = "btn btn-primary"> Add a Bill </button>
- 		</a>
-	</div>
-	<hr>
-	<div class="container">
-		<div class="row">
-	        <div class="col-md-6">
-	            <div id="custom-search-input">
-	                <div class="input-group col-md-12">
-	                   	
-	                   	<form action = "/dashboard/add-friend" method = "POST">
-		                    <input type="text" class="form-control input-lg" id = "autocomplete" placeholder="Add friends through username" name = "username"  />
-		                    <span class="input-group-btn">
-		               
-			                        <button class="btn btn-info btn-lg" type="submit">
-			                            <i class="glyphicon glyphicon-plus"></i>
-			                        </button>
-			                   
-		                    </span>
-		                
-		                </form>
+<head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styledash.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/r_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color_box.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src = "{{ url_for('static', filename='jquery.colorbox.js') }}">
+    </script>
+    <script>
+    $(document).ready(function() {
+        $(".add-friend").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
 
-	                </div>
-	            </div>
-	        </div>
-		</div>
-	</div>
-	<script type="text/javascript" src="src/jquery.autocomplete.js"></script>
+    });
+    </script>
+</head>
 
-{% endblock %}
+<body>
+    <div class="navtop">
+        <nav class="navbar navbar-default navbar-fixed-top rnav">
+            <div class="container-fluid rnavi">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/dashboard" id="rhead">U  D  H  A  A  R  I  F  Y</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" width="100%" height="100%" id="bs-example-navbar-collapse-1">
+                    
+                    <form class="navbar-form navbar-left">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" required="required">
+                            <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/profile">Profile</a></li>
+                                <li><a href="/settings">Settings</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/logout">Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+    <div class="container rthree">
+        <div class="leftpane">
+            <div class="container-fluid rlefty" align="left">
+                <div>
+                    <a id="r1" href="{{ url_for('dashboard_menu') }}" target="middlepane">
+                        <div class="normal rfirst rleftnav">Dashboard</div>
+                    </a>
+                </div>
+                <div>
+                    <a id="r2" href="{{ url_for('all_transactions') }}" target="middlepane">
+                        <div class="normal rsecond">All Transactions</div>
+                    </a>
+                </div>
+                
+                <div class="flex">
+                    <div class="sameRow ">Friends</div>
+                    <div class="sameRow" align="right"><a class='add-friend' href="{{ url_for('add_friend_html') }}">Add+</a></div>
+                </div>
+                <div class="normal well rfrndlist" style="color: grey" width="10px">No Friends to show yet
+                    <span>
+      <i class="icon-ok-sign" rel="tooltip" title="Key active" id="blah"></i>
+      
+        </span>
+                </div>
+                <div class="rcomfrn rounded">
+                    <div class=" rinvite">
+                        Invite Friends
+                    </div>
+                    <div class="normal rfrninp">
+                      <form action="#">
+                        <input class="r_invite_email" type="email" placeholder="Enter an email address" style="width:150px; margin:0 0 5px" required="required">
+                    </div>
+                    <div class="normal">
+                        <button type="submit" class="btn btn-cnacel btn-sm r_send_invite">Send Invite</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <iframe src="{{ url_for('dashboard_menu') }}" class="middlepane" name="middlepane" height="100%">
+        </iframe>
+        <div class="rightpane">
+            <div class="rightnav">
+                <a href="{{ url_for('first') }}" target="rightselect" data-toggle="tooltip" data-placement="bottom" title="Balances"> 
+                <button type="button" class="btn btn-xs">
+                    <i class="glyphicon glyphicon-th-large"></i>
+                </button> </a>
+                <a href="{{ url_for('second') }}" target="rightselect" data-toggle="tooltip" data-placement="bottom" title="Trends">
+                <button class="btn btn-xs" type="button">
+                  <i class="glyphicon glyphicon-signal"></i>
+                </button></a>
+                
+
+
+
+
+                <button class="btn btn-xs" type="button">
+                    <i class="glyphicon glyphicon-sort"></i>
+                </button>
+                <iframe class="rightselect" name="rightselect" width="200" height="300" frameborder="0">
+                </iframe>
+            </div>
+        </div>
+        <footer id="myFooter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h2 class="logo" align="center"><a href="#"> <span class="foot_U">U</span><span class="foot_U">d</span><span class="foot_U">h</span><span class="foot_U">a</span><span class="foot_U">a</span><span class="foot_U">r</span><span class="foot_U">i</span><span class="foot_U">f</span><span class="foot_U">y</span></a></h2>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5 class="subhead">Get started</h5>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/register">Sign up</a></li>
+                            <!-- <li><a href="#">Downloads</a></li>-->
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5 class="subhead">About us</h5>
+                        <ul>
+                            <li><a href="#">Company Information</a></li>
+                            <li><a href="#">Developers</a></li>
+                            <!--<li><a href="#">Reviews</a></li>-->
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5 class="subhead">Need Help?</h5>
+                        <ul>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Help desk</a></li>
+                            <!-- <li><a href="#">Forums</a></li>-->
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="social-networks">
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                        </div>
+                        <button type="button" class="btn btn-default">Contact us</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>©BETA</p>
+            </div>
+        </footer>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+        </script>
+        
+         <script type="text/javascript" src = "{{ url_for('static', filename='dash.js') }}">
+        </script>
+        <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+</body>
+
+</html>

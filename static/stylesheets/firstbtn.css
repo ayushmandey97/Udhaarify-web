@@ -1,0 +1,32 @@
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+@font-face{
+	font-family: 'run';
+	src: url('assets/fonts/run.ttf') format('truetype');
+}
+
+body{
+	font-family: run;
+	color: #121212;
+	background-color: white;
+	width:100%
+	height: 100%;
+	
+}
+.rtxt{
+	font-size: 20px;
+}
+#rbal{
+	font-size: 25px;
+}
+#rbalowed{
+	font-size: 25px;
+}
+#rbalowe{
+	font-size: 25px;
+}
+#rtrends{
+	font-size: 25px;
+}
+#rmoneypaid,#rmoneyshare,#rmoneypay{
+	font-size: 25px;
+}

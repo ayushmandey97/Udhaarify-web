@@ -1,7 +1,11 @@
-{% extends 'layout.html' %}
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
 
-{% block body %}
-	
+
+		{% include 'includes/_messages.html' %}
 		<h1>Add a bill</h1>
 		{% from 'includes/_formhelpers.html' import render_field %}
 		<form method = "POST" action = "">
@@ -116,5 +120,6 @@
 			<p><input type = "submit" class = "btn btn-primary" value = "Submit"></p>
 
 		</form>	
-
-{% endblock %}
+		<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+	</body>
+</html>

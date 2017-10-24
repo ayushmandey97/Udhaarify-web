@@ -1,0 +1,94 @@
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+@font-face{
+	font-family: 'run';
+	src: url('assets/fonts/run.ttf') format('truetype');
+}
+
+body{
+	font-family: run;
+	color: #121212;
+	background-color: white;
+	width:100%
+	height: 100%;
+	
+}
+.rhead{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: rgb(159,255,216);
+}
+.rdash{
+	margin-right: 420px;
+	margin-left: 20px;
+	font-size: 30px;
+}
+.raddbtn{
+	margin-right: 10px;
+	margin-bottom: 7px;
+}
+.rsettlebtn{
+	margin-bottom: 7px;
+
+}
+table{
+	/*margin-top: 20px;*/
+	/*margin-left: 60px;*/
+	background-color: rgb(159,255,216);
+}
+th{
+	font-size: 20px;
+}
+
+#rtotalbal,#rowe,#rowed,th{
+	font-size: 20px;
+	padding-left:60px;
+}
+.rowehead{
+	margin-top: 5px;
+}
+#rowehd{
+	margin-left: 12px;
+	font-size: 18px;
+}
+#rowedhd{
+		margin-left: 550px;
+		font-size: 18px;
+}
+.rlist{
+	margin-top: 15px;
+}
+.roweamt,.rowedamt{
+	font-size: 20px;
+	padding-left: 40px;
+	padding-right: 0px;
+	margin: 0 auto;
+
+}
+.rowename,.rowedname{
+	font-size: 15px;
+	padding-left: 18px;
+	margin: 0 auto;
+}
+.rowedname,.rowedamt{
+	padding-left: 200px !important;
+}
+td.rowename,td.roweamt{
+
+	border-right: solid 1px;
+	 -webkit-border-image: 
+      -webkit-gradient(linear, 0 0, 0 100%, from(black), to(rgba(0, 0, 0, 0))) 1 100%;
+    -webkit-border-image: 
+      -webkit-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
+    -moz-border-image:
+      -moz-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;    
+    -o-border-image:
+      -o-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
+    border-image:
+      linear-gradient(to bottom, black, rgba(0, 0, 0, 0)) 1 100%;
+	padding-right: 0px;
+	padding-left: 50px;
+
+}
+table.side-borders td {
+
+}
