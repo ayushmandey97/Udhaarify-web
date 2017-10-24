@@ -414,11 +414,12 @@ def add_debt(payer, spender, amt):
 		bill_id = data['max(bill_id)']
 		cur.execute('insert into bill_payers (bill_id, bill_payer, amount) values (%s, %s, %s)', (bill_id, payer, amt))
 		cur.execute('insert into bill_spenders (bill_id, bill_spender, amount) values (%s, %s, %s)', (bill_id, spender, amt))
+		cur.execute('insert into debt (sender, receiver, amount) values (%s, %s, %s)', (spender, payer, amt))
 		mysql.connection.commit()
 		cur.close()
 
 
-@app.route('/add-a-bill', methods = ['GET', 'POST'])
+@app.route('/dashboard/add-a-bill', methods = ['GET', 'POST'])
 @is_logged_in
 def add_bill():
 	form = AddBillForm(request.form)
