@@ -91,13 +91,17 @@ def add_friend():
 		result = cur.execute("select * from friends where friend1 = %s and friend2 = %s",(session['username'],username))
 		
 		if result == 0:
-			#Now add the user to the database, handling two way friendships
-			cur.execute("insert into friends (friend1, friend2) values(%s, %s)", (session['username'], username))
-			cur.execute("insert into friends (friend2, friend1) values(%s, %s)", (session['username'], username))
-			
-			mysql.connection.commit()
-			flash('Friend added successfully!','success')
 
+			if username != session['username']:
+				#Now add the user to the database, handling two way friendships
+				cur.execute("insert into friends (friend1, friend2) values(%s, %s)", (session['username'], username))
+				cur.execute("insert into friends (friend2, friend1) values(%s, %s)", (session['username'], username))
+				
+				mysql.connection.commit()
+				flash('Friend added successfully!','success')
+			
+			else:
+				flash('Cannot add yourself as a friend!','danger')
 		else:
 			flash('Friend already added cannot be added again!','danger')
 	else:

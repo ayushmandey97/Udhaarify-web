@@ -17,7 +17,7 @@
 	                <div class="input-group col-md-12">
 	                   	
 	                   	<form action = "/dashboard/add-friend" method = "POST">
-		                    <input type="text" class="form-control input-lg" placeholder="Add friends through username" name = "username"  />
+		                    <input type="text" class="form-control input-lg" id = "autocomplete" placeholder="Add friends through username" name = "username"  />
 		                    <span class="input-group-btn">
 		               
 			                        <button class="btn btn-info btn-lg" type="submit">
@@ -33,5 +33,6 @@
 	        </div>
 		</div>
 	</div>
+	<script type="text/javascript" src="src/jquery.autocomplete.js"></script>
 
 {% endblock %}
