@@ -1,0 +1,145 @@
+@font-face {
+	font-family: 'run';
+	src: url('assets/fonts/run.ttf');
+	font-family: 'NexaLight';
+	src: url("assets/fonts/Nexa Light.otf");
+}
+
+.bdescription{
+	display: ;
+	z-index: -1;
+}
+.glyphicon-remove{
+	float: right;
+}
+
+.dropdown{
+	width: 25%;
+}
+/*.psearch{
+	width: 40%;
+	display: inline-block;
+}*/
+#amt{
+	display: inline-block;
+}
+#peq{
+	width: 10px;
+}
+.paidlist{
+	width: 70%;
+	display: inline-block;
+}
+.pamtlist{
+	display: inline-block;
+	width: 15%;
+}
+.page{
+	
+	border: 2px solid black;
+	border-radius: 20px;
+	padding: 70px;
+	/*margin: 25%;*/
+}
+.addfriends{
+	/*display: block;*/
+}
+body{
+	background-image: url('assets/bkf.png');
+	background-size: cover;
+	z-index: -1
+}
+.main{
+	margin-left: 25%;
+	margin-right: 25%;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 10%;
+	padding-right: 10%;
+	font-family: run;
+}
+.bdescription{
+	/*display: block;	*/
+}
+.nextbutton{
+	background-color: #121212;
+	width: 150px;
+	height: 50px;
+	border-radius: 50px;
+	font-family: Run;
+	color: #ffffff;
+	font-size: 25px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 20px; /* Approximation due to font substitution */
+	text-align: center;
+	float: right;
+}
+
+.prevbutton{
+	background-color: #121212;
+	width:	50px;
+	height: 50px;
+	border-radius: 50%;
+	font-family: Run;
+	color: #ffffff;
+	font-size: 25px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 25px; /* Approximation due to font substitution */
+	text-align: center;
+	float: left;
+}
+.show{
+	display: block;
+}
+.hide{
+	display: none;
+}
+input{
+	background-color: #F7F7F7;
+	border: none;
+}
+.form-control{
+	background: transparent;
+	color: black;
+	border: 1px solid rgba(0,0,0,0);
+	font-size: 25px;
+}
+.list-group-item{
+	background: transparent;
+	color: black;
+	border: 1px solid rgba(0,0,0,0);
+}
+#searchbutton{
+	background: transparent;
+	color: black;
+	border: 1px solid rgba(0,0,0,0);
+}
+body{
+	font-size: 18px;
+}
+#peqcbox{
+	font-size: 20px;
+}
+input[type=checkbox] {
+    transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    margin: 10px;
+}
+.paidtextfields{
+	padding: 4px;
+}
+.amounts{
+	width: 40%;
+}
+.glyphicon glyphicon-remove{
+	width: 10px;
+	height: 10px;
+}
+i{
+	padding: 0;
+}
+.fa-undo{
+	float: right;
+	color: black;
+}

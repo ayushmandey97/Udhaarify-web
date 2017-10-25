@@ -344,35 +344,35 @@ def settleup():
 #ADD A BILL
 
 class PaidByForm(Form):
-	paid_by = StringField("Enter person who paid")
-	paid_by_amount = IntegerField("Enter amount paid")	
+	paid_by = StringField()
+	paid_by_amount = IntegerField()	
 
 class SplitByForm(Form):
-	split_by = StringField("Enter person who spent")
-	split_by_amount = IntegerField("Enter amount spent")
+	split_by = StringField()
+	split_by_amount = IntegerField()
 
 class PeopleInBill(Form):
-	person_in_bill = StringField("Enter person in the bill")
+	person_in_bill = StringField()
 
 class AddBillForm(Form):
 	#Description
-	desc = StringField("Enter bill description", validators = [validators.DataRequired()])
+	desc = StringField(validators = [validators.DataRequired()])
 	#Amount
-	amt = IntegerField("Enter the total bill amount", validators = [validators.DataRequired()])
+	amt = IntegerField(validators = [validators.DataRequired()])
 	#Notes
-	notes = TextAreaField("Enter extra bill notes (Optonal) ")
+	notes = TextAreaField()
 	#Date
-	date = DateField("Enter the date for the bill (Optional)")
+	date = DateField()
 
 	#People in the bill
-	people_in_bill = FieldList(FormField(PeopleInBill), min_entries = 3)
+	people_in_bill = FieldList(FormField(PeopleInBill), min_entries = 1)
 
 	#PAID BY
-	paid_by_list = FieldList(FormField(PaidByForm), min_entries = 3)
+	paid_by_list = FieldList(FormField(PaidByForm), min_entries = 1)
 	paid_equally = BooleanField("Paid Equally?")
 
 	#SPLIT BY
-	split_by_list = FieldList(FormField(SplitByForm), min_entries = 3)
+	split_by_list = FieldList(FormField(SplitByForm), min_entries = 1)
 	split_equally = BooleanField("Split Equally?")
 	
 def mincashflow(amount, people_in_bill, final_string, counter = 0):
@@ -454,8 +454,8 @@ def add_debt(payer, spender, amt):
 @is_logged_in
 def add_bill():
 	form = AddBillForm(request.form)
-
-	if request.method == 'POST' and form.validate():
+	msg = ""
+	if request.method == 'POST':
 
 		#Basic bill datails
 		total_amount = form.amt.data
@@ -518,7 +518,11 @@ def add_bill():
 		#logger("EXTRA SPLIT: " + str(split_by_amounts[split_by.index("dheeraj")]))
 		'''
 		
+		msg = str(total_amount) + " " + str(description) + " " + str(current_date)
+		for i in paid_by_amounts:
+			msg += str(paid_by_amounts)
 
+		logger(msg)
 
 		#Adding the amounts to net worth for people who have paid
 		for index, i in enumerate(people_in_bill):
@@ -551,7 +555,7 @@ def add_bill():
 		
 		return render_template('bill_transactions.html', transactions = final_string, bill_id = bill_id)
 
-	return render_template('add_bill.html', form = form)
+	return render_template('add_a_bill.html', form = form)
 
 
 def logger(msg):
