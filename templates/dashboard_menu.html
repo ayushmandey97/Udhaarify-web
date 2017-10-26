@@ -126,13 +126,14 @@ a:hover {text-decoration:none; color:#fff;}
                         </th>
                     </tr>
                      <tr>
-                        <td width="33%" id="rtotalbal">340
+                        <td width="33%" id="rtotalbal">
+                            {{ net_amount }}
                         </td>
                         <td width="33%" id="rowe">
-                            140
+                            {{ user_owes }}
                         </td>
                         <td width="33%" id="rowed"> 
-                            480
+                            {{ user_is_owed }}
                         </td>
                     </tr>
 
@@ -143,40 +144,44 @@ a:hover {text-decoration:none; color:#fff;}
                     <span id="rowedhd">YOU ARE OWED
                     </span>
                 </div>
+                
+
                 <table style="width: 100%" class="rlist side-borders">
-                     <tr>
-                        <td width="50%" class="rowename"><i class="fa fa-tripadvisor" style="font-size:20px"></i> Dheeraj Lalwani
-                        </td>
-                        <td width="50%" class="rowedname">
-                           <i class="fa fa-tripadvisor" style="font-size:20px"></i> Raghu Tiwari
-                        </td>
-                        
-                    </tr>
-                     <tr>
-                        <td width="50%" class="roweamt">340
-                        </td>
-                        <td width="50%" class="rowedamt">
-                            140
-                        </td>
-                        
-                    </tr>
-                     <tr>
-                        <td width="50%" class="rowename"><i class="fa fa-tripadvisor" style="font-size:20px"></i> Ayushman Dey 
-                        </td>
-                        <td width="50%" class="rowedname">
-                       <i class="fa fa-tripadvisor" style="font-size:20px"></i> Ayushman Dey                
-                        </td>
-                        
-                    </tr>
                     <tr>
-                        <td width="50%" class="roweamt">340
+                        <td>
+                            <table>
+                                {% for key in friends_user_owes %}
+                                     <tr>
+                                        <td width="50%" class="rowename"><i class="fa fa-tripadvisor" style="font-size:20px"></i>
+                                        {{ key }}
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td width="50%" class="roweamt"> 
+                                            {{ friends_user_owes[key] }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
                         </td>
-                        <td width="50%" class="rowedamt">
-                            140
-                        </td>
-                        
-                    </tr>
-                </table>
+
+
+                        <td>  
+                            <table>
+                                {% for key in friends_user_is_owed_by %}
+                                     <tr>
+                                        <td width="50%" class="rowename"><i class="fa fa-tripadvisor" style="font-size:20px"></i>      {{ key }}
+                                        </td>
+                                     </tr>
+                                     <tr>
+                                        <td width="50%" class="roweamt">
+                                            {{ friends_user_is_owed_by[key] }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </td>     
+                    </table>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='dash.js') }}"> </script>
         </script>

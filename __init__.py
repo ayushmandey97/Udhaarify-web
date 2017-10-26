@@ -19,6 +19,9 @@ from flask_mail import Mail, Message
 #for getting the current date
 import datetime
 
+#for string to dictionary conversions
+import ast
+
 #creating the app engine
 app = Flask(__name__)
 
@@ -49,10 +52,16 @@ def is_logged_in(f):
 
 
 
-@app.route('/dashboard_menu')
+@app.route('/dashboard_menu/')
 @is_logged_in
 def dashboard_menu():
-	return render_template('dashboard_menu.html')
+	user_owes = request.args.get('user_owes')
+	user_is_owed = request.args.get('user_is_owed')
+	net_amount = request.args.get('net_amount')
+	friends_user_owes = ast.literal_eval(request.args.get('friends_user_owes'))
+	friends_user_is_owed_by = ast.literal_eval(request.args.get('friends_user_is_owed_by'))
+
+	return render_template('dashboard_menu.html',user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by)
 
 @app.route('/all_transactions')
 @is_logged_in
@@ -89,7 +98,51 @@ def homepage():
 @app.route('/dashboard/')
 @is_logged_in
 def dashboard():
-	return render_template('dashboard.html')
+	cur = mysql.connection.cursor()
+	
+	user_owes = 0
+	user_is_owed = 0
+
+	username = session['username']
+	
+	#Getting the amount user owes in total
+	result = cur.execute("select sum(amount) from debt where sender = %s", [username])
+	if result > 0:
+		data = cur.fetchone()
+		user_owes = int(data['sum(amount)'])
+
+
+	#Getting the amount is owed by friends
+	result = cur.execute("select sum(amount) from debt where receiver = %s", [username])
+	if result > 0:
+		data = cur.fetchone()
+		user_is_owed = int(data['sum(amount)'])
+
+
+
+
+	net_amount = user_is_owed - user_owes
+	friends_user_owes = {} #Friend dictionary whom the user owes 
+	friends_user_is_owed_by = {} #Friend dictionary who owe the user
+
+	#Adding friends to whom the user owes to dictionary
+	result = cur.execute("select receiver, amount from debt where sender = %s", [username])
+	if result > 0:
+		data = cur.fetchall()
+		for row in data:
+			friends_user_owes[row['receiver']] = row['amount']
+
+	#Adding friends who owe the user, to the dictionary
+	result = cur.execute("select sender, amount from debt where receiver = %s", [username])
+	if result > 0:
+		data = cur.fetchall()
+		for row in data:
+			friends_user_is_owed_by[row['sender']] = row['amount']
+
+
+	cur.close()
+	#Get the total balance while templating
+	return render_template('dashboard.html', user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by)
 
 
 
@@ -334,11 +387,6 @@ def settleup():
 
 
 	return render_template('settle_up.html')
-
-
-
-
-
 
 
 #ADD A BILL

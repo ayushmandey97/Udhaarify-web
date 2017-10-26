@@ -67,7 +67,15 @@
         <div class="leftpane">
             <div class="container-fluid rlefty" align="left">
                 <div>
-                    <a id="r1" href="{{ url_for('dashboard_menu') }}" target="middlepane">
+
+
+
+
+                    <a id="r1" href="{{ url_for('dashboard_menu', user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by) }}" target="middlepane">
+
+
+
+
                         <div class="normal rfirst rleftnav">Dashboard</div>
                     </a>
                 </div>
@@ -101,7 +109,14 @@
                 </div>
             </div>
         </div>
-        <iframe src="{{ url_for('dashboard_menu') }}" class="middlepane" name="middlepane" height="100%">
+
+
+
+        <iframe src="{{ url_for('dashboard_menu',user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by) }}" class="middlepane" name="middlepane" height="100%">
+
+
+
+
         </iframe>
         <div class="rightpane">
             <div class="rightnav">
