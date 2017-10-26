@@ -118,9 +118,6 @@ def dashboard():
 	if data['sum(amount)'] != None:
 		user_is_owed = int(data['sum(amount)'])
 
-
-
-
 	net_amount = user_is_owed - user_owes
 	friends_user_owes = {} #Friend dictionary whom the user owes 
 	friends_user_is_owed_by = {} #Friend dictionary who owe the user
@@ -280,9 +277,6 @@ def logout():
 	return redirect(url_for('login'))
 
 
-
-
-
 #Settle up
 @app.route('/dashboard/settleup', methods = ['GET','POST'])
 @is_logged_in
@@ -338,8 +332,6 @@ def settleup():
 				return redirect(url_for('settleup'))
 
 			
-
-
 			result = cur.execute('select amount from debt where sender = %s and receiver = %s',(friend, session['username']))
 			if result > 0:
 				#The friend owes this cur_amt to the user already
@@ -451,7 +443,7 @@ def mincashflow(amount, people_in_bill, final_string, counter = 0):
 
 
 	#Add
-	add_debt(payer = people_in_bill[mxDebit],spender = people_in_bill[mxCredit],amt = minimum)
+	add_debt(spender = people_in_bill[mxDebit], payer = people_in_bill[mxCredit], amt = minimum)
 	
 	'''
 	
@@ -495,14 +487,14 @@ def add_debt(payer, spender, amt):
 		cur.execute('insert into bill_spenders (bill_id, bill_spender, amount) values (%s, %s, %s)', (bill_id, spender, amt))
 		
 		#Equivalent to settle up
-		redundancy_check(sender=pender, receiver=payer, amt=amt)
+		redundancy_check(sender=spender, receiver=payer, amt=amt)
 		
 		mysql.connection.commit()
 		cur.close()
 
 
 def redundancy_check(sender, receiver, amt):
-
+	cur = mysql.connection.cursor()
 	result = cur.execute('select amount from debt where sender = %s and receiver = %s',(sender, receiver))
 	if result > 0:
 		#sender already owes to receiver
@@ -516,31 +508,34 @@ def redundancy_check(sender, receiver, amt):
 
 	
 	result = cur.execute('select amount from debt where sender = %s and receiver = %s',(receiver, sender))
+
 	if result > 0:
+		logger("Case2")
 		#receiver already owes the sender
 		data = cur.fetchone()
 		cur_amt = data['amount']
-
-		cur_amt -= amount
-		
+		cur_amt -= amt
+		logger(str(cur_amt))
 		if cur_amt < 0:
 			#Now sender owes the receiver
 			cur_amt = cur_amt*-1;
-			cur.execute('update debt set sender = %s, receiver = %s, amount = %s where sender = %s and receiver = %s', (receiver,sender, cur_amt, sender, receiver))
+			cur.execute('update debt set sender = %s, receiver = %s, amount = %s where sender = %s and receiver = %s', (sender,receiver, cur_amt, receiver, sender))
 		
 		elif cur_amt > 0:
-			#Friend still owes User
+			#receiver still owes the sender
 			cur.execute('update debt set amount = %s where sender = %s and receiver = %s', (cur_amt, receiver, sender))
 		
 		else:
 			#case where remaining amount is zero
 			cur.execute('delete from debt where sender = %s and receiver = %s', (receiver, sender))
 
+		mysql.connection.commit()
 		return
 		
 	
 	#No old debt exists between user and the friend at this point
 	cur.execute('insert into debt (sender, receiver, amount) values (%s, %s, %s)', (sender, receiver, amt))
+	mysql.connection.commit()
 	return
 
 
@@ -612,12 +607,6 @@ def add_bill():
 		#logger("EXTRA PAY: " + str(paid_by_amounts[paid_by.index("ayushman")]))
 		#logger("EXTRA SPLIT: " + str(split_by_amounts[split_by.index("dheeraj")]))
 		'''
-		
-		msg = str(total_amount) + " " + str(description) + " " + str(current_date)
-		for i in people_in_bill:
-			msg += i
-
-		logger(msg)
 
 		#Adding the amounts to net worth for people who have paid
 		for index, i in enumerate(people_in_bill):
