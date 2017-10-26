@@ -88,9 +88,6 @@ def add_friend_html():
 
 
 
-
-
-
 #Homepage
 @app.route('/')
 def homepage():
@@ -110,15 +107,15 @@ def dashboard():
 	
 	#Getting the amount user owes in total
 	result = cur.execute("select sum(amount) from debt where sender = %s", [username])
-	if result > 0:
-		data = cur.fetchone()
+	data = cur.fetchone()
+	if data['sum(amount)'] != None:
 		user_owes = int(data['sum(amount)'])
 
 
 	#Getting the amount is owed by friends
 	result = cur.execute("select sum(amount) from debt where receiver = %s", [username])
-	if result > 0:
-		data = cur.fetchone()
+	data = cur.fetchone()
+	if data['sum(amount)'] != None:
 		user_is_owed = int(data['sum(amount)'])
 
 
@@ -338,7 +335,7 @@ def settleup():
 				cur.close()
 
 				flash('Transaction recorded successfully!', 'success')
-				return redirect(url_for('dashboard'))
+				return redirect(url_for('settleup'))
 
 			
 
@@ -373,7 +370,7 @@ def settleup():
 				cur.close()
 
 				flash('Transaction noted succesfully', 'success')
-				return redirect(url_for('dashboard'))
+				return redirect(url_for('settleup'))
 				
 			
 			#No old debt exists between user and the friend at this point
@@ -386,7 +383,7 @@ def settleup():
 			cur.close()
 
 			flash('Transaction noted!','success')
-			return redirect(url_for('dashboard'))
+			return redirect(url_for('settleup'))
 
 
 	return render_template('settle_up.html')
@@ -496,9 +493,56 @@ def add_debt(payer, spender, amt):
 		bill_id = data['max(bill_id)']
 		cur.execute('insert into bill_payers (bill_id, bill_payer, amount) values (%s, %s, %s)', (bill_id, payer, amt))
 		cur.execute('insert into bill_spenders (bill_id, bill_spender, amount) values (%s, %s, %s)', (bill_id, spender, amt))
-		cur.execute('insert into debt (sender, receiver, amount) values (%s, %s, %s)', (spender, payer, amt))
+		
+		#Equivalent to settle up
+		redundancy_check(sender=pender, receiver=payer, amt=amt)
+		
 		mysql.connection.commit()
 		cur.close()
+
+
+def redundancy_check(sender, receiver, amt):
+
+	result = cur.execute('select amount from debt where sender = %s and receiver = %s',(sender, receiver))
+	if result > 0:
+		#sender already owes to receiver
+		data = cur.fetchone()
+		cur_amt = data['amount']
+		
+		cur_amt += amt
+		cur.execute('update debt set amount = %s where sender = %s and receiver = %s', (cur_amt, sender, receiver))
+		mysql.connection.commit()
+		return
+
+	
+	result = cur.execute('select amount from debt where sender = %s and receiver = %s',(receiver, sender))
+	if result > 0:
+		#receiver already owes the sender
+		data = cur.fetchone()
+		cur_amt = data['amount']
+
+		cur_amt -= amount
+		
+		if cur_amt < 0:
+			#Now sender owes the receiver
+			cur_amt = cur_amt*-1;
+			cur.execute('update debt set sender = %s, receiver = %s, amount = %s where sender = %s and receiver = %s', (receiver,sender, cur_amt, sender, receiver))
+		
+		elif cur_amt > 0:
+			#Friend still owes User
+			cur.execute('update debt set amount = %s where sender = %s and receiver = %s', (cur_amt, receiver, sender))
+		
+		else:
+			#case where remaining amount is zero
+			cur.execute('delete from debt where sender = %s and receiver = %s', (receiver, sender))
+
+		return
+		
+	
+	#No old debt exists between user and the friend at this point
+	cur.execute('insert into debt (sender, receiver, amount) values (%s, %s, %s)', (sender, receiver, amt))
+	return
+
 
 
 @app.route('/dashboard/add-a-bill', methods = ['GET', 'POST'])
