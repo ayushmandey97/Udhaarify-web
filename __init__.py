@@ -71,7 +71,10 @@ def all_transactions():
 @app.route('/first_button')
 @is_logged_in
 def first():
-	return render_template('firstbtn.html')
+	user_owes = request.args.get('user_owes')
+	user_is_owed = request.args.get('user_is_owed')
+	net_amount = request.args.get('net_amount')
+	return render_template('firstbtn.html',user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount)
 
 @app.route('/second_button')
 @is_logged_in

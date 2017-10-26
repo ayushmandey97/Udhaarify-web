@@ -120,7 +120,7 @@
         </iframe>
         <div class="rightpane">
             <div class="rightnav">
-                <a href="{{ url_for('first') }}" target="rightselect" data-toggle="tooltip" data-placement="bottom" title="Balances"> 
+                <a href="{{ url_for('first',user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount) }}" target="rightselect" data-toggle="tooltip" data-placement="bottom" title="Balances"> 
                 <button type="button" class="btn btn-xs">
                     <i class="glyphicon glyphicon-th-large"></i>
                 </button> </a>
