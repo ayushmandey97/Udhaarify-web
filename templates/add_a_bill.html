@@ -46,18 +46,23 @@
 				<button type="button" class="btn btn-default nextbutton" id="next1">Next</button>
 			</div>
 
+			<div class = "addfriends page">
+				<div data-toggle="fieldset" id="people-in-bill-fieldset">
+			         <button type="button" data-toggle="fieldset-add-row" data-target="#people-in-bill-fieldset" class = "btn btn-primary">Add</button>
+			        <table>
+			            {% for person in form.people_in_bill %}
+			                <tr data-toggle="fieldset-entry">
+			                    <td>{{ render_field(person.person_in_bill, class_ = "form-control", placeholder = "Add friend")}}</td>
+			                    <td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger">Remove</button></td>
+			                </tr>
+			            {% endfor %}
+			        </table>
+			    </div>
+			    <button type="button" class="btn btn-default prevbutton" id="prev1"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-default nextbutton" id="next2">Next</button>
+			</div>
 
-
-
-
-
-
-			
-			
-
-
-
-			<div class="addfriends page" data-toggle = "fieldset">
+			<!-- <div class="addfriends page" data-toggle = "fieldset">
 					<ul class="list-group" id="flist">
 					<div class="input-group" data-toggle = "fieldset" id = "people-in-bill-fieldset">
 				            <button type="button" data-toggle="fieldset-add-row" data-target="#people-in-bill-fieldset" class = "btn btn-primary">Add</button>
@@ -70,14 +75,14 @@
 				                {% endfor %}
 				            </table>
 
-						<!-- <input type="text" class="form-control" placeholder="Search for..." id="addflist"	> -->
+						 <input type="text" class="form-control" placeholder="Search for..." id="addflist"	> 
 
-						<span class="input-group-btn">
+						 <span class="input-group-btn">
 							<button class="btn btn-default" type="button" id="searchbutton"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 						</span>
 					</div>
 				</ul>
-				{{form.submit}}
+				{{form.submit}} -->
 					<!-- /input-group -->
 					
 					<!-- <ul class="list-group" id="flist" data-toggle = "fieldset-entry">
@@ -89,38 +94,44 @@
 						
 					</ul> -->
 				<!-- </div> -->
-				<button type="button" class="btn btn-default prevbutton" id="prev1"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+				<!-- <button type="button" class="btn btn-default prevbutton" id="prev1"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
 				<button type="button" class="btn btn-default nextbutton" id="next2">Next</button>
+			</div>  -->
+
+			<div class = "paidby page">
+				<div data-toggle="fieldset" id="paid-by-fieldset">
+			         <button type="button" data-toggle="fieldset-add-row" data-target="#paid-by-fieldset" class = "btn btn-primary">Add</button>
+			        <table>
+			            {% for person in form.paid_by_list %}
+			                <tr data-toggle="fieldset-entry">
+			                    <td>{{ render_field(person.paid_by, class_ = "form-control", placeholder = "Add friend")}}</td>
+			                    <td>{{ render_field(person.paid_by_amount, class_ = "form-control", placeholder = "Add amount")}}</td>
+			                    <td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger">Remove</button></td>
+			                </tr>
+			            {% endfor %}
+			        </table>
+			    </div>
+			    <button type="button" class="btn btn-default prevbutton" id="prev2"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-default nextbutton" id="next3">Next</button>
 			</div>
 
-
-
-
-
-
-
-
-
-
-
-
-			<div class="paidby page">
+			<!-- <div class="paidby page">
 				
 				<label for="peq" id="peqcbox">Paid Equally?</label>
-				<!-- <input type="checkbox" aria-label="..." id="peq"> -->
+				 <input type="checkbox" aria-label="..." id="peq"> 
 				{{render_field(form.paid_equally, class_= "form-control", id = "peq")}}
 				<div class="input-group paidtextfields">	
-					<!-- <input type="text" class="form-control" placeholder="Paid By" id="paidbytext"> -->
+					 <input type="text" class="form-control" placeholder="Paid By" id="paidbytext">
 					{% for i in form.paid_by_list %}
 						{{render_field(i.paid_by, class_ = "form-control", id = "paidbytext", placeholder = "Paid By")}}
 					{% endfor %}
 					<span class="input-group-btn"></span>
-				</div><!-- /input-group -->
+				</div>
 				<div class="input-group">
 
 				</div>
 				<div class="input-group paidtextfields">
-					<!-- <input type="text" class="form-control" id="amt" placeholder="amount"> -->
+					 <input type="text" class="form-control" id="amt" placeholder="amount">
 					{% for i in form.paid_by_list %}
 						{{render_field(i.paid_by_amount, class_ = "form-control", id = "amt", placeholder = "amount")}}
 					{% endfor %}
@@ -135,25 +146,42 @@
 				<br>
 				<button type="button" class="btn btn-default prevbutton" id="prev2"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
 				<button type="button" class="btn btn-default nextbutton" id="next3">Next</button>
+			</div> -->
+
+
+			<div class = "splitamongst page">
+				<div data-toggle="fieldset" id="split-by-fieldset">
+			         <button type="button" data-toggle="fieldset-add-row" data-target="#split-by-fieldset" class = "btn btn-primary">Add</button>
+			        <table>
+			            {% for person in form.split_by_list %}
+			                <tr data-toggle="fieldset-entry">
+			                    <td>{{ render_field(person.split_by, class_ = "form-control", placeholder = "Add friend")}}</td>
+			                    <td>{{ render_field(person.split_by_amount, class_ = "form-control", placeholder = "Add amount")}}</td>
+			                    <td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger">Remove</button></td>
+			                </tr>
+			            {% endfor %}
+			        </table>
+			    </div>
+			    <button type="button" class="btn btn-default prevbutton" id="prev3"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
 			</div>
 
-			<div class="splitamongst page">
+			<!-- <div class="splitamongst page">
 				<div class="input-group">
 					<label for="seq" id="peqcbox">Split Equally?</label>
-					<!-- <input type="checkbox" aria-label="..." id="seq"> -->
+					 <input type="checkbox" aria-label="..." id="seq"> 
 					{{render_field(form.split_equally, class_= "form-control", id = "seq")}}
 				</div>
 
 				<div class="input-group psearch paidtextfields" >	
-					<!-- <input type="text" class="form-control" placeholder="Split Amongst" id="splitbytext"> -->
+					 <input type="text" class="form-control" placeholder="Split Amongst" id="splitbytext">
 					{% for i in form.split_by_list %}
 						{{render_field(i.split_by, class_ = "form-control", id = "splitbytext", placeholder = "Split By")}}
 					{% endfor %}
 					<span class="input-group-btn">
 					</span>
-				</div><!-- /input-group -->
+				</div>/input-group
 				<div class="input-group amount paidtextfields">
-					<!-- <input type="text" class="form-control paidtextfields" placeholder=" Amount" id="samt"> -->
+					 <input type="text" class="form-control paidtextfields" placeholder=" Amount" id="samt">
 					{% for i in form.split_by_list %}
 						{{render_field(i.split_by_amount, class_ = "form-control paidtextfields", id = "samt", placeholder = "Amount")}}
 					{% endfor %}
@@ -167,10 +195,11 @@
 				<br>
 				<button type="button" class="btn btn-default prevbutton" id="prev3"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
 				
-			</div>
-			<input type="submit" class="btn btn-default nextbutton" id="addbill">Add Bill</input>
+			</div> -->
+			
+			<input type="submit" class="btn btn-default nextbutton" id="addbill"></input>
 		</form>
-		<script type="text/javascript" src="{{ url_for('static', filename='addabill.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='add-a-bill.js') }}"></script>
 
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<!-- <script type="text/javascript" src="date.js"></script> -->

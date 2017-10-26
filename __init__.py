@@ -519,8 +519,8 @@ def add_bill():
 		'''
 		
 		msg = str(total_amount) + " " + str(description) + " " + str(current_date)
-		for i in paid_by_amounts:
-			msg += str(paid_by_amounts)
+		for i in people_in_bill:
+			msg += i
 
 		logger(msg)
 
