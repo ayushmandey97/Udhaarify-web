@@ -1,28 +1,119 @@
 //**************************************//
 
-    //SAP RENDER AND BUTTON-EVENT-CONTROL
+    //SPA TRANSITIONS
+
+//**************************************//
+
+$(document).ready(function() {
+    $('#fullpage').fullpage({
+        //Navigation
+        menu: '#menu',
+        lockAnchors: false,
+        navigation: false,
+        navigationPosition: 'right',
+        navigationTooltips: ['firstSlide', 'secondSlide'],
+        showActiveTooltip: false,
+        slidesNavigation: false,
+        slidesNavPosition: 'bottom',
+
+        //Scrolling
+        css3: true,
+        scrollingSpeed: 500,
+        autoScrolling: true,
+        fitToSection: true,
+        fitToSectionDelay: 200,
+        scrollBar: false,
+        easing: 'easeInOutCubic',
+        easingcss3: 'ease',
+        loopBottom: false,
+        loopTop: false,
+        loopHorizontal: true,
+        continuousVertical: false,
+        continuousHorizontal: false,
+        scrollHorizontally: false,
+        interlockedSlides: false,
+        dragAndMove: false,
+        offsetSections: false,
+        resetSliders: false,
+        fadingEffect: false,
+        normalScrollElements: '#element1, .element2',
+        scrollOverflow: false,
+        scrollOverflowReset: false,
+        scrollOverflowOptions: null,
+        touchSensitivity: 15,
+        normalScrollElementTouchThreshold: 5,
+        bigSectionsDestination: null,
+
+        //Accessibility
+        keyboardScrolling: true,
+        animateAnchor: true,
+        recordHistory: true,
+
+        //Design
+        controlArrows: false,
+        verticalCentered: true,
+        // sectionsColor : ['#ccc', '#fff'],
+        paddingTop: '200px',
+        paddingBottom: '200px',
+        borderRadius: '70px',
+        // fixedElements: '#header, .footer',
+        // responsiveWidth: 0,
+        // responsiveHeight: 0,
+        // responsiveSlides: false,
+        // parallax: false,
+        // parallaxOptions: {type: 'reveal', percentage: 62, property: 'translate'},
+
+        //Custom selectors
+        sectionSelector: '.section',
+        slideSelector: '.slide',
+
+        lazyLoading: false,
+
+        //events
+        onLeave: function(index, nextIndex, direction){},
+        afterLoad: function(anchorLink, index){},
+        afterRender: function(){},
+        afterResize: function(){},
+        afterResponsive: function(isResponsive){},
+        afterSlideLoad: function(anchorLink, index, slideAnchor, slideIndex){
+            // var loadedSlide = $(this);
+            if(index == 1 && slideIndex == 3){
+                console.log('loaded')
+            renderSubmit();
+        }
+        },
+        onSlideLeave: function(anchorLink, index, slideIndex, direction, nextSlideIndex){}
+    });
+});
+
+
+    
+
+//**************************************//
+
+    //SPA RENDER AND BUTTON-EVENT-CONTROL
 
 //*************************************//
 
-init();
+
 renderDescriptionPage();
 $('#next1').on("click", function () {
-	renderFriendsPage();
+    $.fn.fullpage.moveTo(1, 1);
 });
 $('#next2').on("click", function () {
-	renderPaidByPage();
+    $.fn.fullpage.moveTo(1, 2);
 });
 $('#next3').on("click", function () {
-	renderSplitAmongst();
+    $.fn.fullpage.moveTo(1, 3);
 });
 $('#prev1').on("click", function(){
-	renderDescriptionPage();
+    $.fn.fullpage.moveSlideLeft();
 });
 $('#prev2').on("click", function(){
-	renderFriendsPage();
+    $.fn.fullpage.moveSlideLeft();
 });
 $('#prev3').on("click", function(){
-	renderPaidByPage();
+    $.fn.fullpage.moveSlideLeft();
 });
 
 //**************************************//
@@ -32,24 +123,24 @@ $('#prev3').on("click", function(){
 //*************************************//
 
 $("ul").on("click", "span", function(event){
-	$(this).parent().fadeOut(500,function(){
-		$(this).remove();
-	});
-	event.stopPropagation();
+    $(this).parent().fadeOut(500,function(){
+        $(this).remove();
+    });
+    event.stopPropagation();
 });
 
 
 
-$("#addflist").keypress(function(event){
-	if (event.which === 13) {
-		//grabbing new todo text from input
-		var newFriend = $("#addflist").val();
-		$(this).val("");
-		//create a new li and add to ul
-		$("#flist").append("<li class='list-group-item'>"+newFriend+"<span class='glyphicon glyphicon-remove' aria-hidden='true' class='xbutton'> </span></li>" );
-	}	
+/*$("#addflist").keypress(function(event){
+    if (event.which === 13) {
+        //grabbing new todo text from input
+        var newFriend = $("#addflist").val();
+        $(this).val("");
+        //create a new li and add to ul
+        $("#flist").append("<li class='list-group-item'>"+newFriend+"<span class='glyphicon glyphicon-remove' aria-hidden='true' class='xbutton'> </span></li>" );
+    }   
 });
-
+*/
 $("#amt").keypress(function(event){
     if (event.which === 13) {
         //grabbing new todo text from input
@@ -76,7 +167,7 @@ $("#samt").keypress(function(event){
     }   
 });
 
-$('#seq').click(function() {
+/*$('#seq').click(function() {
   if ($(this).is(':checked')) {
     $("#samt").attr("disabled","disabled");
 }
@@ -94,7 +185,7 @@ else{
     $("#amt").removeAttr("disabled");
     $("#peq").removeAttr('checked');
 }
-});
+});*/
 
 
 $("#paidbytext").keypress(function(event){
@@ -109,9 +200,9 @@ $("#paidbytext").keypress(function(event){
         $("#paidlist").append("<li class='list-group-item'>"+newFriend);
         $('#pamtlist').empty();
         for (var i=0;i<n+1;i++) {  
-         $("#pamtlist").append("<li class='list-group-item amounts'>"+amt.toFixed(2)+"</li>")   
-     }
- }   
+           $("#pamtlist").append("<li class='list-group-item amounts'>"+amt.toFixed(2)+"</li>")   
+       }
+   }   
 }
 });
 
@@ -127,9 +218,9 @@ $("#splitbytext").keypress(function(event){
         $("#splitlist").append("<li class='list-group-item'>"+newFriend);
         $('#samtlist').empty();
         for (var i=0;i<n+1;i++) {  
-         $("#samtlist").append("<li class='list-group-item amounts'>"+amt.toFixed(2)+"</li>")   
-     }
- }   
+           $("#samtlist").append("<li class='list-group-item amounts'>"+amt.toFixed(2)+"</li>")   
+       }
+   }   
 }
 });
 
@@ -139,7 +230,7 @@ $("#reset1").click(function () {
 });
 
 $("#reset2").click(function () {
-     $("#flist").empty();
+   $("#flist").empty();
 });
 
 $('#complete-add-bill').on('keyup keypress', function(e) {
@@ -147,13 +238,13 @@ $('#complete-add-bill').on('keyup keypress', function(e) {
   if (keyCode === 13) { 
     e.preventDefault();
     return false;
-  }
+}
 });
 
 $(function() {
     $("div[data-toggle=fieldset]").each(function() {
         var $this = $(this);
-            
+        
         //Add new entry
         $this.find("button[data-toggle=fieldset-add-row]").click(function() {
             var target = $($(this).data("target"))
@@ -179,52 +270,161 @@ $(function() {
                 thisRow.remove();
             }
         }); //End remove row
+        //focus shift
     });
 });
 
+$('.addftext').keypress(function (event) {
+    if(event.which==13){
+        console.log('hello')
+        $('#addbtn1').click();
+    }
+})
+
+$('.PTEXT').keypress(function (event) {
+    if(event.which==13){
+        // console.log('hello')
+        $('#addbtn2').click();
+   if ($('#peq').is(':checked')) {
+        var n = $('#paidtable tr').length;
+        var amt = $('#amount').val()/(n);
+        console.log(amt);
+        var x = $(".PAMT");
+        x.val(amt.toFixed(2));
+    }
+}
+})
+$('.PAMT').keypress(function (event) {
+    if(event.which==13){
+        // console.log('hello')
+        $('#addbtn2').click();
+    if ($('#peq').is(':checked')) {
+        var n = $('#paidtable tr').length;
+        var amt = $('#amount').val()/(n-1);
+        console.log(amt);
+        $(".form-control PAMT").text(amt.toFixed(2));
+    }
+}
+    
+})
+$('.SBYTEXT').keypress(function (event) {
+    if(event.which==13){
+        // console.log('hello')
+        $('#addbtn3').consolelick();
+        if ($('#seq').is(':checked')) {
+        var n = $('#splittable tr').length;
+        var amt = $('#amount').val()/(n);
+        // console.log(amt);
+        var x = $(".SAMT");
+        x.val(amt.toFixed(2));
+    }
+    }
+})
+$('.SAMT').keypress(function (event) {
+    if(event.which==13){
+        // console.log('hello')
+        $('#addbtn3').click();
+    }
+})
+
+$('#peq').click(function() {
+  if ($(this).is(':checked')) {
+    $(".PAMT").attr("disabled","disabled");
+}
+else{
+    $(".PAMT").removeAttr("disabled");
+    $("#peq").removeAttr('checked');
+}
+});
+
+$('#seq').click(function() {
+  if ($(this).is(':checked')) {
+    $(".SAMT").attr("disabled","disabled");
+}
+else{
+    $(".SAMT").removeAttr("disabled");
+    $("#seq").removeAttr('checked');
+}
+});
+
+
+$('.Prmv').on("click", function(){
+    console.log("hello")
+    if ($('#peq').is(':checked')) {
+        // console.log('hello');
+        var n = $('#paidtable tr').length;
+        if (n!=1) {
+        var amt = $('#amount').val()/(n-1);
+        // console.log(amt);
+        var x = $(".PAMT");
+        x.val(amt.toFixed(2));
+        }
+    }
+})
+
+$('.Srmv').on("click", function(){
+    console.log("hello")
+    if ($('#seq').is(':checked')) {
+        // console.log('hello');
+        var n = $('#splittable tr').length;
+        if (n!=1) {
+        var amt = $('#amount').val()/(n-1);
+        // console.log(amt);
+        var x = $(".SAMT");
+        x.val(amt.toFixed(2));
+        }
+    }
+})
 //**************************************//
 
-    //SAP FUNCTION DEFINITIONS
+    //SPA FUNCTION DEFINITIONS
 
 //*************************************//
 
-function init() {
+/*function init() {
   var all = $('.page');
   all.addClass('hide');
   all.removeClass('show');
-}
+  var submitbtn = $('.submitbtn');
+  submitbtn.removeClass('show');
+  submitbtn.addClass('hide');
+}*/
 
 function renderDescriptionPage(){
-    init();
+
 
     var render = $('.bdescription');
     render.addClass('show');
 }
 function renderFriendsPage(){
-    init();
+
 
     var render = $('.addfriends');
     render.addClass('show');
 }
 function renderPaidByPage(){
-    init();
+
 
     var render = $('.paidby');
     render.addClass('show');
 }
 function renderSplitAmongst() {
-   init();
 
-   var render = $('.splitamongst');
-   render.addClass('show');
+
+ var render = $('.splitamongst');
+ render.addClass('show');
 }
-
+function renderSubmit() {
+    var render = $('#addbill');
+    render.removeClass('hide');
+    render.fadeIn();
+}
 //**************************************//
 
         //OTHER FUNCTION DEFINITIONS
 
 //*************************************//
-function pcheck() {
+/*function pcheck() {
   if ($('#peq').is(':checked')) {
     $("#amt").attr("disabled","disabled");
     return true;
@@ -245,4 +445,4 @@ else{
     $("#seq").removeAttr('checked');
     return false;
 }
-};
+};*/

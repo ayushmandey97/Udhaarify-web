@@ -6,60 +6,82 @@
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/add_a_bill.css') }}">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<link href="{{ url_for('static', filename='jquery.page.css') }}" rel="stylesheet">
+	<script src="{{ url_for('static', filename='jquery.page.js') }}"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.css"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.js"></script>
+
+
 </head>
 <body>
-	{% include 'includes/_messages.html' %}
+
+	<!--CSS Spinner-->
+	<div class="spinner-wrapper">
+		<div class="sk-folding-cube">
+			<div class="sk-cube1 sk-cube"></div>
+			<div class="sk-cube2 sk-cube"></div>
+			<div class="sk-cube4 sk-cube"></div>
+			<div class="sk-cube3 sk-cube"></div>
+		</div>
+	</div>
+
 	{% from 'includes/_formhelpers.html' import render_field %}
+<!-- 	<div id="loader-wrapper">
+		<div id="loader"></div>
+
+		<div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div>
+
+	</div>
+-->
+<div id="fullpage">
 	<form id = "complete-add-bill" method = "POST">
-		<div class="main container-fluid">
-			
-			<div class="bdescription page">
+		<div class="main container-fluid section" id="section0">
+
+			<div class="bdescription page slide" data-jquery-page-name="1">
 				<!-- <div class="row">
 				<div class="col-lg-6"> -->
 					<!-- <form> -->
-						<div class="form-group">
-							<label for="date">Date</label>
-							<a><i class="fa fa-undo" aria-hidden="true" id="reset1"></i></a>
-							<!-- <input type="date" class="form-control" id="date"> -->
-							{{render_field(form.date, class_= "form-control", id = "date")}}
-						</div>
-						<div class="form-group">
-							<label for="amount">Amount:</label>
-							<!-- <span class="input-group-addon" id="basic-addon1">₹</span> -->
-							<!-- <input type="text" class="form-control" id="amount"> -->
-							{{render_field(form.amt, class_= "form-control", id = "amount")}}
-						</div>
-						<div class="form-group">
-							<label for="desc">Description</label>
-							<!-- <span class="input-group-addon" id="basic-addon1">₹</span> -->
-							<!-- <input type="text" class="form-control" id="desc"> -->
-							{{render_field(form.desc, class_= "form-control", id = "desc")}}
-						</div>
-						<div class="form-group">
-							<label for="notes">Add notes: </label>
-							<!-- <textarea class="form-control" id="notes" rows="3" placeholder="Notes"></textarea> -->
-							{{render_field(form.notes, class_= "form-control", id = "notes", rows="3", placeholder="Notes")}}
-						</div>
+					<div class="form-group">
+						<a><i class="fa fa-undo" aria-hidden="true" id="reset1"></i></a>
+						<!-- <input type="date" class="form-control" id="date"> -->
+						{{render_field(form.date, class_= "form-control", id = "date")}}
+					</div>
+					<div class="form-group">
+						<!-- <span class="input-group-addon" id="basic-addon1">₹</span> -->
+						<!-- <input type="text" class="form-control" id="amount"> -->
+						{{render_field(form.amt, class_= "form-control", id = "amount")}}
+					</div>
+					<div class="form-group">
+						<!-- <span class="input-group-addon" id="basic-addon1">₹</span> -->
+						<!-- <input type="text" class="form-control" id="desc"> -->
+						{{render_field(form.desc, class_= "form-control", id = "desc")}}
+					</div>
+					<div class="form-group">
+						<!-- <textarea class="form-control" id="notes" rows="3" placeholder="Notes"></textarea> -->
+						{{render_field(form.notes, class_= "form-control", id = "notes", rows="3", placeholder="Notes")}}
+					</div>
 					<!-- </form> -->
 					<!-- </div>
 				</div> -->
-				<button type="button" class="btn btn-default nextbutton" id="next1">Next</button>
+
+				<button type="button" class="btn btn-default nextbutton" id="next1" data-page-name="2" data-page-trans="slide-in-from-right">Next</button>
 			</div>
 
-			<div class = "addfriends page">
+			<div class = "addfriends page slide" data-jquery-page-name="2">
 				<div data-toggle="fieldset" id="people-in-bill-fieldset">
-			         <button type="button" data-toggle="fieldset-add-row" data-target="#people-in-bill-fieldset" class = "btn btn-primary">Add</button>
-			        <table>
-			            {% for person in form.people_in_bill %}
-			                <tr data-toggle="fieldset-entry">
-			                    <td>{{ render_field(person.person_in_bill, class_ = "form-control", placeholder = "Add friend")}}</td>
-			                    <td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger">Remove</button></td>
-			                </tr>
-			            {% endfor %}
-			        </table>
-			    </div>
-			    <button type="button" class="btn btn-default prevbutton" id="prev1"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
-				<button type="button" class="btn btn-default nextbutton" id="next2">Next</button>
+					<button type="button" data-toggle="fieldset-add-row" data-target="#people-in-bill-fieldset" class = "btn btn-primary" id="addbtn1">Add</button>
+					<table>
+						{% for person in form.people_in_bill %}
+						<tr data-toggle="fieldset-entry">
+							<td>{{ render_field(person.person_in_bill, class_ = "form-control addftext", placeholder = "Add friend")}}</td>
+							<td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger">x</button></td>
+						</tr>
+						{% endfor %}
+					</table>
+				</div>
+				<button type="button" class="btn btn-default prevbutton navigation" id="prev1"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-default nextbutton navigation" id="next2">Next</button>
 			</div>
 
 			<!-- <div class="addfriends page" data-toggle = "fieldset">
@@ -83,8 +105,8 @@
 					</div>
 				</ul>
 				{{form.submit}} -->
-					<!-- /input-group -->
-					
+				<!-- /input-group -->
+
 					<!-- <ul class="list-group" id="flist" data-toggle = "fieldset-entry">
 					<a><i class="fa fa-undo" aria-hidden="true" id="reset1"></i></a>
 						
@@ -93,26 +115,29 @@
 						{% endfor %}
 						
 					</ul> -->
-				<!-- </div> -->
+					<!-- </div> -->
 				<!-- <button type="button" class="btn btn-default prevbutton" id="prev1"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
 				<button type="button" class="btn btn-default nextbutton" id="next2">Next</button>
 			</div>  -->
 
-			<div class = "paidby page">
+			<div class = "paidby page slide" data-jquery-page-name="3">
+
 				<div data-toggle="fieldset" id="paid-by-fieldset">
-			         <button type="button" data-toggle="fieldset-add-row" data-target="#paid-by-fieldset" class = "btn btn-primary">Add</button>
-			        <table>
-			            {% for person in form.paid_by_list %}
-			                <tr data-toggle="fieldset-entry">
-			                    <td>{{ render_field(person.paid_by, class_ = "form-control", placeholder = "Add friend")}}</td>
-			                    <td>{{ render_field(person.paid_by_amount, class_ = "form-control", placeholder = "Add amount")}}</td>
-			                    <td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger">Remove</button></td>
-			                </tr>
-			            {% endfor %}
-			        </table>
-			    </div>
-			    <button type="button" class="btn btn-default prevbutton" id="prev2"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
-				<button type="button" class="btn btn-default nextbutton" id="next3">Next</button>
+					<button type="button" data-toggle="fieldset-add-row" data-target="#paid-by-fieldset" class = "btn btn-primary" id="addbtn2">Add</button>
+					<!-- <label for="peq">paid equally?</label> <input type="checkbox" name="peq" id="peq"> -->
+					{{render_field(form.paid_equally, class_= "form-control", id = "peq")}}
+					<table id="paidtable">
+						{% for person in form.paid_by_list %}
+						<tr data-toggle="fieldset-entry">
+							<td>{{ render_field(person.paid_by, class_ = "form-control PTEXT", placeholder = "Friend")}}</td>
+							<td>{{ render_field(person.paid_by_amount, class_ = "form-control PAMT", placeholder = "Amount")}}</td>
+							<td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger Prmv">x</button></td>
+						</tr>
+						{% endfor %}
+					</table>
+				</div>
+				<button type="button" class="btn btn-default prevbutton navigation" id="prev2"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-default nextbutton navigation" id="next3">Next</button>
 			</div>
 
 			<!-- <div class="paidby page">
@@ -149,20 +174,23 @@
 			</div> -->
 
 
-			<div class = "splitamongst page">
+			<div class = "splitamongst page slide" data-jquery-page-name="4">
 				<div data-toggle="fieldset" id="split-by-fieldset">
-			         <button type="button" data-toggle="fieldset-add-row" data-target="#split-by-fieldset" class = "btn btn-primary">Add</button>
-			        <table>
-			            {% for person in form.split_by_list %}
-			                <tr data-toggle="fieldset-entry">
-			                    <td>{{ render_field(person.split_by, class_ = "form-control", placeholder = "Add friend")}}</td>
-			                    <td>{{ render_field(person.split_by_amount, class_ = "form-control", placeholder = "Add amount")}}</td>
-			                    <td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger">Remove</button></td>
-			                </tr>
-			            {% endfor %}
-			        </table>
-			    </div>
-			    <button type="button" class="btn btn-default prevbutton" id="prev3"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+					<button type="button" data-toggle="fieldset-add-row" data-target="#split-by-fieldset" class = "btn btn-primary" id="addbtn3">Add</button>
+					<!-- <label for="seq">split equally?</label> -->
+					{{render_field(form.split_equally, class_= "form-control", id = "seq")}}
+					<!-- <input type="checkbox" id="seq" name="seq"> -->
+					<table id="splittable">
+						{% for person in form.split_by_list %}
+						<tr data-toggle="fieldset-entry">
+							<td>{{ render_field(person.split_by, class_ = "form-control SBYTEXT", placeholder = "Friend")}}</td>
+							<td>{{ render_field(person.split_by_amount, class_ = "form-control SAMT", placeholder = "Amount")}}</td>
+							<td><button type="button" data-toggle="fieldset-remove-row" id="phone-{{loop.index0}}-remove" class = "btn btn-danger Srmv">x</button></td>
+						</tr>
+						{% endfor %}
+					</table>
+				</div>
+				<button type="button" class="btn btn-default prevbutton navigation" id="prev3"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
 			</div>
 
 			<!-- <div class="splitamongst page">
@@ -196,12 +224,31 @@
 				<button type="button" class="btn btn-default prevbutton" id="prev3"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
 				
 			</div> -->
-			
-			<input type="submit" class="btn btn-default nextbutton" id="addbill"></input>
-		</form>
-		<script type="text/javascript" src="{{ url_for('static', filename='add-a-bill.js') }}"></script>
+			<br>
+			<input type="submit" class="nextbutton submitbtn" id="addbill"></input>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='add-a-bill.js') }}"></script>
 
-		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!-- <script type="text/javascript" src="date.js"></script> -->
-	</body>
-	</html>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- <script type="text/javascript" src="date.js"></script> -->
+
+<script>
+$(document).ready(function() {
+//Preloader
+preloaderFadeOutTime = 500;
+function hidePreloader() {
+var preloader = $('.spinner-wrapper');
+preloader.fadeOut(preloaderFadeOutTime);
+}
+setTimeout(
+  function() 
+  {
+    hidePreloader();
+  }, 2500);
+});
+</script>
+</body>
+</html>

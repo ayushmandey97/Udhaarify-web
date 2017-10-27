@@ -25,6 +25,17 @@
 }
 #peq{
 	width: 10px;
+	display: inline-block;
+	border: none;
+	height: 10px;
+	outline: none;
+}
+#seq{
+	width: 10px;
+	display: inline-block;
+	border: none;
+	outline: none;
+	height: 10px;
 }
 .paidlist{
 	width: 70%;
@@ -36,13 +47,19 @@
 }
 .page{
 	
-	border: 2px solid black;
-	border-radius: 20px;
-	padding: 70px;
+	/*border: 2px solid black;*/
+	border-radius: 70px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 70px;
+	padding-left: 70px;
+	background-color: white;
+	margin: 0px;
+	box-shadow: 2px rgba(189, 189, 189, 0.75);
 	/*margin: 25%;*/
 }
 .addfriends{
-	/*display: block;*/
+	padding-left: 100px;
 }
 body{
 	background-image: url('assets/bkf.png');
@@ -50,13 +67,12 @@ body{
 	z-index: -1
 }
 .main{
-	margin-left: 25%;
-	margin-right: 25%;
-	margin-top: 10%;
-	margin-bottom: 10%;
-	padding-left: 10%;
+	margin-left: 20%;
+	margin-right: 20%;
+	padding-left: 15%;
 	padding-right: 10%;
 	font-family: run;
+	padding-top: 10px
 }
 .bdescription{
 	/*display: block;	*/
@@ -73,6 +89,7 @@ body{
 	line-height: 20px; /* Approximation due to font substitution */
 	text-align: center;
 	float: right;
+	margin-right: 20px;
 }
 
 .prevbutton{
@@ -97,13 +114,21 @@ body{
 input{
 	background-color: #F7F7F7;
 	border: none;
+	font-family: NexaLight;
+	border-radius: 30px;
+}
+textarea{
+	border-radius: 30px;
 }
 .form-control{
-	background: transparent;
+	background: #f0f0f0;
 	color: black;
 	border: 1px solid rgba(0,0,0,0);
 	font-size: 25px;
+	border-radius: 30px;
+	margin: 2px;
 }
+
 .list-group-item{
 	background: transparent;
 	color: black;
@@ -142,4 +167,169 @@ i{
 .fa-undo{
 	float: right;
 	color: black;
+}
+input[type=submit]{
+	background-color: #121212;
+	width: 150px;
+	height: 50px;
+	border-radius: 50px;
+	font-family: Run;
+	color: #ffffff;
+	font-size: 25px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 20px; /* Approximation due to font substitution */
+	text-align: center;
+	float: right;
+	margin: 10px; 
+}
+.btn-danger{
+    margin-top: 25px;
+    padding-left: 2px;
+    height: 30px;
+    text-align: center;
+    padding-right: 2px;
+    width: 30px;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+.addftext{
+	padding: 10px;
+	/*margin: 10px;*/
+}
+#addbtn1{
+	display: none;
+}
+#addbtn2{
+	display: none;
+}
+#addbtn3{
+	display: none;
+}
+#addbill{
+	display: none;
+}
+table{
+	border-spacing: 3px;
+	border-collapse: separate;
+}
+.navigation{
+	margin-top: 10%;
+}
+textarea{
+	font-family: NexaLight;
+}
+.bdescription{
+	padding-left: 140px;
+}
+.addfriends{
+	padding-left: 120px;
+}
+#next2{
+	margin-right: 80px;
+}
+
+
+
+.sk-folding-cube {
+  position: absolute;
+	top: 48%;
+left: 48%;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+}
+
+.sk-folding-cube .sk-cube {
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1); 
+}
+.sk-folding-cube .sk-cube:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+          animation: sk-foldCubeAngle 2.4s infinite linear both;
+  -webkit-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+}
+.sk-folding-cube .sk-cube2 {
+  -webkit-transform: scale(1.1) rotateZ(90deg);
+          transform: scale(1.1) rotateZ(90deg);
+}
+.sk-folding-cube .sk-cube3 {
+  -webkit-transform: scale(1.1) rotateZ(180deg);
+          transform: scale(1.1) rotateZ(180deg);
+}
+.sk-folding-cube .sk-cube4 {
+  -webkit-transform: scale(1.1) rotateZ(270deg);
+          transform: scale(1.1) rotateZ(270deg);
+}
+.sk-folding-cube .sk-cube2:before {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s;
+}
+.sk-folding-cube .sk-cube3:before {
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s; 
+}
+.sk-folding-cube .sk-cube4:before {
+  -webkit-animation-delay: 0.9s;
+          animation-delay: 0.9s;
+}
+@-webkit-keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+            transform: perspective(140px) rotateX(-180deg);
+    opacity: 0; 
+  } 25%, 75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+            transform: perspective(140px) rotateX(0deg);
+    opacity: 1; 
+  } 90%, 100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+            transform: perspective(140px) rotateY(180deg);
+    opacity: 0; 
+  } 
+}
+
+@keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+            transform: perspective(140px) rotateX(-180deg);
+    opacity: 0; 
+  } 25%, 75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+            transform: perspective(140px) rotateX(0deg);
+    opacity: 1; 
+  } 90%, 100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+            transform: perspective(140px) rotateY(180deg);
+    opacity: 0; 
+  }
+}
+.spinner-wrapper {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: -webkit-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -moz-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -o-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -ms-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: linear-gradient(162deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+z-index: 999999;
 }
