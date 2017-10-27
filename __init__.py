@@ -279,7 +279,19 @@ def logout():
 @app.route('/profile')
 @is_logged_in
 def profile():
-	return render_template('profile.html')
+	cur = mysql.connection.cursor()
+	result = cur.execute("select name, username, email from users where username = %s", [session['username']])
+	if result > 0:
+		data = cur.fetchone()
+		
+		name = data['name']
+		username = data['username']
+		email = data['email']
+
+	else:
+		flash("User does not exist!")
+	
+	return render_template('profile.html', name = name, username = username, email = email)
 
 
 #Settle up

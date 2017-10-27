@@ -88,14 +88,27 @@
 
 <section class="cd-section visible one">
         <div>
-            <br>
-                        <br>
-                        <br>
-
+          
                         <ul>
                             <li><img align="center" class="avatar w3-card w3-hover-grayscale" src="{{ url_for('static', filename='stylesheets/assets/avatar.jpg') }}" width="18%" height="70%" align="center" /></li>
-                            <li class="rusername" align="center">Raghu Tiwari</li>
+                            <li class="rusername" align="center"> {{name}} </li>
                         </ul>
+                        
+                      <uL class="details" align="center">
+                        <li class="rdetails">Username</li>
+                        <li id="rusernaam">{{username}}</li>
+                        <li class="rdetails">Email id</li>
+                        <li id="remail">{{email}}</li>
+                        <!-- <li class="rdetails">Phone no</li>
+                        <li id="rphone">9001213342</li> -->
+                      </ul>
+            
+                           <div class="setting-btn">
+                                <a href="/change-password" id="changepass"><button class="btn btn-sm btn-primary changebtn">Change Password</button></a>
+                                <a href="/delete-account" id="delaccount"><button class="btn btn-sm btn-danger changebtn">Delete Account</button></a>
+                            </div>
+                        
+                        <!-- <br>
                         <br>
                         <br>
                         <br>
@@ -113,24 +126,40 @@
                         <br>
                         <br>
                         <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br> -->
         </div>
     </section>
 
-    <section class="cd-section">
+    <!-- <section class="cd-section">
         <div>
             <br>
                         <br>
                         <br>
                         <br>
 
-                    <div align="center"><span class="rdet">Your Details<!--<span> </span><sup><a href="editname"><i class="fa fa-pencil-square-o fa-1" aria-hidden="true"></i></a></sup>--></div>
+                    <div align="center"><span class="rdet">Your Details<span> </span><sup><a href="editname"><i class="fa fa-pencil-square-o fa-1" aria-hidden="true"></i></a></sup></div>
                       <uL class="details" align="center">
                         <li class="rdetails">Username</li>
-                        <li id="rusernaam">raghu</li>
+                        <li id="rusernaam">{{username}}</li>
                         <li class="rdetails">Email id</li>
-                        <li id="remail">raghutiwari12345@gmail.com</li>
-                        <li class="rdetails">Phone no</li>
-                        <li id="rphone">9001213342</li>
+                        <li id="remail">{{email}}</li>
+                         <li class="rdetails">Phone no</li>
+                        <li id="rphone">9001213342</li> 
                       </ul>
                         <br><br><br>
                            
@@ -157,7 +186,7 @@
                     <br>
                 
         </div>
-    </section>
+    </section> -->
 
     <section class="cd-section">
         <div>

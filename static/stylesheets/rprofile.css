@@ -19,17 +19,17 @@ body {
 }
 
 .avatar{
-	margin-top: 8%;
+	margin-top: 3%;
 	margin-bottom: 2%;
-	margin-left: 43%;
+	margin-left: 44%;
 	border-radius: 50%;
-	width: 210px;
-	height:200px;
+	width: 260px;
+	height:250px;
 }
 .rusername {
-	font-size: 200%;
-	margin-left: 02%;
-	margin-top: 4%;
+	font-size: 300%;
+	margin-left: 04%;
+	margin-top: 2%;
 	color: black;
 }
 .rdet{
@@ -60,17 +60,17 @@ body {
     font-family: lulla !important;
 }
 .details{
-	margin-top: 5%;
-	margin-left: 4.7%;
+	margin-top: 3%;
+	margin-left: 4%;
 }
 .details li {
-	margin-top: 1.5%;
+	margin-top: 1%;
 }
 #changepass{
 	margin-left: 40%;
 }
 #delaccount{
-	margin-left: 08%;
+	margin-left: 04%;
 }
 #myFooter > div.container > div > div:nth-child(1) > h2 > a {
 	font-family: run;
@@ -253,4 +253,9 @@ background: linear-gradient(0deg, #4cf8d5 0%, #abffb0 100%);
 }
 .cd-section:nth-of-type(4) > div {
   background-color: #fcb052;
+}
+.setting-btn{
+    margin-bottom: 10%;
+    margin-top: 2%;
+    margin-left: 7%;
 }
