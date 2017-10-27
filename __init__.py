@@ -464,25 +464,25 @@ def settleup():
 #ADD A BILL
 
 class PaidByForm(Form):
-	paid_by = StringField()
-	paid_by_amount = IntegerField()	
+	paid_by = StringField("")
+	paid_by_amount = IntegerField("")	
 
 class SplitByForm(Form):
-	split_by = StringField()
-	split_by_amount = IntegerField()
+	split_by = StringField("")
+	split_by_amount = IntegerField("")
 
 class PeopleInBill(Form):
-	person_in_bill = StringField()
+	person_in_bill = StringField("")
 
 class AddBillForm(Form):
 	#Description
-	desc = StringField(validators = [validators.DataRequired()])
+	desc = StringField("Description", validators = [validators.DataRequired()])
 	#Amount
-	amt = IntegerField(validators = [validators.DataRequired()])
+	amt = IntegerField("Amount", validators = [validators.DataRequired()])
 	#Notes
-	notes = TextAreaField()
+	notes = TextAreaField("Notes")
 	#Date
-	date = DateField()
+	date = DateField("Date")
 
 	#People in the bill
 	people_in_bill = FieldList(FormField(PeopleInBill), min_entries = 1)

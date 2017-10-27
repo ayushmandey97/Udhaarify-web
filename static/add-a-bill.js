@@ -310,7 +310,7 @@ $('.PAMT').keypress(function (event) {
 $('.SBYTEXT').keypress(function (event) {
     if(event.which==13){
         // console.log('hello')
-        $('#addbtn3').consolelick();
+        $('#addbtn3').click();
         if ($('#seq').is(':checked')) {
         var n = $('#splittable tr').length;
         var amt = $('#amount').val()/(n);
