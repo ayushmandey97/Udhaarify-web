@@ -653,9 +653,11 @@ def add_bill():
 		paid_by = []
 		paid_by_amounts = []
 		paid_equally = False
+		
 		for entry in form.paid_by_list.entries:
 			paid_by.append(entry.data['paid_by'])
 			paid_by_amounts.append(entry.data['paid_by_amount'])
+			msg += str(entry.data['paid_by_amount']) + " "
 
 		paid_equally = form.paid_equally.data
 
@@ -663,9 +665,11 @@ def add_bill():
 		split_by = []
 		split_by_amounts = []
 		split_equally = False
+
 		for entry in form.split_by_list.entries:
 			split_by.append(entry.data['split_by'])
 			split_by_amounts.append(entry.data['split_by_amount'])
+			msg += str(entry.data['split_by_amount']) + " "
 
 		split_equally = form.split_equally.data
 
@@ -675,23 +679,11 @@ def add_bill():
 
 		#Array storing net worth
 		amount = [0]*size
-		
-
-		'''
-
-		msg = ""
-		for index, i in enumerate(split_by):
-			msg += str(i)
-
-		logger(msg)
-		#logger("EXTRA PAY: " + str(paid_by_amounts[paid_by.index("ayushman")]))
-		#logger("EXTRA SPLIT: " + str(split_by_amounts[split_by.index("dheeraj")]))
-		'''
 
 		#Adding the amounts to net worth for people who have paid
 		for index, i in enumerate(people_in_bill):
 			if i in paid_by:
-				if paid_equally != 'True':
+				if paid_equally != True:
 					amount[index] += paid_by_amounts[paid_by.index(i)]
 				else:
 					amount[index] += eql_paid_amt
@@ -700,7 +692,7 @@ def add_bill():
 		#Subtracting the amounts to networth for people who have spent in the bill
 		for index, i in enumerate(people_in_bill):
 			if i in split_by:
-				if split_equally != 'True':
+				if split_equally != True:
 					amount[index] -= split_by_amounts[split_by.index(i)]
 				else:
 					amount[index] -= eql_split_amt

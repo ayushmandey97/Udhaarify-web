@@ -200,7 +200,7 @@ $("#paidbytext").keypress(function(event){
         $("#paidlist").append("<li class='list-group-item'>"+newFriend);
         $('#pamtlist').empty();
         for (var i=0;i<n+1;i++) {  
-           $("#pamtlist").append("<li class='list-group-item amounts'>"+amt.toFixed(2)+"</li>")   
+           $("#pamtlist").append("<li class='list-group-item amounts'>"+amt.toFixed(0)+"</li>")   
        }
    }   
 }
@@ -218,7 +218,7 @@ $("#splitbytext").keypress(function(event){
         $("#splitlist").append("<li class='list-group-item'>"+newFriend);
         $('#samtlist').empty();
         for (var i=0;i<n+1;i++) {  
-           $("#samtlist").append("<li class='list-group-item amounts'>"+amt.toFixed(2)+"</li>")   
+           $("#samtlist").append("<li class='list-group-item amounts'>"+amt.toFixed(0)+"</li>")   
        }
    }   
 }
@@ -290,7 +290,7 @@ $('.PTEXT').keypress(function (event) {
         var amt = $('#amount').val()/(n);
         console.log(amt);
         var x = $(".PAMT");
-        x.val(amt.toFixed(2));
+        x.val(amt.toFixed(0));
     }
 }
 })
@@ -302,7 +302,7 @@ $('.PAMT').keypress(function (event) {
         var n = $('#paidtable tr').length;
         var amt = $('#amount').val()/(n-1);
         console.log(amt);
-        $(".form-control PAMT").text(amt.toFixed(2));
+        $(".form-control PAMT").text(amt.toFixed(0));
     }
 }
     
@@ -316,7 +316,7 @@ $('.SBYTEXT').keypress(function (event) {
         var amt = $('#amount').val()/(n);
         // console.log(amt);
         var x = $(".SAMT");
-        x.val(amt.toFixed(2));
+        x.val(amt.toFixed(0));
     }
     }
 })
@@ -357,7 +357,7 @@ $('.Prmv').on("click", function(){
         var amt = $('#amount').val()/(n-1);
         // console.log(amt);
         var x = $(".PAMT");
-        x.val(amt.toFixed(2));
+        x.val(amt.toFixed(0));
         }
     }
 })
@@ -371,7 +371,7 @@ $('.Srmv').on("click", function(){
         var amt = $('#amount').val()/(n-1);
         // console.log(amt);
         var x = $(".SAMT");
-        x.val(amt.toFixed(2));
+        x.val(amt.toFixed(0));
         }
     }
 })
