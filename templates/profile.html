@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <title>My account-Udhaarify</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   <!--  <link href="lightbox.css" rel="stylesheet">
+    <link rel="stylesheet" href="colorbox.css" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>-->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/reset.css') }}"> <!-- CSS reset -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/pstyle.css') }}"> <!-- Resource style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/rprofile.css') }}">
+    <script src="{{ url_for('static', filename='modernizr.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery.colorbox.js') }}"></script>
+</head>
+<body data-hijacking="off" data-animation="scaleDown">
+     <div class="navtop">
+        <nav class="navbar navbar-default navbar-fixed-top rnav">
+            <div class="container-fluid rnavi">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="dashboard.html" id="rhead">U  D  H  A  A  R  I  F  Y</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" width="100%" height="100%" id="bs-example-navbar-collapse-1">
+                    <!--<ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>-->
+                    <!--
+    SEARCHING
+      <form class="navbar-form navbar-left ">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search a Bill">
+        </div>
+        <button class="btn btn-info btn-sm" type="button">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+      </form>-->
+                    <!--<form class="navbar-form navbar-left">
+                        <div class="input-group">
+                            <input type="text" class="form-control rsearch" placeholder="Search" required="required">
+                            <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>-->
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Raghu<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/profile">Profile</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+
+<section class="cd-section visible one">
+        <div>
+            <br>
+                        <br>
+                        <br>
+
+                        <ul>
+                            <li><img align="center" class="avatar w3-card w3-hover-grayscale" src="{{ url_for('static', filename='stylesheets/assets/avatar.jpg') }}" width="18%" height="70%" align="center" /></li>
+                            <li class="rusername" align="center">Raghu Tiwari</li>
+                        </ul>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+        </div>
+    </section>
+
+    <section class="cd-section">
+        <div>
+            <br>
+                        <br>
+                        <br>
+                        <br>
+
+                    <div align="center"><span class="rdet">Your Details<!--<span> </span><sup><a href="editname"><i class="fa fa-pencil-square-o fa-1" aria-hidden="true"></i></a></sup>--></div>
+                      <uL class="details" align="center">
+                        <li class="rdetails">Username</li>
+                        <li id="rusernaam">raghu</li>
+                        <li class="rdetails">Email id</li>
+                        <li id="remail">raghutiwari12345@gmail.com</li>
+                        <li class="rdetails">Phone no</li>
+                        <li id="rphone">9001213342</li>
+                      </ul>
+                        <br><br><br>
+                           
+                                <a href="/change-password" id="changepass"><button class="btn btn-sm changebtn">Change Password</button></a>
+                                <a href="/delete-account" id="delaccount"><button class="btn btn-sm changebtn">Delete Account</button></a>
+                           
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                
+        </div>
+    </section>
+
+    <section class="cd-section">
+        <div>
+            <h2>Trends</h2>
+        </div>
+    </section>
+    <section class="cd-section">
+        <div>
+        <footer id="myFooter">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h2 class="logo" align="center"><a href="#"> <span class="foot_U">U</span><span class="foot_U">d</span><span class="foot_U">h</span><span class="foot_U">a</span><span class="foot_U">a</span><span class="foot_U">r</span><span class="foot_U">i</span><span class="foot_U">f</span><span class="foot_U">y</span></a></h2>
+                    </div>
+                    
+                    <div class="leftsidefoot">
+                    <div class="col-sm-2">
+                        <h5 class="subhead">Get started</h5>
+                        <ul>
+                            <li><a href="/dashboard">Home</a></li>
+                            <li><a href="/register">Sign up</a></li>
+                            <!-- <li><a href="#">Downloads</a></li>-->
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5 class="subhead">About us</h5>
+                        <ul>
+                            <li><a href="#">Company Information</a></li>
+                            <li><a href="#">Developers</a></li>
+                            <!--<li><a href="#">Reviews</a></li>-->
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5 class="subhead">Need Help?</h5>
+                        <ul>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Help desk</a></li>
+                            <!-- <li><a href="#">Forums</a></li>-->
+                        </ul>
+                    </div>
+                    </div>
+                    <div class="col-sm-3 iconfoot">
+                        <div class="social-networks">
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                        </div>
+                        <button type="button" class="btn btn-default">Contact us</button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="footer-copyright">
+                <p>©BETA</p>
+            </div>
+        </footer>
+    </div>
+    </section>
+
+    <nav>
+        <ul class="cd-vertical-nav">
+            <li><a href="#0" class="cd-prev inactive">Next</a></li>
+            <li><a href="#0" class="cd-next">Prev</a></li>
+        </ul>
+    </nav>
+
+
+<!-- <script src="js/jquery-2.1.4.js"></script> -->
+<script src="{{ url_for('static', filename='velocity.min.js') }}"></script>
+<script src="{{ url_for('static', filename='velocity.ui.min.js') }}"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script> <!-- Resource jQuery -->
+
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+        </script>
+        <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/popper-utils.min.js"></script>-->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+        <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"> </script>-->
+        <script type="text/javascript" src="dash.js">
+        </script>
+</body>
+</html>
+

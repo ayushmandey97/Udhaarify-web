@@ -1,0 +1,256 @@
+@font-face{
+	font-family: 'run';
+	src: url('assets/fonts/run.ttf') format('truetype');
+}
+@font-face{
+	font-family: 'lulla';
+	src: url('assets/fonts/goodbylullaby.ttf') format('truetype');
+}
+
+body{
+	font-family: run;
+	color: #121212;
+	background-color: black !important;
+}
+body {
+	padding-top: 50px;
+	background-color: white;
+	color: white;
+}
+
+.avatar{
+	margin-top: 8%;
+	margin-bottom: 2%;
+	margin-left: 43%;
+	border-radius: 50%;
+	width: 210px;
+	height:200px;
+}
+.rusername {
+	font-size: 200%;
+	margin-left: 02%;
+	margin-top: 4%;
+	color: black;
+}
+.rdet{
+	font-size: 250%;
+	color: black;
+	margin-left: 04.7%;
+}
+.rdetails{
+	font-size: 100%;
+	color: #A9A9A9;
+}
+#rusernaam, #rphone, #remail {
+	font-size: 150%;
+	color: black;
+}
+#rusernaam, #rphone, #remail{
+	margin-left: 1%;
+	transition: transform 200ms;
+}
+#rusernaam:hover, #remail:hover, #rphone:hover {
+	transform: scale(1.3);
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+#remail, #rusernaam, .rdet{
+	font-family: run !important;
+}
+#rphone{
+    font-family: lulla !important;
+}
+.details{
+	margin-top: 5%;
+	margin-left: 4.7%;
+}
+.details li {
+	margin-top: 1.5%;
+}
+#changepass{
+	margin-left: 40%;
+}
+#delaccount{
+	margin-left: 08%;
+}
+#myFooter > div.container > div > div:nth-child(1) > h2 > a {
+	font-family: run;
+}
+ ul {
+	    list-style-type: none;
+
+}
+.ruser,.remail,.rphone{
+	font-size: 200%;
+}
+#myFooter {
+    background-color: #121212;
+    color: white;
+    padding-top: 30px;
+}
+
+#myFooter .footer-copyright {
+    background-color: #333333;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: center;
+}
+
+#myFooter .row {
+    margin-bottom: 60px;
+}
+
+#myFooter .navbar-brand {
+    margin-top: 45px;
+    height: 65px;
+}
+#myFooter .footer-copyright {
+	background-color: #121212;
+}
+#myFooter .footer-copyright p {
+    /*margin: 10px;*/
+    color: #ccc;
+}
+
+#myFooter ul {
+    list-style-type: none;
+    padding-left: 0;
+    line-height: 1.7;
+}
+
+#myFooter h5 {
+    font-size: 18px;
+    color: white;
+    font-weight: normal;
+    margin-top: 30px;
+}
+
+#myFooter h2 a{
+    font-size: 50px;
+    text-align: center;
+    color: #fff;
+}
+
+#myFooter a {
+    color: #d2d1d1;
+    text-decoration: none;
+}
+
+#myFooter a:hover,
+#myFooter a:focus {
+    text-decoration: none;
+    color: white;
+}
+
+#myFooter .social-networks {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 16px;
+}
+
+#myFooter .social-networks a {
+    font-size: 32px;
+    color: #f9f9f9;
+    padding: 10px;
+    transition: 0.2s;
+}
+
+#myFooter .social-networks a:hover {
+    text-decoration: none;
+}
+
+#myFooter .facebook:hover {
+    color: #0077e2;
+}
+
+#myFooter .google:hover {
+    color: #ef1a1a;
+}
+
+#myFooter .twitter:hover {
+    color: #00aced;
+}
+
+#myFooter .btn {
+    color: white;
+    /*background-color: #d84b6b;*/
+    background: -webkit-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+	background: -moz-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+	background: -o-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+	background: -ms-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+	background: linear-gradient(0deg, #4cf8d5 0%, #abffb0 100%);
+    border-radius: 20px;
+    border: none;
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    line-height: 25px;
+    color: Black;
+    font-family: run;
+    font-size: 20px;
+}
+#myFooter a{
+	display: inline-block;
+	transition: transform 200ms;
+}
+#myFooter a:hover{
+	 transform: scale(1.3);
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+
+}
+
+
+@media screen and (max-width: 767px) {
+    #myFooter {
+        text-align: center;
+    }
+}
+.leftsidefoot{
+	margin-top: 17%;
+}
+.iconfoot{
+	margin-top: -2%;
+
+}
+.rnav{
+	background-image: url('images/navback.png');
+}
+
+
+.cd-section {
+  height: 100vh;
+}
+.cd-section:first-of-type > div {
+ background: -webkit-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -moz-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -o-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -ms-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: linear-gradient(162deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+}
+.cd-section:nth-of-type(2) > div {
+  background: -webkit-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -moz-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -o-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: -ms-linear-gradient(-72deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+background: linear-gradient(162deg, #48ffde 8%, #72ffca 44%, #a9ffaf 92%);
+}
+.cd-section:nth-of-type(3) > div {
+ background: -webkit-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+background: -moz-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+background: -o-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+background: -ms-linear-gradient(90deg, #4cf8d5 0%, #abffb0 100%);
+background: linear-gradient(0deg, #4cf8d5 0%, #abffb0 100%);
+}
+.cd-section:nth-of-type(4) > div {
+  background-color: #fcb052;
+}
+}
+.cd-section:nth-of-type(2) > div {
+  background-color: #2e5367;
+}
+.cd-section:nth-of-type(3) > div {
+  background-color: #267481;
+}
+.cd-section:nth-of-type(4) > div {
+  background-color: #fcb052;
+}

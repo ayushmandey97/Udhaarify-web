@@ -276,6 +276,11 @@ def logout():
 	flash('Successfully logged out.','success')
 	return redirect(url_for('login'))
 
+@app.route('/profile')
+@is_logged_in
+def profile():
+	return render_template('profile.html')
+
 
 #Settle up
 @app.route('/dashboard/settleup', methods = ['GET','POST'])
