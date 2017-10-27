@@ -52,7 +52,7 @@ def is_logged_in(f):
 
 
 
-@app.route('/dashboard_menu/')
+@app.route('/dashboard_menu')
 @is_logged_in
 def dashboard_menu():
 	user_owes = request.args.get('user_owes')
@@ -86,6 +86,69 @@ def second():
 def add_friend_html():
 	return render_template('add-friend.html')
 
+@app.route('/delete_account', methods = ['GET', 'POST'])
+@is_logged_in
+def delete_account():
+	if request.method == 'POST':
+		password_candidate = request.form['password']
+		cur = mysql.connection.cursor()
+		cur.execute("select * from users where username = %s", [session['username']])
+		data = cur.fetchone()
+		password = data['password']
+
+		if sha256_crypt.verify(password_candidate, password):
+			result = cur.execute("select * from debt where sender = %s", [session['username']])
+			if result > 0:
+				flash("Clear existing debts first before deleting!", "danger")
+				return redirect(url_for('delete_account'))
+			else:
+				cur.execute("delete from users where username = %s", [session['username']])
+				cur.execute("delete from friends where friend1 = %s or friend2 = %s", (session['username'], session['username']))
+				mysql.connection.commit()
+				cur.close()
+				flash("Successfully deleted profile!", 'success')
+				
+				session['username'] = None
+				session['logged_in'] = False
+
+				return redirect(url_for('login'))
+
+		else:
+			flash("Incorrect password, cannot delete profile!", "danger")
+			return redirect(url_for('delete_account'))
+
+	return render_template('delete_account.html')
+
+@app.route('/change_password', methods = ['GET', 'POST'])
+@is_logged_in
+def change_password():
+	if request.method == 'POST':
+		password_candidate = request.form['password']
+
+		#Obtained checks in js to avoid the mismatch of the following data fields
+		new_password = request.form['new_password'] 
+		confirm_password = request.form['confirm_password']
+
+		if new_password != confirm_password:
+			flash('Mismatching passwords!', 'danger')
+			return redirect(url_for('change_password'))
+
+		cur = mysql.connection.cursor()
+		cur.execute("select * from users where username = %s", [session['username']])
+		data = cur.fetchone()
+		password = data['password']
+		
+		if sha256_crypt.verify(password_candidate, password):
+			cur.execute('update users set password = %s where username = %s', (sha256_crypt.encrypt(new_password), session['username']))
+			mysql.connection.commit()
+			flash("Password successfully changed, login again!", 'success')
+			return redirect(url_for('login'))
+		else:
+			flash("Incorrect password!", 'danger')
+			return redirect(url_for('change_password'))
+
+		return redirect(url_for('change_password'))
+	return render_template('change_password.html')
 
 
 #Homepage
@@ -95,7 +158,7 @@ def homepage():
 
 
 #Dashboard
-@app.route('/dashboard/')
+@app.route('/dashboard')
 @is_logged_in
 def dashboard():
 	cur = mysql.connection.cursor()
@@ -209,7 +272,7 @@ def login():
 			data = cur.fetchone()
 			password = data['password']
 
-			#comparing hashes
+			#comparing candidate with hashed password
 			if sha256_crypt.verify(password_candidate, password):
 				#Passes
 				session['logged_in'] = True
