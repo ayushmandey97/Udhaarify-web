@@ -37,7 +37,7 @@ def is_logged_in(f):
 			return f(*args, **kwargs)
 		else:
 			flash('Unauthorized, please log in first.', 'danger')
-			return render_template('home.html')
+			return redirect(url_for('homepage'))
 	return wrap
 
 
@@ -101,7 +101,7 @@ def delete_account():
 				session['username'] = None
 				session['logged_in'] = False
 
-				return render_template('home.html')
+				return redirect(url_for('homepage'))
 
 		else:
 			flash("Incorrect password, cannot delete profile!", "danger")
@@ -112,6 +112,7 @@ def delete_account():
 @app.route('/change_password', methods = ['GET', 'POST'])
 @is_logged_in
 def change_password():
+
 	if request.method == 'POST':
 		password_candidate = request.form['password']
 
@@ -132,7 +133,7 @@ def change_password():
 			cur.execute('update users set password = %s where username = %s', (sha256_crypt.encrypt(new_password), session['username']))
 			mysql.connection.commit()
 			flash("Password successfully changed, login again!", 'success')
-			return render_template('home.html')
+			return redirect(url_for('homepage'))
 		else:
 			flash("Incorrect password!", 'danger')
 			return redirect(url_for('change_password'))
@@ -189,13 +190,13 @@ def homepage():
 
 				else:
 					flash("Invalid credentials", 'danger')
-					return render_template('home.html')
+					return redirect(url_for('homepage'))
 
 				cur.close()
 
 			else:
 				flash("Username not found", 'danger')
-				return render_template('home.html')
+				return redirect(url_for('homepage'))
 
 
 		elif method == 'register':
@@ -225,7 +226,7 @@ def homepage():
 def logout():
 	session.clear()
 	flash('Successfully logged out.','success')
-	return render_template('home.html')
+	return redirect(url_for('homepage'))
 
 
 #Dashboard
