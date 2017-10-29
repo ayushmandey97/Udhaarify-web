@@ -9,8 +9,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
+
+
+
+
+
+	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/featherlight.min.css') }}" />
+		<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
+  		<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/login-style.css') }}">
+		<style type="text/css">
+			@media all {
+				.lightbox { display: none; }
+				}
+		</style>
 </head>
-<body>
+<body class="fl-page">
 	<div class="upper">
 		<!-- Header -->
 		<div class="header">
@@ -33,9 +46,9 @@
 					</ul>
 					<a class="navbar-brand" href="#" id="logo">Udhaarify</a>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/login"><i class="fa fa-user" aria-hidden="true"></i>
+						<li><a href="#" class="log2" data-featherlight="#fl1"><i class="fa fa-user" aria-hidden="true"></i>
 							Login</a></li>
-							<li id="signup"><a href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Signup</a></li>
+							<li id="signup"><a href="#" class="reg2" data-featherlight="#fl2"><i class="fa fa-user-plus" aria-hidden="true"></i> Signup</a></li>
 						</ul>
 					</div><!-- /.navbar-collapse -->
 				</nav>
@@ -103,10 +116,10 @@
 							<p class="chargetext lmidtext">Haven't got a desktop around you? You don't need one to use our application! Responsive and compaitable on all major smartphone browsers.</p>
 							<div class="row btns">
 								<div class="col-lg-4">
-									<a href="/login"><button type="button" href="/login" class="btn btn-default login">sign in</button></a>
+									<a href="#" class="log2" data-featherlight="#fl1"><button type="button" class="btn btn-default login">sign in</button></a>
 								</div>
 								<div class="col-lg-4">
-									<a href="/register"><button type="button" class="btn btn-default sup">create an account</button></a>
+									<a href="#" class="reg2" data-featherlight="#fl2"><button type="button" class="btn btn-default sup">create an account</button></a>
 								</div>
 							</div>
 						</div>
@@ -193,8 +206,215 @@
 					</div>
 				</footer>
 			</div>
+					{% from 'includes/_formhelpers.html' import render_field %}
+					
+					<div class= "lightbox" id="fl1">
+					  <div class="container container2">
+								  <div class="card"></div>
+								  <div class="card login2">
+								    <h1 class="title">Login</h1>
+								    
+
+								    <form method = "POST">
+								     <div class="input-container">
+								        <!-- <input type="text" id="r-username"  value={{request.form.username}} name = "username"/> -->
+								        {{render_field(form2.username, id = "r-username" )}}
+								        <label for="r-username">Username</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="password" id="pass-login"  value={{request.form.password}} name = "password"/> -->
+								        {{render_field(form2.password, id = "pass-login" )}}
+								        <label for="pass-login">Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="button-container">
+								        <button type = "submit" name ="method" value = "login"><span style="color:white;">Go</span></button>
+								      </div>
+								      <div class="footer"><a href="#">Forgot your password?</a></div>
+								    </form>
+								  </div>
+
+
+
+								 
+
+								  <div class="card alt register">
+								    <div class="toggle tg-btn"></div>
+								    <h1 class="title">Register
+								      <div class="close"></div>
+								    </h1>
+								    <form class="regform" method = "POST">
+								      <div class="input-container">
+								        <!-- <input type="text" id="user-name-login" /> -->
+								        {{render_field(form.name, id = "name-login" )}}
+								        <label for="name-login">Name</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="text" id="user-name-login" /> -->
+								        {{render_field(form.username, id = "user-name-login" )}}
+								        <label for="user-name-login">Username</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="email" id="email-login" /> -->
+								         {{render_field(form.email, id = "email-login" )}}
+								        <label for="email-login">Email ID</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="password" id="pass-login" /> -->
+								         {{render_field(form.password, id = "pass-login" )}}
+								        <label for="pass-login">Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="password" id="re-pass-login" /> -->
+								        {{render_field(form.confirm, id = "re-pass-login" )}}
+								        <label for="re-pass-login">Repeat Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="button-container">
+								        <button  type = "submit" name ="method" value = "register"><span style="color:white;">Next</span></button>
+								      </div>
+								    </form>
+								  </div>
+								</div>
+
+						</div>
+
+						<div class= "lightbox" id="fl2">
+					  <div class="container container2">
+								  <div class="card"></div>
+								  <div class="card login2">
+								    <h1 class="title">Login</h1>
+								    
+								    <form method = "POST">
+								     <div class="input-container">
+								        <!-- <input type="text" id="r-username"  value={{request.form.username}} name = "username"/> -->
+								        {{render_field(form2.username, id = "r-username" )}}
+								        <label for="r-username">Username</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="password" id="pass-login"  value={{request.form.password}} name = "password"/> -->
+								        {{render_field(form2.password, id = "pass-login" )}}
+								        <label for="pass-login">Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="button-container">
+								        <button type = "submit" name ="method" value = "login"><span style="color:white;">Go</span></button>
+								      </div>
+								      <div class="footer"><a href="#">Forgot your password?</a></div>
+								    </form>
+								    
+								  </div>
+
+								  <div class="card alt register">
+								    <div class="toggle tg-btn"></div>
+								    <h1 class="title">Register
+								      <div class="close"></div>
+								    </h1>
+								    <form class="regform" method = "POST">
+								      <div class="input-container">
+								        <!-- <input type="text" id="user-name-login" /> -->
+								        {{render_field(form.name, id = "name-login" )}}
+								        <label for="name-login">Name</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="text" id="user-name-login" /> -->
+								        {{render_field(form.username, id = "user-name-login" )}}
+								        <label for="user-name-login">Username</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="email" id="email-login" /> -->
+								         {{render_field(form.email, id = "email-login" )}}
+								        <label for="email-login">Email ID</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="password" id="pass-login" /> -->
+								         {{render_field(form.password, id = "pass-login" )}}
+								        <label for="pass-login">Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <!-- <input type="password" id="re-pass-login" /> -->
+								        {{render_field(form.confirm, id = "re-pass-login" )}}
+								        <label for="re-pass-login">Repeat Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="button-container">
+								        <button  type = "submit" name ="method" value = "register"><span style="color:white;">Next</span></button>
+								      </div>
+								    </form>
+								  </div>
+								</div>
+
+						</div>
+								<!-- <div class= "lightbox" id="fl2">
+ 								<div class="container container2">
+								  <div class="card"></div>
+								  <div class="card login2">
+								    <h1 class="title">Login</h1>
+								    <form>
+								      <div class="input-container">
+								        <input type="text" id="r-username" />
+								        <label for="r-username">Username</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <input type="password" id="pass-login" />
+								        <label for="pass-login">Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="button-container">
+								        <button><span style="color:white;">Go</span></button>
+								      </div>
+								      <div class="footer"><a href="#">Forgot your password?</a></div>
+								    </form>
+								  </div>
+								  <div class="card alt register">
+								    <div class="toggle"></div>
+								    <h1 class="title">Register
+								      <div class="close"></div>
+								    </h1>
+								    <form>
+								      <div class="input-container">
+								        <input type="text" id="user-name-login" />
+								        <label for="user-name-login">Username</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <input type="email" id="email-login" />
+								        <label for="email-login">Email ID</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <input type="password" id="pass-login" />
+								        <label for="pass-login">Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="input-container">
+								        <input type="password" id="re-pass-login" />
+								        <label for="re-pass-login">Repeat Password</label>
+								        <div class="bar"></div>
+								      </div>
+								      <div class="button-container">
+								        <button><span style="color:white;">Next</span></button>
+								      </div>
+								    </form>
+								  </div>
+								</div>
+								</div> -->
 			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 			<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+			<script src="{{ url_for('static', filename='featherlight.min.js') }}" type="text/javascript" charset="utf-8"></script>
+			<script  src="{{ url_for('static', filename='login.js') }}"></script>
+
 		</body>
 		</html>

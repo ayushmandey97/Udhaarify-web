@@ -13,9 +13,6 @@ from passlib.hash import sha256_crypt
 #for unauthorised url accesses
 from functools import wraps 
 
-#for sending emails
-from flask_mail import Mail, Message
-
 #for getting the current date
 import datetime
 
@@ -31,13 +28,6 @@ from sql_config import configure
 configure(app)
 mysql = MySQL(app)
 
-'''
-#configuring mail settings
-from mail_config import mail_configure
-mail_configure(app)
-mail = Mail(app)
-'''
-
 
 #To avoid manual url changes to view unauthorized dashboard
 def is_logged_in(f):
@@ -47,7 +37,7 @@ def is_logged_in(f):
 			return f(*args, **kwargs)
 		else:
 			flash('Unauthorized, please log in first.', 'danger')
-			return redirect(url_for('login'))
+			return render_template('home.html')
 	return wrap
 
 
@@ -111,7 +101,7 @@ def delete_account():
 				session['username'] = None
 				session['logged_in'] = False
 
-				return redirect(url_for('login'))
+				return render_template('home.html')
 
 		else:
 			flash("Incorrect password, cannot delete profile!", "danger")
@@ -142,7 +132,7 @@ def change_password():
 			cur.execute('update users set password = %s where username = %s', (sha256_crypt.encrypt(new_password), session['username']))
 			mysql.connection.commit()
 			flash("Password successfully changed, login again!", 'success')
-			return redirect(url_for('login'))
+			return render_template('home.html')
 		else:
 			flash("Incorrect password!", 'danger')
 			return redirect(url_for('change_password'))
@@ -150,10 +140,91 @@ def change_password():
 		return redirect(url_for('change_password'))
 	return render_template('change_password.html')
 
+#REGISTRATION
+class RegisterForm(Form):
+	name = StringField('', [validators.Length(min=1, max=50)])
+	username = StringField('', [validators.Length(min=4, max=25)])
+	email = StringField('', [validators.Length(min=6, max=50)])
+	password = PasswordField('', [
+		validators.DataRequired(),
+		validators.EqualTo('confirm', message='Passwords do not match')
+	])
+	confirm = PasswordField('')
+
+class LoginForm(Form):
+	username = StringField('', [validators.Length(min=4, max=25)])
+	password = PasswordField('')
 
 #Homepage
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def homepage():
+	form = RegisterForm(request.form)
+	form2 = LoginForm(request.form)
+
+	if request.method == 'POST':
+		method = request.form['method']
+		if method == 'login':
+			logger("login!")
+			#get form fields
+			username = request.form['username']
+			password_candidate = request.form['password']
+
+			logger(str(username))
+			#creating a cursor
+			cur = mysql.connection.cursor()
+			result = cur.execute('select * from users where username = %s', [username])
+			if result > 0:
+				data = cur.fetchone()
+				password = data['password']
+
+				#comparing candidate with hashed password
+				if sha256_crypt.verify(password_candidate, password):
+					#Passes
+					session['logged_in'] = True
+					session['username'] = username
+
+					flash('Successfully logged in!', 'success')
+					return redirect(url_for('dashboard'))
+
+
+				else:
+					flash("Invalid credentials", 'danger')
+					return render_template('home.html')
+
+				cur.close()
+
+			else:
+				flash("Username not found", 'danger')
+				return render_template('home.html')
+
+
+		elif method == 'register':
+			logger('register!')
+			name = form.name.data
+			email = form.email.data
+			username = form.username.data
+			password = sha256_crypt.encrypt(str(form.password.data)) #creating password hash
+
+			cur = mysql.connection.cursor()
+			cur.execute('insert into users(name, email, username, password) values(%s, %s, %s, %s)', (name, email, username, password))
+			mysql.connection.commit()
+			cur.close()
+
+			flash('Successfully registered!', 'success')
+			session['logged_in'] = True
+			session['username'] = username
+
+			return redirect(url_for('dashboard'))
+
+	return render_template('home.html', form=form, form2=form2)
+
+
+
+@app.route('/logout')
+@is_logged_in
+def logout():
+	session.clear()
+	flash('Successfully logged out.','success')
 	return render_template('home.html')
 
 
@@ -206,20 +277,6 @@ def dashboard():
 
 
 
-#To send mail invites
-'''
-#Add friends through mail invite
-@app.route('/dashboard/sendinvite', methods = ['POST'])
-@is_logged_in
-def invite():
-	email = request.form['email']
-	msg = Message('Hey, come join me at Udhaarify', sender = 'noreply.udhaarify@gmail.com', recipients = ['%s'%email])
-	msg.body = "Hey, so there's this great bill splitting and expense tracking app what you should totally try out, just try it out, it will help us avoid a lot of hassles \n Here's the link: http/localhost:5000/register"
-	mail.send(msg)
-	flash("Invite successfully sent!", 'success')
-	return redirect(url_for('dashboard'))
-'''
-
 #Adding friends
 @app.route('/dashboard/add-friend', methods = ['POST'])
 @is_logged_in
@@ -249,95 +306,6 @@ def add_friend():
 
 	return redirect(url_for('add_friend_html'))
 
-
-
-
-
-
-
-
-
-#LOGIN
-@app.route('/login', methods = ['GET' , 'POST'])
-def login():
-	if request.method == 'POST':
-		#get form fields
-		username = request.form['username']
-		password_candidate = request.form['password']
-
-		#creating a cursor
-		cur = mysql.connection.cursor()
-		result = cur.execute('select * from users where username = %s', [username])
-		if result > 0:
-			data = cur.fetchone()
-			password = data['password']
-
-			#comparing candidate with hashed password
-			if sha256_crypt.verify(password_candidate, password):
-				#Passes
-				session['logged_in'] = True
-				session['username'] = username
-
-				flash('Successfully logged in!', 'success')
-				return redirect(url_for('dashboard'))
-
-
-			else:
-				error = "Invalid password"
-				return render_template('login.html', error=error)
-
-			cur.close()
-
-		else:
-			error = "Username not found"
-			return render_template('login.html', error=error)
-
-	return render_template('login.html')
-
-
-
-
-
-
-#REGISTRATION
-class RegisterForm(Form):
-	name = StringField('Name', [validators.Length(min=1, max=50)])
-	username = StringField('Username', [validators.Length(min=4, max=25)])
-	email = StringField('Email', [validators.Length(min=6, max=50)])
-	password = PasswordField('Password', [
-		validators.DataRequired(),
-		validators.EqualTo('confirm', message='Passwords do not match')
-	])
-	confirm = PasswordField('Confirm Password')
-
-@app.route('/register', methods = ['GET', 'POST'])
-def register():
-	form = RegisterForm(request.form)
-	if request.method == 'POST' and form.validate():
-		name = form.name.data
-		email = form.email.data
-		username = form.username.data
-		password = sha256_crypt.encrypt(str(form.password.data)) #creating password hash
-
-		cur = mysql.connection.cursor()
-		cur.execute('insert into users(name, email, username, password) values(%s, %s, %s, %s)', (name, email, username, password))
-		mysql.connection.commit()
-		cur.close()
-
-		flash('Successfully registered! Log in to continue.', 'success')
-		return redirect(url_for('login'))
-
-
-	return render_template('register.html', form = form)
-
-
-
-@app.route('/logout')
-@is_logged_in
-def logout():
-	session.clear()
-	flash('Successfully logged out.','success')
-	return redirect(url_for('login'))
 
 @app.route('/profile')
 @is_logged_in
