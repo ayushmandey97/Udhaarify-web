@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Settle Up</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/settle_up.css') }}">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="heading">
+			<h1>Settle Up</h1>
+		</div>
+		<div class="row">
+			<div class="col-lg-4 mainbox centered">
+				<form action="/dashboard/settleup" method="POST">
+					<div class="form-group">
+						<label for="friend">Friend</label>
+						<input type="text" class="form-control" id="friend" placeholder="add friend" name="username">
+					</div>
+					<div class="form-group">
+						<label for="amount">Amount</label>
+						<input type="text" class="form-control" id="amount" placeholder="enter amount" name="amount">
+					</div>
+					<div class="radio">
+					<label><input type="radio" name="radio" value="user" id="radio2">I am paying</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="radio" value="friend" id="radio1">I'm getting paid</label>
+					</div>
+
+					<button type="submit" id="submit" name="payment_method" value="online">Pay now</button>
+					<button type="submit" id="submit" name="payment_method" value="cash">Record cash transaction</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='settle_up.js') }}"></script>
+</body>
+</html>

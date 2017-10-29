@@ -350,7 +350,6 @@ def settleup():
 			result = cur.execute('select amount from debt where sender = %s and receiver = %s',(session['username'], friend))
 			if result > 0:
 				#user owes this cur_amt to the friend already
-				
 				data = cur.fetchone()
 				cur_amt = data['amount']
 				
@@ -426,7 +425,7 @@ def settleup():
 			return redirect(url_for('settleup'))
 
 
-	return render_template('settle_up.html')
+	return render_template('settleup.html')
 
 
 #ADD A BILL

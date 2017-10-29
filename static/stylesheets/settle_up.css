@@ -1,0 +1,64 @@
+@font-face {
+	font-family: 'run';
+	src: url('assets/fonts/run.ttf');
+	font-family: 'NexaLight';
+	src: url("assets/fonts/Nexa Light.otf");
+}
+body{
+	background: url('assets/bkf.png');
+	background-size: cover;
+}
+.container{
+	padding: 1%;
+}
+.heading{
+	text-align: center;
+	font-family: run;
+}
+.mainbox{
+	background-color: white;
+	font-family: run;
+	/*border: 1px solid black;*/
+	border-radius: 70px;
+	padding: 70px;
+	font-size: 20px;
+	float: none;
+/*	margin-left: 33%;
+	margin-right: 33%;*/
+}
+
+#friend{
+	background: #f0f0f0;
+	color: black;
+	border: 1px solid rgba(0,0,0,0);
+	font-size: 25px;
+	border-radius: 30px;
+	margin: 2px;
+	font-family: NexaLight;
+}
+#amount{
+	background: #f0f0f0;
+	color: black;
+	border: 1px solid rgba(0,0,0,0);
+	font-size: 25px;
+	border-radius: 30px;
+	margin: 2px;
+	font-family: NexaLight;
+}
+#submit{
+	background-color: #121212;
+	width: 150px;
+	height: 50px;
+	border-radius: 50px;
+	font-family: Run;
+	color: #ffffff;
+	font-size: 25px; /* Approximation due to font substitution */
+	font-weight: 500;
+	line-height: 20px; /* Approximation due to font substitution */
+	text-align: center;
+	float: right;
+	margin-right: 20px;
+}
+.greenamt{
+	background-color: #9effb5;
+}
