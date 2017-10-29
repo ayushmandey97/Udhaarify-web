@@ -485,7 +485,7 @@ def mincashflow(amount, people_in_bill, final_string, counter = 0):
 	amount[mxDebit] += minimum;
 
 	# If minimum is the maximum amount to be
-	s = str(people_in_bill[mxDebit])+ " has to pay " + str(minimum) + " to " + str(people_in_bill[mxCredit])
+	s = str(people_in_bill[mxDebit])+ " has to pay " + str(int(minimum)) + " to " + str(people_in_bill[mxCredit])
 	logger(s)
 	final_string.append(s)
 

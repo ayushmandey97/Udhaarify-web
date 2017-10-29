@@ -1,11 +1,59 @@
-{% include 'layout.html' %}
 
-{% block body %}
+<html>
+<head>
+	<title>Udhaarify</title>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styledash.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/r_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color__box.css') }}">
+</head>
+<body>
+	<div class="navtop">
+        <nav class="navbar navbar-default navbar-fixed-top rnav">
+            <div class="container-fluid rnavi">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/dashboard" id="rhead">U  D  H  A  A  R  I  F  Y</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" width="100%" height="100%" id="bs-example-navbar-collapse-1">
+                    
+                    <form class="navbar-form navbar-left">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" required="required">
+                            <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{session['username']}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/profile">Profile</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/logout">Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
 	<div class = "jumbotron" align = "center">
 		<h2 align = "center">These are the following transations which are to be made to settle the bill with bill id: {{bill_id}}</h2>
 		<hr>
 		<table>
-			
 				{% for transaction in transactions %}
 				 <tr><td><h3> {{transaction}} <h3></td></tr>
 				{% endfor %}
@@ -15,6 +63,6 @@
 	<div align = "center">
 		<a href = "/dashboard" ><button class = "btn btn-primary"> Go to dashbaord </button> </a>
 	</div>
-
-
-{% endblock %}
+</body>
+</html>
+	
