@@ -40,9 +40,9 @@
                     
                     <form class="navbar-form navbar-left">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" required="required">
+                            <input type="text" class="form-control" placeholder="Search" required="required" id="bid">
                             <span class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                    <a  id="submitbill"><button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button></a>
                             </span>
                         </div>
                     </form>
@@ -192,6 +192,20 @@
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
 });
+
+        
+        console.log(bid);
+    $('#bid').on('change',function () {
+        var bid = $('#bid').val();
+        // body...
+        // alert(bid);
+          // $('#submitbill').setAttribute('href',"/show_bills/"+bid)
+          window.location.href = '/show_bills/'+bid;
+    })
+  
+</script>
+<script>
+
 </script>
 </body>
 

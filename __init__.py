@@ -326,6 +326,53 @@ def profile():
 	return render_template('profile.html', name = name, username = username, email = email)
 
 
+@app.route('/show_bills/<int:id>')
+@is_logged_in
+def show_bills(id):
+	cur = mysql.connection.cursor()
+	res = cur.execute('select * from bill_details where bill_id = %s', [id])
+	if res > 0:
+		data = cur.fetchone()
+		amount = data['bill_amount']
+		description = data['description']
+		notes = data['notes']
+		date = data['date']
+
+	logger(str(amount))
+	result = cur.execute('select * from bill_payers where bill_id = %s', [id])
+	payer_dict = {}
+
+	if result>0:
+		data = cur.fetchall()
+		for row in data:
+			if row['bill_payer'] not in payer_dict.keys():
+				payer_dict[row['bill_payer']] = row['amount']
+			else:
+				payer_dict[row['bill_payer']] += row['amount']
+
+	result = cur.execute('select * from bill_spenders where bill_id = %s', [id])
+	spender_dict = {}
+
+	if result>0:
+		data = cur.fetchall()
+		for row in data:
+			if row['bill_spender'] not in spender_dict.keys():
+				spender_dict[row['bill_spender']] = row['amount']
+			else:
+				spender_dict[row['bill_spender']] += row['amount']
+
+	msg = ""
+	for i in payer_dict:
+		msg += str(i) + ":" + str(payer_dict[i])
+	logger(msg)
+	msg = ""
+	for i in spender_dict:
+		msg += str(i) + ":" + str(spender_dict[i])
+	logger(msg)
+	return render_template('show_bills.html', amount=amount, desc=description, notes=notes, date=date, payer_dict=payer_dict, spender_dict=spender_dict, bill_id=id)
+
+
+
 #Settle up
 @app.route('/dashboard/settleup', methods = ['GET','POST'])
 @is_logged_in

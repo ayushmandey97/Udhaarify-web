@@ -1,0 +1,37 @@
+<html>
+<head>
+	<title>Udhaarify</title>
+	 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+	<div align = "center" class = "jumbotron">
+		<h2>Bill Id: {{bill_id}}</h2>
+		<h2>Description: {{desc}}</h2>
+		<h2>Amount: {{amount}}</h2>
+		<h2>Notes : {{notes}}</h2>
+		<h2>Date: {{date}}</h2>
+	</div>
+	
+				<table border = "1px" align = "center" width = "15%">
+					<caption>Bill payers</caption>
+					{% for key in payer_dict %}
+						<tr>
+							<td> {{key}} </td>
+							<td> {{payer_dict[key]}} </td>
+						</tr>
+					{% endfor %}
+				</table>
+				<hr>
+				<table border = "1px" align = "center" width = "15%">
+					<caption>Bill spenders</caption>
+					{% for key in spender_dict %}
+						<tr>
+							<td> {{key}} </td>
+							<td> {{spender_dict[key]}} </td>
+						</tr>
+					{% endfor %}
+				</table>
+
+
+</body>
+</html>
