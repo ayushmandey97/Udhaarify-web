@@ -1,0 +1,8 @@
+@font-face {
+	font-family: 'NexaLight';
+	src: url("assets/fonts/Nexa Light.otf");
+	unicode-range: U+30-39;
+}
+body{
+	font-family: run, NexaLight;
+}
