@@ -210,6 +210,9 @@ def homepage():
 			session['username'] = username
 
 			return redirect(url_for('dashboard'))
+		else:
+			flash("Mismatching passwords!", "danger")
+			return redirect(url_for('homepage'))
 
 	return render_template('home.html', form=form, form2=form2)
 
