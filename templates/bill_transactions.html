@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/r_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color__box.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/bill-trans.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="navtop">
@@ -50,19 +52,31 @@
             <!-- /.container-fluid -->
         </nav>
     </div>
-	<div class = "jumbotron" align = "center">
-		<h2 align = "center">These are the following transations which are to be made to settle the bill with bill id: {{bill_id}}</h2>
-		<hr>
-		<table>
-				{% for transaction in transactions %}
-				 <tr><td><h3> {{transaction}} </h3></td></tr>
-				{% endfor %}
-			</tr>
-		</table>
-	</div>
-	<div align = "center">
-		<a href = "/dashboard" ><button class = "btn btn-primary"> Go to dashbaord </button> </a>
-	</div>
+        <div class = "jumbotron" align = "center">
+                <h2 align = "center"> Bill ID generated: {{bill_id}} </h2>
+                <br><br><br><br><br>
+
+                <table class="table-fill">
+                    <thead>
+                            <tr>
+                            <th class="text-left">Transactions to be made</th>
+                            </tr>
+                    </thead>
+                    <tbody class="table-hover">
+                    
+                        {% for transaction in transactions %}
+                         <tr>
+                            <td class="text-left"> {{transaction}} </td>
+                         </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <br><br><br><br><br><br><br><br>
+            </div>
+            <div align = "center">
+                <a href = "/dashboard" ><button class = "btn btn-primary dashing"> Go to dashbaord </button> </a>
+            </div>
 </body>
 </html>
 	

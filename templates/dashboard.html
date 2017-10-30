@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/r_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color__box.css') }}">
+    <style>
+        input[type="text"] { border-radius: 0 !important; }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/auto-complete.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src = "{{ url_for('static', filename='jquery.colorbox.js') }}">
-    </script>
+    <script type="text/javascript" src = "{{ url_for('static', filename='jquery.colorbox.js') }}"></script>
     <script>
     $(document).ready(function() {
         $(".add-friend").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
@@ -38,6 +41,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" width="100%" height="100%" id="bs-example-navbar-collapse-1">
                     
+                    
+
                     <form class="navbar-form navbar-left">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" required="required" id="bid">
@@ -46,6 +51,8 @@
                             </span>
                         </div>
                     </form>
+
+
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{session['username']}}<span class="caret"></span></a>
@@ -204,9 +211,22 @@ $(document).ready(function(){
     })
   
 </script>
-<script>
-
-</script>
+<script src="{{ url_for('static', filename='auto-complete.js') }}"></script>
+    <script>
+        var demo1 = new autoComplete({
+            selector: '#bid',
+            minChars: 1,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                var choices = {{ bill_list|safe }};
+                var suggestions = [];
+                for (i=0;i<choices.length;i++)
+                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                suggest(suggestions);
+            }
+        });
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" async defer></script>
 </body>
 
 </html>

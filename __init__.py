@@ -277,10 +277,18 @@ def dashboard():
 		for row in data:
 			friends.append(row['username'])
 
+
+	# BILL ID AUTOCOMPLETE
+	result = cur.execute("select bill_id from bill_details")
+	data = cur.fetchall()
+	bill_list = []
+	for row in data:
+		bill_list.append(row['bill_id'])
+
 	cur.close()
 	
 	#Get the total balance while templating
-	return render_template('dashboard.html', user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by, friends=friends)
+	return render_template('dashboard.html', user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by, friends=friends, bill_list=bill_list)
 
 
 
@@ -480,12 +488,14 @@ def settleup():
 			flash('Transaction noted!','success')
 			return redirect(url_for('dashboard'))
 
+	#sending list of friends for settleup
 	cur = mysql.connection.cursor()
 	result = cur.execute("select friend2 from friends where friend1 = %s", [session['username']])
 	data = cur.fetchall()
 	friends = []
 	for row in data:
 		friends.append(row['friend2'])
+	
 	return render_template('settleup.html', friends=friends)
 
 
