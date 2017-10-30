@@ -86,7 +86,7 @@
                 
                 <div class="flex">
                     <div class="sameRow ">Friends</div>
-                    <div class="sameRow" align="right"><a class='add-friend' href="{{ url_for('add_friend_html') }}">Add+</a></div>
+                    <div class="sameRow" align="right"><a class='add-friend' href="{{ url_for('add_friend', friends = friends) }}">Add+</a></div>
                 </div>
                 <div class="normal well rfrndlist" style="color: grey" width="10px">No Friends to show yet
                     <span>
@@ -103,7 +103,7 @@
                         <input class="r_invite_email" type="email" placeholder="Enter an email address" style="width:150px; margin:0 0 5px" required="required">
                     </div>
                     <div class="normal">
-                        <button type="submit" class="btn btn-cnacel btn-sm r_send_invite">Send Invite</button>
+                        <button type="submit" class="btn btn-cancel btn-sm r_send_invite">Send Invite</button>
                     </div>
                 </div>
             </div>

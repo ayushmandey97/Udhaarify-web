@@ -71,11 +71,6 @@ def first():
 def second():
 	return render_template('secondbtn.html')
 
-@app.route('/add-friend-html')
-@is_logged_in
-def add_friend_html():
-	return render_template('add-friend.html')
-
 @app.route('/delete_account', methods = ['GET', 'POST'])
 @is_logged_in
 def delete_account():
@@ -137,7 +132,7 @@ def change_password():
 		else:
 			flash("Incorrect password!", 'danger')
 			return redirect(url_for('profile'))
-			
+
 	return render_template('change_password.html')
 
 #REGISTRATION
@@ -270,41 +265,56 @@ def dashboard():
 		for row in data:
 			friends_user_is_owed_by[row['sender']] = row['amount']
 
+	#Getting all the users in database to send for friends
+	result = cur.execute("select distinct(username) from users where username not in (select distinct(friend2) from friends where friend1 = %s) and username <> %s", (session['username'], session['username']))
+	friends = []
+
+	if result > 0:
+		data = cur.fetchall()
+		for row in data:
+			friends.append(row['username'])
 
 	cur.close()
+	
 	#Get the total balance while templating
-	return render_template('dashboard.html', user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by)
+	return render_template('dashboard.html', user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by, friends=friends)
 
 
 
 #Adding friends
-@app.route('/dashboard/add-friend', methods = ['POST'])
+@app.route('/dashboard/add-friend', methods = ['GET','POST'])
 @is_logged_in
 def add_friend():
-	username = request.form['username']
-	cur = mysql.connection.cursor()
-	result = cur.execute("select * from users where username = %s", [username])
-	if result > 0:
-		result = cur.execute("select * from friends where friend1 = %s and friend2 = %s",(session['username'],username))
-		
-		if result == 0:
-
-			if username != session['username']:
-				#Now add the user to the database, handling two way friendships
-				cur.execute("insert into friends (friend1, friend2) values(%s, %s)", (session['username'], username))
-				cur.execute("insert into friends (friend2, friend1) values(%s, %s)", (session['username'], username))
-				
-				mysql.connection.commit()
-				flash('Friend added successfully!','success')
+	if request.method == 'POST':
+		username = request.form['username']
+		cur = mysql.connection.cursor()
+		result = cur.execute("select * from users where username = %s", [username])
+		if result > 0:
+			result = cur.execute("select * from friends where friend1 = %s and friend2 = %s",(session['username'],username))
 			
-			else:
-				flash('Cannot add yourself as a friend!','danger')
-		else:
-			flash('Friend already added cannot be added again!','danger')
-	else:
-		flash('Requested username does not exist!','danger')
+			if result == 0:
 
-	return redirect(url_for('add_friend_html'))
+				if username != session['username']:
+					#Now add the user to the database, handling two way friendships
+					cur.execute("insert into friends (friend1, friend2) values(%s, %s)", (session['username'], username))
+					cur.execute("insert into friends (friend2, friend1) values(%s, %s)", (session['username'], username))
+					
+					mysql.connection.commit()
+					flash('Friend added successfully!','success')
+					return(redirect(url_for('dashboard')))
+				
+				else:
+					flash('Cannot add yourself as a friend!','danger')
+					return(redirect(url_for('dashboard')))
+			else:
+				flash('Friend already added cannot be added again!','danger')
+				return(redirect(url_for('dashboard')))
+		else:
+			flash('Requested username does not exist!','danger')
+			return(redirect(url_for('dashboard')))
+
+	friends = request.args.getlist('friends')
+	return render_template('add-friend.html', friends=friends)
 
 
 @app.route('/profile')
@@ -331,7 +341,6 @@ def show_bills(id):
 	cur = mysql.connection.cursor()
 	result = cur.execute('select * from bill_details where bill_id = %s', [id])
 	
-	logger("Result: " + str(result))
 	if result == 0:
 		flash("Bill not found!", "danger")
 		return redirect(url_for('dashboard'))
@@ -343,7 +352,6 @@ def show_bills(id):
 	date = data['date']
 
 
-	logger(str(amount))
 	result = cur.execute('select * from bill_payers where bill_id = %s', [id])
 	payer_dict = {}
 
