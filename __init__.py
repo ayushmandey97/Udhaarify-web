@@ -480,8 +480,13 @@ def settleup():
 			flash('Transaction noted!','success')
 			return redirect(url_for('dashboard'))
 
-
-	return render_template('settleup.html')
+	cur = mysql.connection.cursor()
+	result = cur.execute("select friend2 from friends where friend1 = %s", [session['username']])
+	data = cur.fetchall()
+	friends = []
+	for row in data:
+		friends.append(row['friend2'])
+	return render_template('settleup.html', friends=friends)
 
 
 #ADD A BILL
