@@ -90,7 +90,7 @@ def delete_account():
 			result = cur.execute("select * from debt where sender = %s", [session['username']])
 			if result > 0:
 				flash("Clear existing debts first before deleting!", "danger")
-				return redirect(url_for('delete_account'))
+				return redirect(url_for('profile'))
 			else:
 				cur.execute("delete from users where username = %s", [session['username']])
 				cur.execute("delete from friends where friend1 = %s or friend2 = %s", (session['username'], session['username']))
@@ -105,7 +105,7 @@ def delete_account():
 
 		else:
 			flash("Incorrect password, cannot delete profile!", "danger")
-			return redirect(url_for('delete_account'))
+			return redirect(url_for('profile'))
 
 	return render_template('delete_account.html')
 
@@ -122,7 +122,7 @@ def change_password():
 
 		if new_password != confirm_password:
 			flash('Mismatching passwords!', 'danger')
-			return redirect(url_for('change_password'))
+			return redirect(url_for('profile'))
 
 		cur = mysql.connection.cursor()
 		cur.execute("select * from users where username = %s", [session['username']])
@@ -136,9 +136,8 @@ def change_password():
 			return redirect(url_for('homepage'))
 		else:
 			flash("Incorrect password!", 'danger')
-			return redirect(url_for('change_password'))
-
-		return redirect(url_for('change_password'))
+			return redirect(url_for('profile'))
+			
 	return render_template('change_password.html')
 
 #REGISTRATION
@@ -199,7 +198,7 @@ def homepage():
 				return redirect(url_for('homepage'))
 
 
-		elif method == 'register':
+		elif method == 'register' and form.validate():
 			logger('register!')
 			name = form.name.data
 			email = form.email.data
@@ -330,13 +329,19 @@ def profile():
 @is_logged_in
 def show_bills(id):
 	cur = mysql.connection.cursor()
-	res = cur.execute('select * from bill_details where bill_id = %s', [id])
-	if res > 0:
-		data = cur.fetchone()
-		amount = data['bill_amount']
-		description = data['description']
-		notes = data['notes']
-		date = data['date']
+	result = cur.execute('select * from bill_details where bill_id = %s', [id])
+	
+	logger("Result: " + str(result))
+	if result == 0:
+		flash("Bill not found!", "danger")
+		return redirect(url_for('dashboard'))
+	
+	data = cur.fetchone()
+	amount = data['bill_amount']
+	description = data['description']
+	notes = data['notes']
+	date = data['date']
+
 
 	logger(str(amount))
 	result = cur.execute('select * from bill_payers where bill_id = %s', [id])
@@ -361,14 +366,6 @@ def show_bills(id):
 			else:
 				spender_dict[row['bill_spender']] += row['amount']
 
-	msg = ""
-	for i in payer_dict:
-		msg += str(i) + ":" + str(payer_dict[i])
-	logger(msg)
-	msg = ""
-	for i in spender_dict:
-		msg += str(i) + ":" + str(spender_dict[i])
-	logger(msg)
 	return render_template('show_bills.html', amount=amount, desc=description, notes=notes, date=date, payer_dict=payer_dict, spender_dict=spender_dict, bill_id=id)
 
 
@@ -424,7 +421,7 @@ def settleup():
 				cur.close()
 
 				flash('Transaction recorded successfully!', 'success')
-				return redirect(url_for('settleup'))
+				return redirect(url_for('dashboard'))
 
 			
 			result = cur.execute('select amount from debt where sender = %s and receiver = %s',(friend, session['username']))
@@ -457,7 +454,7 @@ def settleup():
 				cur.close()
 
 				flash('Transaction noted succesfully', 'success')
-				return redirect(url_for('settleup'))
+				return redirect(url_for('dashboard'))
 				
 			
 			#No old debt exists between user and the friend at this point
@@ -470,7 +467,7 @@ def settleup():
 			cur.close()
 
 			flash('Transaction noted!','success')
-			return redirect(url_for('settleup'))
+			return redirect(url_for('dashboard'))
 
 
 	return render_template('settleup.html')
@@ -723,7 +720,7 @@ def add_bill():
 		data = cur.fetchone()
 		bill_id = data['max(bill_id)']
 
-		
+		flash("Bill added successfully", 'success')
 		return render_template('bill_transactions.html', transactions = final_string, bill_id = bill_id)
 
 	return render_template('add_a_bill.html', form = form)

@@ -13,13 +13,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery.colorbox.js') }}"> </script>
     
-    <script>
-    $(document).ready(function() {
-        $(".rsettle").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
-        // $(".raddbill").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
-        
-    });
-    </script>
 
 <style>
     .funkyradio{
@@ -109,10 +102,10 @@ a:hover {text-decoration:none; color:#fff;}
 	
         <div class="rhead">
             <span class="rdash"> DASHBOARD</span>
-                    <a class = "raddbill" href="/dashboard/add-a-bill" target = "_blank"><button type="button" class="btn btn-hot btn-sm text-uppercase raddbtn">Add a Bill</button></a>
-                   <a class="rsettle" href="/dashboard/settleup"> <button type="button" class="btn btn-sunny btn-sm text-uppercase rsettlebtn">Settle Up</button></a>
+                    <a class = "raddbill" href="/dashboard/add-a-bill" target = "_parent"><button type="button" class="btn btn-hot btn-sm text-uppercase raddbtn">Add a Bill</button></a>
+                   <a class="rsettle" href="/dashboard/settleup" target = "_parent"> <button type="button" class="btn btn-sunny btn-sm text-uppercase rsettlebtn">Settle Up</button></a>
                 </div>
-
+                {% include 'includes/_messages.html' %}
 
                 <table style="width: 100%">
                     <tr>
@@ -138,14 +131,13 @@ a:hover {text-decoration:none; color:#fff;}
                     </tr>
 
                 </table>
+                
                 <div class="rowehead">
                     <span id="rowehd">YOU OWE
                     </span>
                     <span id="rowedhd">YOU ARE OWED
                     </span>
                 </div>
-                
-
                 <table style="width: 100%" class="rlist side-borders">
                     <tr>
                         <td>
