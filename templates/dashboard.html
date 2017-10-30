@@ -1,233 +1,130 @@
 <!DOCTYPE html>
-
 <head>
-    <title>Dashboard</title>
+    <title>
+        Dashboard
+    </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styledash.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/r_style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color__box.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/num_font.css') }}">
-    <style>
-        input[type="text"] { border-radius: 0 !important; }
-    </style>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/auto-complete.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style__menu.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color__box.css') }}"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src = "{{ url_for('static', filename='jquery.colorbox.js') }}"></script>
-    <script>
-    $(document).ready(function() {
-        $(".add-friend").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.css"/>
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.colorbox.js') }}"> </script>
+    
+    <!-- <script>
+        $(document).ready(function() {
+            $(".rsettle").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
+        // $(".raddbill").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
+        
     });
-    </script>
+</script> -->
 </head>
 
 <body>
-    <div class="navtop">
-        <nav class="navbar navbar-default navbar-fixed-top rnav">
-            <div class="container-fluid rnavi">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/dashboard" id="rhead">U  D  H  A  A  R  I  F  Y</a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" width="100%" height="100%" id="bs-example-navbar-collapse-1">
-                    
-                    
-
-                    <form class="navbar-form navbar-left">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" required="required" id="bid">
-                            <span class="input-group-btn">
-                    <a  id="submitbill"><button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button></a>
-                            </span>
-                        </div>
-                    </form>
 
 
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{session['username']}}<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/profile">Profile</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="/logout">Log Out</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-        </nav>
-    </div>
-    <div class="container rthree">
-        <div class="leftpane">
-            <div class="container-fluid rlefty" align="left">
-                <div>
+
+    <!-- Sidebar -->
 
 
 
 
-                    <a id="r1" href="{{ url_for('dashboard_menu', user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by) }}" target="middlepane">
+    <!-- Sidebar -->
 
 
+    <div id="fullpage">
 
-
-                        <div class="normal rfirst rleftnav">Dashboard</div>
-                    </a>
-                </div>
-                <div>
-                    <a id="r2" href="{{ url_for('all_transactions') }}" target="middlepane">
-                        <div class="normal rsecond">All Transactions</div>
-                    </a>
-                </div>
-                
-                <div class="flex">
-                    <div class="sameRow ">Friends</div>
-                    <div class="sameRow" align="right"><a class='add-friend' href="{{ url_for('add_friend', friends = friends) }}">Add+</a></div>
-                </div>
-                <div class="normal well rfrndlist" style="color: grey" width="10px">No Friends to show yet
-                    <span>
-      <i class="icon-ok-sign" rel="tooltip" title="Key active" id="blah"></i>
-      
-        </span>
-                </div>
-                <div class="rcomfrn rounded">
-                    <div class=" rinvite">
-                        Invite Friends
-                    </div>
-                    <div class="normal rfrninp">
-                      <form action="#">
-                        <input class="r_invite_email" type="email" placeholder="Enter an email address" style="width:150px; margin:0 0 5px" required="required">
-                    </div>
-                    <div class="normal">
-                        <button type="submit" class="btn btn-cancel btn-sm r_send_invite">Send Invite</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <iframe src="{{ url_for('dashboard_menu',user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount, friends_user_owes = friends_user_owes, friends_user_is_owed_by = friends_user_is_owed_by) }}" class="middlepane" name="middlepane" height="100%">
-
-
-
-
-        </iframe>
-        <div class="rightpane">
-            <div class="rightnav">
-                <a href="{{ url_for('first',user_owes = user_owes, user_is_owed = user_is_owed, net_amount = net_amount) }}" target="rightselect" data-toggle="tooltip" data-placement="bottom" title="Balances"> 
-                <button type="button" class="btn btn-xs">
-                    <i class="glyphicon glyphicon-th-large"></i>
-                </button> </a>
-                <a href="{{ url_for('second') }}" target="rightselect" data-toggle="tooltip" data-placement="bottom" title="Trends">
-                <button class="btn btn-xs" type="button">
-                  <i class="glyphicon glyphicon-signal"></i>
-                </button></a>
-                
-
-
-
-
-                <button class="btn btn-xs" type="button">
-                    <i class="glyphicon glyphicon-sort"></i>
-                </button>
-                <iframe class="rightselect" name="rightselect" width="200" height="300" frameborder="0">
-                </iframe>
-            </div>
-        </div>
-        <footer id="myFooter">
-            <div class="container">
+        <div class="section active">
+            <div class="slide" id="s1">
+                <h1>DASHBOARD</h1>
+                <hr>
                 <div class="row">
-                    <div class="col-sm-3">
-                        <h2 class="logo" align="center"><a href="#"> <span class="foot_U">U</span><span class="foot_U">d</span><span class="foot_U">h</span><span class="foot_U">a</span><span class="foot_U">a</span><span class="foot_U">r</span><span class="foot_U">i</span><span class="foot_U">f</span><span class="foot_U">y</span></a></h2>
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4" id="btns">
+                        <a href="/dashboard/add-a-bill" target = "_top"><button type="button" class="buttons">Add a Bill</button></a>
+                        <a href="/dashboard/settleup"> <button type="button" class="buttons">Settle Up</button></a>
                     </div>
-                    <div class="col-sm-2">
-                        <h5 class="subhead">Get started</h5>
-                        <ul>
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/register">Sign up</a></li>
-                            <!-- <li><a href="#">Downloads</a></li>-->
-                        </ul>
+
+                    <div class="col-lg-4"></div>
+
+                </div>
+                
+            </div>
+            <div class="slide" id="friendslide">
+
+                <input type="text" name=""><button class="btn btn-default"></button>
+                <div class="flex">
+                    <div>Friends</div>
+                    <div><a href="{{ url_for('add_friend', friends = friends) }}">Add+</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="section" id="s2">
+             {% include 'includes/_messages.html' %}
+            <div class="tbalance">
+                <span>Total Balance</span>
+                <table>
+                    <tr>
+                        <th>Total Balance</th>
+                        <th>You Owe</th>
+                        <th>You're owed</th>
+                    </tr>
+                    <tr>
+                        <td id="net">
+                            {{ net_amount }}
+                        </td>
+                        <td id="red">
+                            {{ user_owes }}
+                        </td>
+                        <td id="green"> 
+                            {{ user_is_owed }}
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div>
+                        <span>You owe</span>
+                        <table  class="owe">
+                            <tr><th>Name</th><th>Amount</th></tr>
+                            {% for key in friends_user_owes %}
+                            <tr>
+                                <td>{{ key }}</td>
+                                <td id="red">{{ friends_user_owes[key] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
                     </div>
-                    <div class="col-sm-2">
-                        <h5 class="subhead">About us</h5>
-                        <ul>
-                            <li><a href="#">Company Information</a></li>
-                            <li><a href="#">Developers</a></li>
-                            <!--<li><a href="#">Reviews</a></li>-->
-                        </ul>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5 class="subhead">Need Help?</h5>
-                        <ul>
-                            <li><a href="#">FAQ</a></li>
-                            <li><a href="#">Help desk</a></li>
-                            <!-- <li><a href="#">Forums</a></li>-->
-                        </ul>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="social-networks">
-                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
-                        </div>
-                        <button type="button" class="btn btn-default">Contact us</button>
+                </div>
+                <div class="col-lg-6">
+                    <div >
+                        <span>You're owed</span>
+                        <table class="owes">
+                            <tr><th>Name</th><th>Amount</th></tr>
+                            {% for key in friends_user_is_owed_by %}
+                            <tr>
+                                <td>{{ key }}</td>
+                                <td id="green">{{ friends_user_is_owed_by[key] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>     
                     </div>
                 </div>
             </div>
-            <div class="footer-copyright">
-                <p>©BETA</p>
-            </div>
-        </footer>
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
-        </script>
-        
-         <script type="text/javascript" src = "{{ url_for('static', filename='dash.js') }}">
-        </script>
-        <script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip(); 
-});
-
-        
-        console.log(bid);
-    $('#bid').on('change',function () {
-        var bid = $('#bid').val();
-        // body...
-        // alert(bid);
-          // $('#submitbill').setAttribute('href',"/show_bills/"+bid)
-          window.open('/show_bills/'+bid, '_blank');
-    })
-  
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='dashboard.js') }}"> </script>
 </script>
-<script src="{{ url_for('static', filename='auto-complete.js') }}"></script>
-    <script>
-        var demo1 = new autoComplete({
-            selector: '#bid',
-            minChars: 1,
-            source: function(term, suggest){
-                term = term.toLowerCase();
-                var choices = {{ bill_list|safe }};
-                var suggestions = [];
-                for (i=0;i<choices.length;i++)
-                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-                suggest(suggestions);
-            }
-        });
-    </script>
-    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" async defer></script>
-</body>
 
+</body>
 </html>
+
+

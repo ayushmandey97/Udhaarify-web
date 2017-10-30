@@ -3,92 +3,118 @@
 	font-family: 'run';
 	src: url('assets/fonts/run.ttf') format('truetype');
 }
-
+@font-face {
+	font-family: 'NexaLight';
+	src: url("assets/fonts/Nexa Light.otf");
+	unicode-range: U+30-39;
+}
 body{
-	font-family: run;
+	font-family: run, NexaLight;
 	color: #121212;
-	background-color: white;
+	/*background-image: url('assets/bkf.png');*/
 	width:100%
 	height: 100%;
-	
+	font-size: 40px;
 }
-.rhead{
-	padding-top: 10px;
-	padding-bottom: 10px;
-	background-color: rgb(159,255,216);
-}
-.rdash{
-	margin-right: 420px;
-	margin-left: 20px;
+.buttons{
+	background-color: #121212;
+	width: 200px;
+	height: 80px;
+	border-radius: 50px;
+	font-family: Run;
+	color: #ffffff;
 	font-size: 30px;
+	font-weight: 500;
+	line-height: 20px;
+	text-align: center;
+	border: 1px solid white;
 }
-.raddbtn{
-	margin-right: 10px;
-	margin-bottom: 7px;
+.container-fluid{
+	margin-left: 10%;
+	margin-right: 10%;
 }
-.rsettlebtn{
-	margin-bottom: 7px;
+#s1{
+	background-image: url('assets/pexels-photo-210990.jpeg');
+	background-size: cover;
+	/*background-position: center;*/
+	color: white;
+	text-align: center;
+	text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 
+	0px 8px 13px rgba(0,0,0,0.4),
+	0px 18px 23px rgba(0,0,0,0.4);
+}
 
+.section{
+	text-align: center;
+}
+#s2{
+	background-image: url('assets/wood.jpg');
+	background-size: cover;
+	color: white;
+}
+h1{
+	font-size: 100px;
+}
+hr{
+	width: 700px;
+	border-top: 2px solid black;
+	border-bottom : 4px rgb(0,0,0,0.2);
 }
 table{
-	/*margin-top: 20px;*/
-	/*margin-left: 60px;*/
-	background-color: rgb(159,255,216);
+	margin: 0 auto;
+	border: 1px solid black;
+}
+span{
+	font-size: 
+}
+
+th,td{
+	padding: 20px;
+}
+
+td{
+	color: black;
+	text-align: center;
+	background:#FFFFFF;
+	/*vertical-align:middle;*/
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+	/*border-right: 1px solid #C1C3D1;*/
+}
+tr{
+	/*border-top: 1px solid #C1C3D1;*/
+	/*border-bottom-: 1px solid #C1C3D1;*/
+	text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
 }
 th{
-	font-size: 20px;
+	color: white;
+	background:#1b1e24;
+	/*border-bottom:4px solid #9ea7af;*/
+	/*border-right: 1px solid #343a45;*/
+	font-size:23px;
+	font-weight: 100;
+	/*padding:24px;*/
+	text-align:center;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	/*vertical-align:middle;*/
+}
+.owe,.owes{
+	width: 60%;
+}
+table{
+	width: 70%;
+}
+.tbalance{
+	margin-bottom: 5%;
+}
+#red{
+	color: red;
+	font-weight: 800;
+}
+#green{
+	color: green;
+	font-weight: 800;
 }
 
-#rtotalbal,#rowe,#rowed,th{
-	font-size: 20px;
-	padding-left:60px;
-}
-.rowehead{
-	margin-top: 5px;
-}
-#rowehd{
-	margin-left: 12px;
-	font-size: 18px;
-}
-#rowedhd{
-		margin-left: 550px;
-		font-size: 18px;
-}
-.rlist{
-	margin-top: 15px;
-}
-.roweamt,.rowedamt{
-	font-size: 20px;
-	padding-left: 40px;
-	padding-right: 0px;
-	margin: 0 auto;
-
-}
-.rowename,.rowedname{
-	font-size: 15px;
-	padding-left: 18px;
-	margin: 0 auto;
-}
-.rowedname,.rowedamt{
-	padding-left: 200px !important;
-}
-td.rowename,td.roweamt{
-
-	border-right: solid 1px;
-	 -webkit-border-image: 
-      -webkit-gradient(linear, 0 0, 0 100%, from(black), to(rgba(0, 0, 0, 0))) 1 100%;
-    -webkit-border-image: 
-      -webkit-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
-    -moz-border-image:
-      -moz-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;    
-    -o-border-image:
-      -o-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
-    border-image:
-      linear-gradient(to bottom, black, rgba(0, 0, 0, 0)) 1 100%;
-	padding-right: 0px;
-	padding-left: 50px;
-
-}
-table.side-borders td {
-
+#net{
+	font-weight: 800;
 }
