@@ -13,8 +13,8 @@ So go ahead and register at [Udhaarify](http://udhaarify.me)
 
 Built by:
  
-[Dheeraj Lalwani](https://github.com/Dheeraj27)
-[Raghu TIwari](https://github.com/raghutiwari)
-[Ayushman Dey](https://github.com/ayushmandey97)
+* [Dheeraj Lalwani](https://github.com/Dheeraj27)
+* [Raghu TIwari](https://github.com/raghutiwari)
+* [Ayushman Dey](https://github.com/ayushmandey97)
 
 
