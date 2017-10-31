@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <head>
-    <title>
-        Dashboard
-    </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style__menu.css') }}">
+	<title>
+		Dashboard
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/footer.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style__menu.css') }}">
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color__box.css') }}"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.css"/>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery.colorbox.js') }}"> </script>
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/num_font.css') }}">
     <!-- <script>
         $(document).ready(function() {
             $(".rsettle").colorbox({ iframe: true, width: "60%", height: "80%", closeButton: true });
@@ -25,103 +26,193 @@
 
 <body>
 
+<!--CSS Spinner-->
+	<div class="spinner-wrapper">
+		<div class="sk-folding-cube">
+			<div class="sk-cube1 sk-cube"></div>
+			<div class="sk-cube2 sk-cube"></div>
+			<div class="sk-cube4 sk-cube"></div>
+			<div class="sk-cube3 sk-cube"></div>
+		</div>
+	</div>
 
 
-    <!-- Sidebar -->
+	<!-- Sidebar -->
 
 
 
+	<!-- Sidebar -->
 
-    <!-- Sidebar -->
+	<div id="fadeandscale">
+		{% include 'includes/_messages.html' %}
+	</div>
 
 
-    <div id="fullpage">
 
-        <div class="section active">
-            <div class="slide" id="s1">
-                <h1>DASHBOARD</h1>
-                <hr>
-                <div class="row">
-                    <div class="col-lg-4"></div>
-                    <div class="col-lg-4" id="btns">
-                        <a href="/dashboard/add-a-bill" target = "_top"><button type="button" class="buttons">Add a Bill</button></a>
-                        <a href="/dashboard/settleup"> <button type="button" class="buttons">Settle Up</button></a>
-                    </div>
+	<div id="fullpage">
+		<div class="section fp-auto-height">
+			
+			<nav class="navbar navbar-inverse">
+				<!-- <div class="container-fluid"> -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Udhaarify</a>
+				</div>
 
-                    <div class="col-lg-4"></div>
+				<form class="navbar-form navbar-center">
+					<div class="input-group">
+						<input type="text" id="bid" class="form-control" placeholder="Search by bill ID">
+						<div class="input-group-btn">
+							<button class="btn btn-default" id="search">
+								<i class="glyphicon glyphicon-search"></i>
+							</button>
+						</div>
+					</div>
+				</form> 
+				<div align = "right">
+				<ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{session['username']}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/profile">Profile</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/logout">Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                 </div>
+				<!-- </div> -->
+			</nav> 
 
-                </div>
-                
-            </div>
-            <div class="slide" id="friendslide">
+		</div>
 
-                <input type="text" name=""><button class="btn btn-default"></button>
-                <div class="flex">
-                    <div>Friends</div>
-                    <div><a href="{{ url_for('add_friend', friends = friends) }}">Add+</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="section" id="s2">
-             {% include 'includes/_messages.html' %}
-            <div class="tbalance">
-                <span>Total Balance</span>
-                <table>
-                    <tr>
-                        <th>Total Balance</th>
-                        <th>You Owe</th>
-                        <th>You're owed</th>
-                    </tr>
-                    <tr>
-                        <td id="net">
-                            {{ net_amount }}
-                        </td>
-                        <td id="red">
-                            {{ user_owes }}
-                        </td>
-                        <td id="green"> 
-                            {{ user_is_owed }}
-                        </td>
-                    </tr>
 
-                </table>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div>
-                        <span>You owe</span>
-                        <table  class="owe">
-                            <tr><th>Name</th><th>Amount</th></tr>
-                            {% for key in friends_user_owes %}
-                            <tr>
-                                <td>{{ key }}</td>
-                                <td id="red">{{ friends_user_owes[key] }}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div >
-                        <span>You're owed</span>
-                        <table class="owes">
-                            <tr><th>Name</th><th>Amount</th></tr>
-                            {% for key in friends_user_is_owed_by %}
-                            <tr>
-                                <td>{{ key }}</td>
-                                <td id="green">{{ friends_user_is_owed_by[key] }}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>     
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='dashboard.js') }}"> </script>
+		<div class="section active">
+			<div class="slide" id="s1">
+				<h1>DASHBOARD</h1>
+				<hr>
+				<div class="row">
+					<div class="col-lg-4"></div>
+					<div class="col-lg-4" id="btns">
+						<a href="/dashboard/add-a-bill" target = "_top"><button type="button" class="buttons">Add a Bill</button></a>
+						<a href="/dashboard/settleup"> <button type="button" class="buttons">Settle Up</button></a>
+						<a href="{{ url_for('add_friend', friends = friends) }}"> <button style = "margin-top:10px;" type="button" class="buttons">Add friends</button></a>
+					</div>
+
+					<div class="col-lg-4"></div>
+
+				</div>
+
+			</div>
+		</div>
+	
+		<div class="section" id="s2">
+
+			<div class="tbalance">
+				<span>Total Balance</span>
+				<table>
+					<tr>
+						<th>Total Balance</th>
+						<th>You Owe</th>
+						<th>You're owed</th>
+					</tr>
+					<tr>
+						<td id="net">
+							{{ net_amount }}
+						</td>
+						<td id="red">
+							{{ user_owes }}
+						</td>
+						<td id="green"> 
+							{{ user_is_owed }}
+						</td>
+					</tr>
+
+				</table>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<div>
+						<span>You owe</span>
+						<table  class="owe">
+							<tr><th>Name</th><th>Amount</th></tr>
+							{% for key in friends_user_owes %}
+							<tr>
+								<td>{{ key }}</td>
+								<td id="red">{{ friends_user_owes[key] }}</td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div >
+						<span>You're owed</span>
+						<table class="owes">
+							<tr><th>Name</th><th>Amount</th></tr>
+							{% for key in friends_user_is_owed_by %}
+							<tr>
+								<td>{{ key }}</td>
+								<td id="green">{{ friends_user_is_owed_by[key] }}</td>
+							</tr>
+							{% endfor %}
+						</table>     
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section fp-auto-height" id="ftr">
+
+			<footer id="myFooter">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-3">
+							<h2 class="logo"><a href="#"> <span class="foot_U">U</span><span class="foot_U">d</span><span class="foot_U">h</span><span class="foot_U">a</span><span class="foot_U">a</span><span class="foot_U">r</span><span class="foot_U">i</span><span class="foot_U">f</span><span class="foot_U">y</span></a></h2>
+						</div>
+						<div class="col-sm-2">
+							<h5 class="subhead">Get started</h5>
+							<ul>
+								<li><a href="#">Home</a></li>
+								<li><a href="/register">Sign up</a></li>
+								<!-- <li><a href="#">Downloads</a></li>-->
+							</ul>
+						</div>
+						<div class="col-sm-2">
+							<h5 class="subhead">About us</h5>
+							<ul>
+								<li><a href="#">Company Information</a></li>
+								<li><a href="#">Developers</a></li>
+								<!--<li><a href="#">Reviews</a></li>-->
+							</ul>
+						</div>
+						<div class="col-sm-2">
+							<h5 class="subhead">Need Help?</h5>
+							<ul>
+								<li><a href="#">FAQ</a></li>
+								<li><a href="#">Help desk</a></li>
+								<!-- <li><a href="#">Forums</a></li>-->
+							</ul>
+						</div>
+						<div class="col-sm-3">
+							<div class="social-networks">
+								<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+								<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+								<a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+							</div>
+							<button type="button" class="btn btn-default">Contact us</button>
+						</div>
+					</div>
+				</div>
+				<div class="footer-copyright">
+					<p>©BETA</p>
+				</div>
+			</footer>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='dashboard.js') }}"> </script>
 </script>
 
 </body>

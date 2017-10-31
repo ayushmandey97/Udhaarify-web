@@ -20,7 +20,7 @@ body{
 	font-family: run;
 	/*border: 1px solid black;*/
 	border-radius: 70px;
-	padding: 70px;
+	padding: 60px;
 	font-size: 20px;
 	float: none;
 /*	margin-left: 33%;
@@ -47,8 +47,8 @@ body{
 }
 #submit{
 	background-color: #121212;
-	width: 150px;
-	height: 50px;
+	width: 180px;
+	height: 70px;
 	border-radius: 50px;
 	font-family: Run;
 	color: #ffffff;
@@ -58,7 +58,11 @@ body{
 	text-align: center;
 	float: right;
 	margin-right: 20px;
+	padding: 1px;
 }
 .greenamt{
 	background-color: #9effb5;
+}
+form{
+	padding: 10px;
 }

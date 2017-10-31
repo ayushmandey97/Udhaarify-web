@@ -50,7 +50,7 @@ $(document).ready(function() {
 		verticalCentered: true,
 		sectionsColor : ['#ccc', '#fff'],
 		paddingTop: '0',
-		paddingBottom: '10px',
+		paddingBottom: '0px',
 		fixedElements: '#header, .footer',
 		responsiveWidth: 0,
 		responsiveHeight: 0,
@@ -74,8 +74,20 @@ $(document).ready(function() {
 		onSlideLeave: function(anchorLink, index, slideIndex, direction, nextSlideIndex){}
 	});
 
-
+ $('#fadeandscale').popup();
+$('#fadeandscale').popup('show');
 	// check_net_amt();
+
+	preloaderFadeOutTime = 500;
+function hidePreloader() {
+var preloader = $('.spinner-wrapper');
+preloader.fadeOut(preloaderFadeOutTime);
+}
+setTimeout(
+  function() 
+  {
+    hidePreloader();
+  }, 2500);
 
 });
 
@@ -87,3 +99,24 @@ var x = parseInt(amt);
 	else{
 		$('#net').css("color",'green');
 	}
+
+$('#fadeandscale').popup({
+  transition: 'all 0.3s'
+});
+
+
+$('#bid').on('change',function () {
+	var bid = $('#bid').val();
+	// alert(bid);
+	var url = "/show_bills/" + bid;
+	// alert(url);
+	window.location.href = "show_bills/" + bid;
+});
+
+$(document).on('keyup keypress', function(e) {
+  var keyCode = e.keyCode || e.which;
+  if (keyCode === 13) { 
+    e.preventDefault();
+    return false;
+}
+});

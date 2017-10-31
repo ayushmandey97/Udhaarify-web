@@ -17,16 +17,27 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/backtotop.css') }}">
 
 	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/featherlight.min.css') }}" />
-		<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
-  		<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/login-style.css') }}">
-		<style type="text/css">
-			@media all {
-				.lightbox { display: none; }
-				}
-		</style>
+	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
+	<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/login-style.css') }}">
+	<style type="text/css">
+		@media all {
+			.lightbox { display: none; }
+		}
+	</style>
 </head>
 <body class="fl-page">
-	
+<div class="spinner-wrapper">
+		<div class="sk-folding-cube">
+			<div class="sk-cube1 sk-cube"></div>
+			<div class="sk-cube2 sk-cube"></div>
+			<div class="sk-cube4 sk-cube"></div>
+			<div class="sk-cube3 sk-cube"></div>
+		</div>
+	</div>
+
+	<div id="fadeandscale">
+		{% include 'includes/_messages.html' %}
+	</div>
 	<div class="upper">
 		<!-- Header -->
 		<div class="header">
@@ -56,7 +67,7 @@
 					</div><!-- /.navbar-collapse -->
 				</nav>
 			</div>
-			{% include 'includes/_messages.html' %}
+			
 			<div class="container">
 				<div class="desc">
 					<div class="row">
@@ -155,209 +166,209 @@
 					</div>
 					<div class="col-lg-4">
 						<img src="{{ url_for('static', filename='stylesheets/assets/raghu.jpg') }}" class="tphoto">
-							<p class="ttext"> Raghu Tiwari </p>
+						<p class="ttext"> Raghu Tiwari </p>
+					</div>
+				</div>
+				<p class="teamhead">About us</p>
+				<p class="tdesc">Did you ever plan on having a fun night out only to be disappointed at the end of it, just because of cash hassles? Endless debate on how much to pay each other, everyone whipping out their phones and calculating, trying to convince that their math is correct. Is that something that you and your friends can relate to? If yes, then we have a solution. Udhaarify is an open source software which uses an algorithm to settle those pesky bills for you, making group outings way more awesome. You can customize the bill the way you want, and thus can add bills of varying complexity, we'll solve it all for you.So go ahead and register, why wait?</p>
+			</div>
+		</div>
+		<!-- Footer -->
+		<div class="footer">
+			<footer id="myFooter">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-3">
+							<h2 class="logo"><a href="#"> <span class="foot_U">U</span><span class="foot_U">d</span><span class="foot_U">h</span><span class="foot_U">a</span><span class="foot_U">a</span><span class="foot_U">r</span><span class="foot_U">i</span><span class="foot_U">f</span><span class="foot_U">y</span></a></h2>
+						</div>
+						<div class="col-sm-2">
+							<h5 class="subhead">Get started</h5>
+							<ul>
+								<li><a href="#">Home</a></li>
+								<li><a href="/register">Sign up</a></li>
+								<!-- <li><a href="#">Downloads</a></li>-->
+							</ul>
+						</div>
+						<div class="col-sm-2">
+							<h5 class="subhead">About us</h5>
+							<ul>
+								<li><a href="#">Company Information</a></li>
+								<li><a href="#">Developers</a></li>
+								<!--<li><a href="#">Reviews</a></li>-->
+							</ul>
+						</div>
+						<div class="col-sm-2">
+							<h5 class="subhead">Need Help?</h5>
+							<ul>
+								<li><a href="#">FAQ</a></li>
+								<li><a href="#">Help desk</a></li>
+								<!-- <li><a href="#">Forums</a></li>-->
+							</ul>
+						</div>
+						<div class="col-sm-3">
+							<div class="social-networks">
+								<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+								<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+								<a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+							</div>
+							<button type="button" class="btn btn-default">Contact us</button>
+						</div>
+					</div>
+				</div>
+				<div class="footer-copyright">
+					<p>©BETA</p>
+				</div>
+			</footer>
+		</div>
+		{% from 'includes/_formhelpers.html' import render_field %}
+
+		<div class= "lightbox" id="fl1">
+			<div class="container container2">
+				<div class="card"></div>
+				<div class="card login2">
+					<h1 class="title">Login</h1>
+
+
+					<form method = "POST">
+						<div class="input-container">
+							<!-- <input type="text" id="r-username"  value={{request.form.username}} name = "username"/> -->
+							{{render_field(form2.username, id = "r-username" )}}
+							<label for="r-username">Username</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="password" id="pass-login"  value={{request.form.password}} name = "password"/> -->
+							{{render_field(form2.password, id = "pass-login" )}}
+							<label for="pass-login">Password</label>
+							<div class="bar"></div>
+						</div>
+						<div class="button-container">
+							<button type = "submit" name ="method" value = "login"><span style="color:white;">Go</span></button>
+						</div>
+						<div class="footer"><a href="#">Forgot your password?</a></div>
+					</form>
+				</div>
+
+
+
+
+
+				<div class="card alt register">
+					<div class="toggle tg-btn"></div>
+					<h1 class="title">Register
+						<div class="close"></div>
+					</h1>
+					<form class="regform" method = "POST">
+						<div class="input-container">
+							<!-- <input type="text" id="user-name-login" /> -->
+							{{render_field(form.name, id = "name-login" )}}
+							<label for="name-login">Name</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="text" id="user-name-login" /> -->
+							{{render_field(form.username, id = "user-name-login" )}}
+							<label for="user-name-login">Username</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="email" id="email-login" /> -->
+							{{render_field(form.email, id = "email-login" )}}
+							<label for="email-login">Email ID</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="password" id="pass-login" /> -->
+							{{render_field(form.password, id = "pass-login" )}}
+							<label for="pass-login">Password</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="password" id="re-pass-login" /> -->
+							{{render_field(form.confirm, id = "re-pass-login" )}}
+							<label for="re-pass-login">Repeat Password</label>
+							<div class="bar"></div>
+						</div>
+						<div class="button-container">
+							<button  type = "submit" name ="method" value = "register"><span style="color:white;">Next</span></button>
+						</div>
+					</form>
 				</div>
 			</div>
-			<p class="teamhead">About us</p>
-			<p class="tdesc">Did you ever plan on having a fun night out only to be disappointed at the end of it, just because of cash hassles? Endless debate on how much to pay each other, everyone whipping out their phones and calculating, trying to convince that their math is correct. Is that something that you and your friends can relate to? If yes, then we have a solution. Udhaarify is an open source software which uses an algorithm to settle those pesky bills for you, making group outings way more awesome. You can customize the bill the way you want, and thus can add bills of varying complexity, we'll solve it all for you.So go ahead and register, why wait?</p>
-			</div>
-			</div>
-			<!-- Footer -->
-			<div class="footer">
-				<footer id="myFooter">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-sm-3">
-								<h2 class="logo"><a href="#"> <span class="foot_U">U</span><span class="foot_U">d</span><span class="foot_U">h</span><span class="foot_U">a</span><span class="foot_U">a</span><span class="foot_U">r</span><span class="foot_U">i</span><span class="foot_U">f</span><span class="foot_U">y</span></a></h2>
-							</div>
-							<div class="col-sm-2">
-								<h5 class="subhead">Get started</h5>
-								<ul>
-									<li><a href="#">Home</a></li>
-									<li><a href="/register">Sign up</a></li>
-									<!-- <li><a href="#">Downloads</a></li>-->
-								</ul>
-							</div>
-							<div class="col-sm-2">
-								<h5 class="subhead">About us</h5>
-								<ul>
-									<li><a href="#">Company Information</a></li>
-									<li><a href="#">Developers</a></li>
-									<!--<li><a href="#">Reviews</a></li>-->
-								</ul>
-							</div>
-							<div class="col-sm-2">
-								<h5 class="subhead">Need Help?</h5>
-								<ul>
-									<li><a href="#">FAQ</a></li>
-									<li><a href="#">Help desk</a></li>
-									<!-- <li><a href="#">Forums</a></li>-->
-								</ul>
-							</div>
-							<div class="col-sm-3">
-								<div class="social-networks">
-									<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-									<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-									<a href="#" class="google"><i class="fa fa-google-plus"></i></a>
-								</div>
-								<button type="button" class="btn btn-default">Contact us</button>
-							</div>
+
+		</div>
+
+		<div class= "lightbox" id="fl2">
+			<div class="container container2">
+				<div class="card"></div>
+				<div class="card login2">
+					<h1 class="title">Login</h1>
+
+					<form method = "POST">
+						<div class="input-container">
+							<!-- <input type="text" id="r-username"  value={{request.form.username}} name = "username"/> -->
+							{{render_field(form2.username, id = "r-username" )}}
+							<label for="r-username">Username</label>
+							<div class="bar"></div>
 						</div>
-					</div>
-					<div class="footer-copyright">
-						<p>©BETA</p>
-					</div>
-				</footer>
+						<div class="input-container">
+							<!-- <input type="password" id="pass-login"  value={{request.form.password}} name = "password"/> -->
+							{{render_field(form2.password, id = "pass-login" )}}
+							<label for="pass-login">Password</label>
+							<div class="bar"></div>
+						</div>
+						<div class="button-container">
+							<button type = "submit" name ="method" value = "login"><span style="color:white;">Go</span></button>
+						</div>
+						<div class="footer"><a href="#">Forgot your password?</a></div>
+					</form>
+
+				</div>
+
+				<div class="card alt register">
+					<div class="toggle tg-btn"></div>
+					<h1 class="title">Register
+						<div class="close"></div>
+					</h1>
+					<form class="regform" method = "POST">
+						<div class="input-container">
+							<!-- <input type="text" id="user-name-login" /> -->
+							{{render_field(form.name, id = "name-login" )}}
+							<label for="name-login">Name</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="text" id="user-name-login" /> -->
+							{{render_field(form.username, id = "user-name-login" )}}
+							<label for="user-name-login">Username</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="email" id="email-login" /> -->
+							{{render_field(form.email, id = "email-login" )}}
+							<label for="email-login">Email ID</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="password" id="pass-login" /> -->
+							{{render_field(form.password, id = "pass-login" )}}
+							<label for="pass-login">Password</label>
+							<div class="bar"></div>
+						</div>
+						<div class="input-container">
+							<!-- <input type="password" id="re-pass-login" /> -->
+							{{render_field(form.confirm, id = "re-pass-login" )}}
+							<label for="re-pass-login">Repeat Password</label>
+							<div class="bar"></div>
+						</div>
+						<div class="button-container">
+							<button  type = "submit" name ="method" value = "register"><span style="color:white;">Next</span></button>
+						</div>
+					</form>
+				</div>
 			</div>
-					{% from 'includes/_formhelpers.html' import render_field %}
-					
-					<div class= "lightbox" id="fl1">
-					  <div class="container container2">
-								  <div class="card"></div>
-								  <div class="card login2">
-								    <h1 class="title">Login</h1>
-								    
 
-								    <form method = "POST">
-								     <div class="input-container">
-								        <!-- <input type="text" id="r-username"  value={{request.form.username}} name = "username"/> -->
-								        {{render_field(form2.username, id = "r-username" )}}
-								        <label for="r-username">Username</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="password" id="pass-login"  value={{request.form.password}} name = "password"/> -->
-								        {{render_field(form2.password, id = "pass-login" )}}
-								        <label for="pass-login">Password</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="button-container">
-								        <button type = "submit" name ="method" value = "login"><span style="color:white;">Go</span></button>
-								      </div>
-								      <div class="footer"><a href="#">Forgot your password?</a></div>
-								    </form>
-								  </div>
-
-
-
-								 
-
-								  <div class="card alt register">
-								    <div class="toggle tg-btn"></div>
-								    <h1 class="title">Register
-								      <div class="close"></div>
-								    </h1>
-								    <form class="regform" method = "POST">
-								      <div class="input-container">
-								        <!-- <input type="text" id="user-name-login" /> -->
-								        {{render_field(form.name, id = "name-login" )}}
-								        <label for="name-login">Name</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="text" id="user-name-login" /> -->
-								        {{render_field(form.username, id = "user-name-login" )}}
-								        <label for="user-name-login">Username</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="email" id="email-login" /> -->
-								         {{render_field(form.email, id = "email-login" )}}
-								        <label for="email-login">Email ID</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="password" id="pass-login" /> -->
-								         {{render_field(form.password, id = "pass-login" )}}
-								        <label for="pass-login">Password</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="password" id="re-pass-login" /> -->
-								        {{render_field(form.confirm, id = "re-pass-login" )}}
-								        <label for="re-pass-login">Repeat Password</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="button-container">
-								        <button  type = "submit" name ="method" value = "register"><span style="color:white;">Next</span></button>
-								      </div>
-								    </form>
-								  </div>
-								</div>
-
-						</div>
-
-						<div class= "lightbox" id="fl2">
-					  <div class="container container2">
-								  <div class="card"></div>
-								  <div class="card login2">
-								    <h1 class="title">Login</h1>
-								    
-								    <form method = "POST">
-								     <div class="input-container">
-								        <!-- <input type="text" id="r-username"  value={{request.form.username}} name = "username"/> -->
-								        {{render_field(form2.username, id = "r-username" )}}
-								        <label for="r-username">Username</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="password" id="pass-login"  value={{request.form.password}} name = "password"/> -->
-								        {{render_field(form2.password, id = "pass-login" )}}
-								        <label for="pass-login">Password</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="button-container">
-								        <button type = "submit" name ="method" value = "login"><span style="color:white;">Go</span></button>
-								      </div>
-								      <div class="footer"><a href="#">Forgot your password?</a></div>
-								    </form>
-								    
-								  </div>
-
-								  <div class="card alt register">
-								    <div class="toggle tg-btn"></div>
-								    <h1 class="title">Register
-								      <div class="close"></div>
-								    </h1>
-								    <form class="regform" method = "POST">
-								      <div class="input-container">
-								        <!-- <input type="text" id="user-name-login" /> -->
-								        {{render_field(form.name, id = "name-login" )}}
-								        <label for="name-login">Name</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="text" id="user-name-login" /> -->
-								        {{render_field(form.username, id = "user-name-login" )}}
-								        <label for="user-name-login">Username</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="email" id="email-login" /> -->
-								         {{render_field(form.email, id = "email-login" )}}
-								        <label for="email-login">Email ID</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="password" id="pass-login" /> -->
-								         {{render_field(form.password, id = "pass-login" )}}
-								        <label for="pass-login">Password</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="input-container">
-								        <!-- <input type="password" id="re-pass-login" /> -->
-								        {{render_field(form.confirm, id = "re-pass-login" )}}
-								        <label for="re-pass-login">Repeat Password</label>
-								        <div class="bar"></div>
-								      </div>
-								      <div class="button-container">
-								        <button  type = "submit" name ="method" value = "register"><span style="color:white;">Next</span></button>
-								      </div>
-								    </form>
-								  </div>
-								</div>
-
-						</div>
+		</div>
 								<!-- <div class= "lightbox" id="fl2">
  								<div class="container container2">
 								  <div class="card"></div>
@@ -412,15 +423,42 @@
 								    </form>
 								  </div>
 								</div>
-								</div> -->
-				<a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+							</div> -->
+							<a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
 
-			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-			<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
-			<script src="{{ url_for('static', filename='featherlight.min.js') }}" type="text/javascript" charset="utf-8"></script>
-			<script  src="{{ url_for('static', filename='login.js') }}"></script>
-			<script type="text/javascript" src="{{ url_for('static', filename='backtotop.js') }}"></script>
+							<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+							<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+							<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+							<script src="{{ url_for('static', filename='featherlight.min.js') }}" type="text/javascript" charset="utf-8"></script>
+							<script  src="{{ url_for('static', filename='login.js') }}"></script>
+							<script type="text/javascript" src="{{ url_for('static', filename='backtotop.js') }}"></script>
+							<script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
 
-		</body>
-		</html>
+							<script>
+								$(document).ready(function() {
+
+      // Initialize the plugin
+      preloaderFadeOutTime = 500;
+      function hidePreloader() {
+      	var preloader = $('.spinner-wrapper');
+      	preloader.fadeOut(preloaderFadeOutTime);
+      }
+      setTimeout(
+      	function() 
+      	{
+      		hidePreloader();
+      	}, 2500);
+
+      $('#fadeandscale').popup();
+      $('#fadeandscale').popup('show');
+
+  });
+								$('#fadeandscale').popup({
+									transition: 'all 0.3s'
+								});
+							</script>
+							<script>
+
+							</script>
+						</body>
+						</html>
