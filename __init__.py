@@ -279,7 +279,7 @@ def dashboard():
 
 
 	# BILL ID AUTOCOMPLETE
-	result = cur.execute("select bill_id from bill_details")
+	result = cur.execute("select distinct(bill_id) from bill_payers as bp natural join bill_spenders as bs where bp.bill_payer = %s or bs.bill_spender = %s", (session['username'], session['username']))
 	data = cur.fetchall()
 	bill_list = []
 	for row in data:
