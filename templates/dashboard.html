@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style__menu.css') }}">
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/lightbox.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/color__box.css') }}"> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.css"/>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery.colorbox.js') }}"> </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/num_font.css') }}">
@@ -22,6 +21,10 @@
         
     });
 </script> -->
+<style>
+        input[type="text"] { border-radius: 0 !important; }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/auto-complete.css') }}">
 </head>
 
 <body>
@@ -57,6 +60,17 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="/">Udhaarify</a>
 				</div>
+					<ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{session['username']}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/profile">Profile</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/logout">Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+		
 
 				<form class="navbar-form navbar-center">
 					<div class="input-group">
@@ -68,19 +82,6 @@
 						</div>
 					</div>
 				</form> 
-				<div align = "right">
-				<ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{session['username']}}<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/profile">Profile</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="/logout">Log Out</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                 </div>
-				<!-- </div> -->
 			</nav> 
 
 		</div>
@@ -208,7 +209,23 @@
 			</footer>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	   <script src="{{ url_for('static', filename='auto-complete.js') }}"></script>
+    <script>
+        var demo1 = new autoComplete({
+            selector: '#hero-demo',
+            minChars: 1,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                var choices = {{ friends|safe }};
+                var suggestions = [];
+                for (i=0;i<choices.length;i++)
+                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                suggest(suggestions);
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" async defer></script>
 	<script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
