@@ -9,7 +9,7 @@ Is that something that you and your friends can relate to? If yes, then we have 
 
 Udhaarify is an open source software which uses an algorithm to settle those pesky bills for you, making group outings way more awesome.
 You can customize the bill the way you want, and thus can add bills of varying complexity, we'll solve it all for you.
-So go ahead and register at [Udhaarify](http://udhaarify.me)
+So go ahead and register at [Udhaarify](http://udhaarify.me) (Currently down)
 
 Built by:
  
