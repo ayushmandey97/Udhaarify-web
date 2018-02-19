@@ -14,7 +14,7 @@ So go ahead and register at [Udhaarify](http://udhaarify.me) (Currently down)
 Built by:
  
 * [Dheeraj Lalwani](https://github.com/Dheeraj27)
-* [Raghu TIwari](https://github.com/raghutiwari)
+* [Raghu Tiwari](https://github.com/raghutiwari)
 * [Ayushman Dey](https://github.com/ayushmandey97)
 
 
